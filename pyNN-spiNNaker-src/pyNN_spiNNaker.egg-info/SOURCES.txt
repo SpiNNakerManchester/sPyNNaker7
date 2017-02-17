@@ -1,0 +1,6 @@
+setup.py
+pyNN_spiNNaker.egg-info/PKG-INFO
+pyNN_spiNNaker.egg-info/SOURCES.txt
+pyNN_spiNNaker.egg-info/dependency_links.txt
+pyNN_spiNNaker.egg-info/requires.txt
+pyNN_spiNNaker.egg-info/top_level.txt
