@@ -7,7 +7,6 @@ from ._version import __version__, __version_name__, __version_month__, \
 from spynnaker7.pyNN.spinnaker import Spinnaker
 
 # pynn centric classes
-from spynnaker.pyNN.utilities import utility_calls
 from spynnaker.pyNN.spinnaker_common import executable_finder
 
 # notification protocol classes (stored in front end common)
@@ -89,7 +88,7 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
     .timing_dependence_pfister_spike_triplet \
     import TimingDependencePfisterSpikeTriplet as PfisterSpikeTripletRule
 
-# constraints
+import spynnaker7
 
 # note importing star is a bad thing to do.
 from pyNN.random import *
