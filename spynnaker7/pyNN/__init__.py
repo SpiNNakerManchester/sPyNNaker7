@@ -326,7 +326,7 @@ def connect(source, target, weight=0.0, delay=None, synapse_type="excitatory",
     source and target can both be individual cells or lists of cells, in
     which case all possible connections are made with probability p, using
     either the random number generator supplied, or the default rng
-    otherwise. Weights should be in nA or µS.
+    otherwise. Weights should be in nA or uS.
     """
     connector = FixedProbabilityConnector(p_connect=p, weights=weight,
                                           delays=delay)

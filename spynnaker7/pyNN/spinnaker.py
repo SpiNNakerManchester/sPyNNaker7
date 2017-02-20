@@ -4,11 +4,12 @@ import os
 
 from spinn_front_end_common.utilities.utility_objs.executable_finder \
     import ExecutableFinder
-from spynnaker7 import Population
-from spynnaker7 import Projection
-from spynnaker7 import SpiNNakerCommon
-from spynnaker7 import config
-from spynnaker7 import model_binaries
+from spynnaker7.pyNN.models.pynn_population import Population
+from spynnaker7.pyNN.models.pynn_projection import Projection
+from spynnaker7.pyNN.utilities.conf import config
+
+from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
+from spynnaker.pyNN import model_binaries
 
 # global objects
 logger = logging.getLogger(__name__)

@@ -309,8 +309,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: file to write the spike data to
         """
 
-        RecordingCommon._record(
-            self, 'spikes', self._create_full_filter_list(1), 1)
+        self._record('spikes', self._create_full_filter_list(1), 1)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
@@ -323,11 +322,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._vertex.record(
-            self, 'gsyn_exc', self._create_full_filter_list(1), 1)
+        self._record('gsyn_exc', self._create_full_filter_list(1), 1)
         self.file = to_file
-        self._vertex.set_recording_gsyn_inh(
-            self, 'gsyn_inh', self._create_full_filter_list(1), 1)
+        self._record('gsyn_inh', self._create_full_filter_list(1), 1)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -339,8 +336,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: the file to write the recorded v to.
         """
 
-        self._vertex.record(
-            self, 'v', self._create_full_filter_list(1), 1)
+        self._record('v', self._create_full_filter_list(1), 1)
         self.file = to_file
 
         # state that something has changed in the population,
