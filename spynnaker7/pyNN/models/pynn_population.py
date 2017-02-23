@@ -13,6 +13,8 @@ from spynnaker.pyNN.models.abstract_models.abstract_population_initializable \
 from spynnaker.pyNN.models.neuron.input_types.input_type_conductance \
     import InputTypeConductance
 
+from spynnaker.pyNN.utilities import globals_variables
+
 from spinn_front_end_common.utilities import exceptions
 
 import numpy
@@ -42,19 +44,21 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
                  structure=None):
 
-        PyNNPopulationCommon.__init__(
-            self, spinnaker_control=spinnaker, size=size,
-            cellparams=cellparams, cellclass=cellclass, label=label)
-        RecordingCommon.__init__(self, self, spinnaker)
+        internal_cellparams = dict(cellparams)
 
-        # Internal structure now supported 23 November 2014 ADR
-        # structure should be a valid Space.py structure type.
-        # generation of positions is deferred until needed.
-        if structure:
-            self._structure = structure
-            self._positions = None
-        else:
-            self._structure = None
+        # set spinnaker targeted parameters
+        internal_cellparams['label'] = self.create_label(label)
+        internal_cellparams['n_neurons'] = size
+        internal_cellparams['config'] = \
+            globals_variables.get_simulator().config
+
+        # create population vertex.
+        vertex = cellclass(**internal_cellparams)
+
+        PyNNPopulationCommon.__init__(
+            self, spinnaker_control=spinnaker, size=size, vertex=vertex,
+            initial_values=None, structure=structure)
+        RecordingCommon.__init__(self, self, spinnaker)
 
     def __add__(self, other):
         """ Merges populations
