@@ -575,13 +575,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    @property
-    def size(self):
-        """ The number of neurons in the population
-        :return:
-        """
-        return self._vertex.n_atoms
-
     def tset(self, parametername, value_array):
         """ 'Topographic' set. Set the value of parametername to the values in\
             value_array, which must have the same dimensions as the Population.
@@ -608,15 +601,3 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             self.print_v(self._record_v_file)
         if self._record_gsyn_file is not None:
             self.print_gsyn(self._record_gsyn_file)
-
-    @property
-    def _get_vertex(self):
-        return self._vertex
-
-    @property
-    def _internal_delay_vertex(self):
-        return self._delay_vertex
-
-    @_internal_delay_vertex.setter
-    def _internal_delay_vertex(self, delay_vertex):
-        self._delay_vertex = delay_vertex
