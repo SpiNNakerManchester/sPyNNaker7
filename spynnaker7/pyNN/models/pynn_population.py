@@ -58,7 +58,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         PyNNPopulationCommon.__init__(
             self, spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(self, self, spinnaker)
+        RecordingCommon.__init__(self, self)
 
     def __add__(self, other):
         """ Merges populations
