@@ -58,7 +58,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         PyNNPopulationCommon.__init__(
             self, spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(self, self)
+        RecordingCommon.__init__(
+            self, self, globals_variables.get_simulator().machine_time_step)
 
     def __add__(self, other):
         """ Merges populations
@@ -100,15 +101,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def __getitem__(self, index_or_slice):
         # TODO: Used to get a single cell - not yet supported
         raise NotImplementedError
-
-    def get(self, parameter_name, gather=False):
-        """ Get the values of a parameter for every local cell in the\
-            population.
-        """
-        if isinstance(self._vertex, AbstractPopulationSettable):
-            return self._vertex.get_value(parameter_name)
-        raise KeyError("Population does not have a property {}".format(
-            parameter_name))
 
     # noinspection PyPep8Naming
     def getSpikes(self, compatible_output=False, gather=True):
@@ -313,7 +305,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: file to write the spike data to
         """
 
-        self._record('spikes', self._create_full_filter_list(1), 1)
+        self._record('spikes', self._create_full_filter_list(1), 1, to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
@@ -326,9 +318,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record('gsyn_exc', self._create_full_filter_list(1), 1)
+        self._record('gsyn_exc', self._create_full_filter_list(1), 1, to_file)
         self.file = to_file
-        self._record('gsyn_inh', self._create_full_filter_list(1), 1)
+        self._record('gsyn_inh', self._create_full_filter_list(1), 1, to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -340,7 +332,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: the file to write the recorded v to.
         """
 
-        self._record('v', self._create_full_filter_list(1), 1)
+        self._record('v', self._create_full_filter_list(1), 1, to_file)
         self.file = to_file
 
         # state that something has changed in the population,
