@@ -15,6 +15,8 @@ from spynnaker.pyNN.models.neuron.input_types.input_type_conductance \
 
 from spynnaker.pyNN.utilities import globals_variables
 
+from pynn import descriptions
+
 from spinn_front_end_common.utilities import exceptions
 
 import numpy
@@ -95,8 +97,27 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         If template is None, then a dictionary containing the template context
         will be returned.
         """
-        # TODO:
-        raise NotImplementedError
+
+        vertex_context = self._vertex.describe()
+
+        context = {
+            "label": self.label,
+            "celltype": descriptions.render(
+                engine, 'modeltype_default.txt', vertex_context),
+            "structure": None,
+            "size": self.size,
+            "size_local": self.size,
+            "first_id": None,
+            "last_id": None,
+        }
+        if self.size > 0:
+            context.update({
+                "local_first_id": None,
+                "cell_parameters": {}})
+
+        if self._structure:
+            context["structure"] = self._structure.describe(template=None)
+        return descriptions.render(engine, template, context)
 
     def __getitem__(self, index_or_slice):
         # TODO: Used to get a single cell - not yet supported
