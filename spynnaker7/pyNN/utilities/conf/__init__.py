@@ -17,6 +17,8 @@ import sys
 import spynnaker7 as spynnaker
 from spynnaker7.pyNN.utilities.conf import log
 
+from spinn_front_end_common.utilities import exceptions
+
 
 def _install_cfg():
     template_cfg = os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -48,6 +50,11 @@ for possible_spynnaker_file in spynnaker_others:
     if os.path.isfile(possible_spynnaker_file):
         found_spynnakers = True
         located_spynnaker.append(os.path.abspath(possible_spynnaker_file))
+
+if len(located_spynnaker) == 0:
+    raise exceptions.ConfigurationException(
+        "You need to have at least one spynnaker.cfg file located in one of"
+        " the following locations: {}".format(spynnaker_others))
 
 with open(default) as f:
     config.readfp(f)
