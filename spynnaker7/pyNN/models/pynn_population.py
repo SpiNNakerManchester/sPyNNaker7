@@ -2,9 +2,9 @@ from pacman.model.constraints.abstract_constraint \
     import AbstractConstraint
 from pacman.model.constraints.placer_constraints \
     .placer_chip_and_core_constraint import PlacerChipAndCoreConstraint
+
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
-
 from spynnaker.pyNN.utilities import utility_calls
 from spynnaker.pyNN.models.abstract_models.abstract_population_settable \
     import AbstractPopulationSettable
@@ -12,10 +12,9 @@ from spynnaker.pyNN.models.abstract_models.abstract_population_initializable \
     import AbstractPopulationInitializable
 from spynnaker.pyNN.models.neuron.input_types.input_type_conductance \
     import InputTypeConductance
-
 from spynnaker.pyNN.utilities import globals_variables
 
-from pynn import descriptions
+from pyNN import descriptions
 
 from spinn_front_end_common.utilities import exceptions
 
