@@ -50,8 +50,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # set spinnaker targeted parameters
         internal_cellparams['label'] = self.create_label(label)
         internal_cellparams['n_neurons'] = size
-        internal_cellparams['config'] = \
-            globals_variables.get_simulator().config
 
         # create population vertex.
         vertex = cellclass(**internal_cellparams)
@@ -159,8 +157,13 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         self._compatible_output_and_gather_warnings(compatible_output, gather)
         excit = self._get_recorded_variable("gsyn_exc")
         inhib = self._get_recorded_variable("gsyn_inh")
-        # TODO join them together and then return the joined up thingy
-        return None
+        # TODO this needs fixing for seperate recordings of cells on views
+        # and assembliers
+        # merge two arrays into one
+        merged = numpy.hstack((excit, inhib))
+        merged = numpy.delete(merged, [3, 4], 1)
+
+        return merged
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=False):
