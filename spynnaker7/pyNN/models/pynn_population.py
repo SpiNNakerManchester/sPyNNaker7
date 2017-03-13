@@ -161,9 +161,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # and assembliers
         # merge two arrays into one
         merged = numpy.hstack((excit, inhib))
-        merged = numpy.delete(merged, [3, 4], 1)
-
-        return merged
+        return numpy.delete(merged, [3, 4], 1)
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=False):
