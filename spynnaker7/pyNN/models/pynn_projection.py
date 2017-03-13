@@ -34,18 +34,10 @@ class Projection(PyNNProjectionCommon):
         postsynaptic_population._get_vertex.synapse_dynamics = \
             synapse_dynamics_stdp
 
-        synapse_type = postsynaptic_population._get_vertex \
-            .synapse_type.get_synapse_id_by_target(target)
-        if synapse_type is None:
-            raise exceptions.ConfigurationException(
-                "Synapse target {} not found in {}".format(
-                    target, postsynaptic_population.label))
-
         PyNNProjectionCommon.__init__(
             self, spinnaker_control=spinnaker_control, connector=connector,
             synapse_dynamics_stdp=synapse_dynamics_stdp,
-            synapse_type=synapse_type,
-            pre_synaptic_population=presynaptic_population,
+            target=target, pre_synaptic_population=presynaptic_population,
             post_synaptic_population=postsynaptic_population,
             rng=rng, machine_time_step=machine_time_step,
             user_max_delay=user_max_delay, label=label,
