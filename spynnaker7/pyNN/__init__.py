@@ -69,8 +69,8 @@ from spynnaker.pyNN.models.neural_projections.connectors. \
 from spynnaker.pyNN.models.neural_projections.connectors. \
     fixed_probability_connector import FixedProbabilityConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors.from_list_connector \
-    import FromListConnector
+from spynnaker7.pyNN.models.connectors.from_list_connector import \
+    FromListConnector
 # noinspection PyUnresolvedReferences
 from spynnaker.pyNN.models.neural_projections.connectors.from_file_connector \
     import FromFileConnector
