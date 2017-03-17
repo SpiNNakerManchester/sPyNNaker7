@@ -1,4 +1,5 @@
 from setuptools import setup
+from spynnaker7.pyNN._version import __version__
 
 exec (open("spynnaker/pyNN/_version.py").read())
 
@@ -14,6 +15,6 @@ setup(
               'spynnaker7.pyNN.utilities.conf'],
     install_requires=[
         'SpiNNFrontEndCommon >= 3.0.0, < 4.0.0', 'sPyNNaker'
-                                                 'pyNN >= 0.7, < 0.8', 'numpy',
+        'pyNN >= 0.7, < 0.8', 'numpy',
         'scipy', 'lxml', 'six', 'bitarray']
 )
