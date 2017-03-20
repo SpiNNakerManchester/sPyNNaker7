@@ -213,19 +213,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # TODO: Need __getitem__
         raise NotImplementedError
 
-    def initialize(self, variable, value):
-        """ Set the initial value of one of the state variables of the neurons\
-            in this population.
-
-        """
-        if not isinstance(self._vertex, AbstractPopulationInitializable):
-            raise KeyError(
-                "Population does not support the initialisation of {}".format(
-                    variable))
-        self._vertex.initialize(variable, utility_calls.convert_param_to_numpy(
-            value, self._vertex.n_atoms))
-        self._change_requires_mapping = True
-
     @staticmethod
     def is_local(cell_id):
         """ Determine whether the cell with the given ID exists on the local \
