@@ -60,33 +60,36 @@ from spynnaker.pyNN.models.spike_source.spike_source_from_file \
 
 # connections
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors.all_to_all_connector \
+from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors. \
+from spynnaker7.pyNN.models.connectors. \
     fixed_number_pre_connector import FixedNumberPreConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors. \
+from spynnaker7.pyNN.models.connectors. \
     fixed_probability_connector import FixedProbabilityConnector
 # noinspection PyUnresolvedReferences
 from spynnaker7.pyNN.models.connectors.from_list_connector import \
     FromListConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors.from_file_connector \
+from spynnaker7.pyNN.models.connectors.from_file_connector \
     import FromFileConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors.multapse_connector \
+from spynnaker7.pyNN.models.connectors.multapse_connector \
     import MultapseConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors.one_to_one_connector \
+from spynnaker7.pyNN.models.connectors.one_to_one_connector \
     import OneToOneConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors. \
+from spynnaker7.pyNN.models.connectors. \
     distance_dependent_probability_connector import \
     DistanceDependentProbabilityConnector
 # noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.connectors. \
+from spynnaker7.pyNN.models.connectors. \
     fixed_number_post_connector import FixedNumberPostConnector
+# noinspection PyUnresolvedReferences
+from spynnaker7.pyNN.models.connectors.small_world_connector import \
+    SmallWorldConnector
 
 # Mechanisms for synapse dynamics
 # noinspection PyUnresolvedReferences
