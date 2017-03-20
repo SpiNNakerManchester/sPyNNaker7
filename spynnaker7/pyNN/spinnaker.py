@@ -4,12 +4,16 @@ import os
 
 from spinn_front_end_common.utilities.utility_objs.executable_finder \
     import ExecutableFinder
+from spynnaker.pyNN import model_binaries
+from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
 from spynnaker7.pyNN.utilities.conf import config
 
-from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
-from spynnaker.pyNN import model_binaries
+from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
+    RandomStatsScipyImpl
+from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
+    RandomStatsUniformImpl
 
 # global objects
 logger = logging.getLogger(__name__)
@@ -77,3 +81,16 @@ class Spinnaker(SpiNNakerCommon):
             machine_time_step=self._machine_time_step,
             timescale_factor=self._time_scale_factor,
             user_max_delay=self.max_supported_delay)
+
+    @staticmethod
+    def get_distribution_to_stats():
+        return {
+            'binomial': RandomStatsScipyImpl("binom"),
+            'gamma': RandomStatsScipyImpl("gamma"),
+            'exponential': RandomStatsScipyImpl("expon"),
+            'lognormal': RandomStatsScipyImpl("lognorm"),
+            'normal': RandomStatsScipyImpl("norm"),
+            'poisson': RandomStatsScipyImpl("poisson"),
+            'uniform': RandomStatsUniformImpl(),
+            'randint': RandomStatsScipyImpl("randint"),
+            'vonmises': RandomStatsScipyImpl("vonmises")}
