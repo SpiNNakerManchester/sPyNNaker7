@@ -37,5 +37,4 @@ class FromListConnector(CommonFromListConnector):
                 conn_list, ['pre', 'post', 'weight', 'delay'])
 
         CommonFromListConnector.__init__(self, conn_list, safe, verbose)
-
         self._set_weights_and_delays(weights, delays)
