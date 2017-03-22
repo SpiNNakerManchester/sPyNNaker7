@@ -2,6 +2,8 @@
 import logging
 import os
 
+from pyNN.random import RandomDistribution
+
 from spinn_front_end_common.utilities.utility_objs.executable_finder \
     import ExecutableFinder
 from spynnaker.pyNN import model_binaries
@@ -94,3 +96,7 @@ class Spinnaker(SpiNNakerCommon):
             'uniform': RandomStatsUniformImpl(),
             'randint': RandomStatsScipyImpl("randint"),
             'vonmises': RandomStatsScipyImpl("vonmises")}
+
+    @staticmethod
+    def get_random_distribution():
+        return RandomDistribution
