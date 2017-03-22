@@ -11,8 +11,10 @@ setup(
     packages=['spynnaker7',
               'spynnaker7.pyNN',
               'spynnaker7.pyNN.models',
+              'spynnaker7.pyNN.models.connectors',
               'spynnaker7.pyNN.utilities',
-              'spynnaker7.pyNN.utilities.conf'],
+              'spynnaker7.pyNN.utilities.conf',
+              'spynnaker7.pyNN.utilities.random_stats'],
     install_requires=[
         'SpiNNFrontEndCommon >= 3.0.0, < 4.0.0', 'sPyNNaker'
         'pyNN >= 0.7, < 0.8', 'numpy',

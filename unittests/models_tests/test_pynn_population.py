@@ -2,7 +2,7 @@
 import unittest
 import spynnaker.pyNN as pyNN
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
-from pacman.model.constraints.placer_constraints. \
+from pacman.model.constraints.placer_constraints.\
     placer_chip_and_core_constraint import PlacerChipAndCoreConstraint
 
 populations = list()
@@ -25,15 +25,14 @@ cell_params_izk = {
     'v_init': -70.0,
     'tau_syn_E': 5.0,
     'tau_syn_I': 5.0}
-pyNN.setup(timestep=1, min_delay=1, max_delay=10.0)
 
 
 class TestPyNNPopulation(unittest.TestCase):
     def setUp(self):
-        pass
+        pyNN.setup(timestep=1, min_delay=1, max_delay=10.0)
 
     def tearDown(self):
-        pass
+        pyNN.end()
 
     def test_create_if_curr_exp_population(self):
         pyNN.Population(1, pyNN.IF_curr_exp, cell_params_lif,
@@ -70,15 +69,12 @@ class TestPyNNPopulation(unittest.TestCase):
                             label="One population")
 
     def test_population_size(self):
-        populations = list()
-        populations.append(
-            pyNN.Population(1, pyNN.IF_curr_exp, cell_params_lif,
-                            label="One population"))
-        populations.append(
-            pyNN.Population(10, pyNN.IF_curr_exp, cell_params_lif,
-                            label="Two population"))
-        self.assertEqual(populations[0]._size, 1)
-        self.assertEqual(populations[1]._size, 10)
+        pop0 = pyNN.Population(
+            1, pyNN.IF_curr_exp, cell_params_lif, label="One population")
+        pop1 = pyNN.Population(
+            10, pyNN.IF_curr_exp, cell_params_lif, label="Two population")
+        self.assertEqual(pop0._size, 1)
+        self.assertEqual(pop1._size, 10)
 
     @unittest.skip("Not implemented")
     def test_get_spikes_from_virtual_spinnaker(self):

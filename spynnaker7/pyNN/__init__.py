@@ -1,19 +1,18 @@
-import inspect
+import inspect as __inspect
 
-from spynnaker.pyNN.utilities.failed_state import FailedState
-from ._version import __version__, __version_name__, __version_month__, \
+from ._version import __version__, __version_name__, __version_month__,\
     __version_year__
 
 # main entrance
-from spynnaker7.pyNN.spinnaker import Spinnaker
+from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
 
 # pynn centric classes
-from spynnaker.pyNN.spinnaker_common import executable_finder
+from spynnaker.pyNN.spinnaker_common import executable_finder as __exec_finder
 from spynnaker.pyNN.utilities import globals_variables
 
 # notification protocol classes (stored in front end common)
 from spinn_front_end_common.utilities.notification_protocol. \
-    socket_address import SocketAddress
+    socket_address import SocketAddress as __SockAddr
 
 # front end common exceptions
 from spinn_front_end_common.utilities import exceptions as \
@@ -119,30 +118,59 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
     .timing_dependence_pfister_spike_triplet \
     import TimingDependencePfisterSpikeTriplet as PfisterSpikeTripletRule
 
+# needed for unit tests
+from spynnaker.pyNN.utilities import utility_calls
+
 import spynnaker7
 
 # note importing star is a bad thing to do.
-from pyNN.random import *
-from pyNN.space import *
-import os
-import logging
+from pyNN.random import NumpyRNG, RandomDistribution
+from pyNN.space import \
+    distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
+import os as __os
+import numpy as __numpy
+
+import logging as __logging
 
 # traditional logger
-logger = logging.getLogger(__name__)
+logger = __logging.getLogger(__name__)
 
 # List of binary search paths
 _binary_search_paths = []
 
+__all__ = [
+    # Ugly, but tests expect it
+    'utility_calls',
+    # Implementations of the neuroscience models
+    'IF_cond_exp', 'IF_curr_dual_exp', 'IF_curr_exp', 'IZK_curr_exp',
+    'IZK_cond_exp', 'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
+    'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
+    'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
+    'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
+    'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
+    'DistanceDependentProbabilityConnector', 'SynapseDynamics',
+    'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
+    'MultiplicativeWeightDependence', 'PfisterSpikeTripletRule',
+    # Stuff from pyNN.random
+    'NumpyRNG', 'RandomDistribution',
+    # Stuff from pyNN.space
+    'distance', 'Space', 'Line', 'Grid2D', 'Grid3D', 'Cuboid', 'Sphere',
+    'RandomStructure',
+    # Stuff that we define
+    'register_binary_search_path', 'end', 'setup', 'run', 'get_spynnaker',
+    'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
+    'register_database_notification_request', 'Population', 'Projection',
+    'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
+    'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
+    'record_v', 'record_gsyn', 'get_machine']
+
 
 def register_binary_search_path(search_path):
-    """
-    :param search_path:
-    Registers an additional binary search path for
-        for executables
+    """ Registers an additional binary search path for executables
 
-    absolute search path for binaries
+    :param search_path: absolute search path for binaries
     """
-    executable_finder.add_path(search_path)
+    __exec_finder.add_path(search_path)
 
 
 def end():
@@ -159,7 +187,7 @@ def end():
 def get_spynnaker():
     """helper method for other plugins to add stuff to the graph
 
-    :return:
+    :return: The current spinnaker API, or None if before setup or after end.
     """
     return globals_variables.get_simulator()
 
@@ -202,31 +230,33 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
         given simulator but not by others.
 
     :param machine: A SpiNNaker machine used to run the simulation.
-    :param timestep:
-    :param min_delay:
-    :param max_delay:
-    :param machine:
-    :param database_socket_addresses:
+    :param timestep: The timestep in milleseconds.\
+       Value will be rounded up to whole microseconds.\
+       Set to None to use the value from the config file
+    :param min_delay: the minumum number of time steps supported for delays
+    :param max_delay: the maximum number of time steps supported for delays
+    :param machine: The machine ip address
+    :param database_socket_addresses: the set of sockets needed to be listened
+    to for database notification protocol
     :param n_chips_required: The number of chips required for the simulation
-    :param extra_params:
-    :return:
+    :param extra_params: random other crap
+    :rtype: float or None
     """
     global _binary_search_paths
 
     logger.info(
         "sPyNNaker (c) {} APT Group, University of Manchester".format(
             __version_year__))
-    parent_dir = os.path.split(os.path.split(spynnaker7.__file__)[0])[0]
+    parent_dir = __os.path.split(__os.path.split(spynnaker7.__file__)[0])[0]
     logger.info(
         "Release version {}({}) - {} {}. Installed in folder {}".format(
             __version__, __version_name__, __version_month__, __version_year__,
             parent_dir))
 
-    if len(extra_params) > 1:
-        logger.warn("Extra params has been applied to the setup command which "
-                    "we do not consider")
-
-    spinnaker_control = Spinnaker(
+    if len(extra_params) > 0:
+        logger.warn("Extra params {} have been applied to the setup "
+                    "command which we do not consider".format(extra_params))
+    spinnaker_control = __Spinnaker(
         host_name=machine, timestep=timestep, min_delay=min_delay,
         max_delay=max_delay,
         database_socket_addresses=database_socket_addresses,
@@ -239,45 +269,47 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
 def set_number_of_neurons_per_core(neuron_type, max_permitted):
     """ Sets a ceiling on the number of neurons of a given type that can be\
         placed on a single core.
-    :param neuron_type:
-    :param max_permitted:
+
+    :param neuron_type: the neuron type that will have its max atoms set
+    :param max_permitted: The max amount of atoms to be set
+    :type neuron_type: The string reprensetation of the neuron type
+    :type max_permitted: int
+    :rtype: None
     """
-    if not inspect.isclass(neuron_type):
+    if not __inspect.isclass(neuron_type):
         if neuron_type in globals():
             neuron_type = globals()[neuron_type]
         else:
-            raise Exception("Unknown Vertex Type {}"
-                            .format(neuron_type))
+            raise Exception("Unknown Vertex Type {}".format(neuron_type))
 
     if hasattr(neuron_type, "set_model_max_atoms_per_core"):
         neuron_type.set_model_max_atoms_per_core(max_permitted)
     else:
-        raise Exception("{} is not a Vertex type"
-                        .format(neuron_type))
+        raise Exception("{} is not a Vertex type".format(neuron_type))
 
 
 def register_database_notification_request(hostname, notify_port, ack_port):
     """ Adds a socket system which is registered with the notification protocol
 
-    :param hostname:
-    :param notify_port:
-    :param ack_report:
-    :return:
+    :param hostname: ip address of host
+    :param notify_port: port for listeing for when database is set up
+    :param ack_port: the port for sending back the ack
+    :rtype: None
     """
-    globals_variables.get_simulator()._add_socket_address(
-        SocketAddress(hostname, notify_port, ack_port))
+    globals_variables.get_simulator()._add_socket_address(__SockAddr(
+        hostname, notify_port, ack_port))
 
 
 # noinspection PyPep8Naming
 def Population(size, cellclass, cellparams, structure=None, label=None):
-    """
+    """ building a new pop
 
-    :param size:
-    :param cellclass:
-    :param cellparams:
-    :param structure:
-    :param label:
-    :return:
+    :param size: n neurons
+    :param cellclass: the neuron class that needs to be created
+    :param cellparams: the params to put into the neuron model
+    :param structure: ??????
+    :param label: the human readable label
+    :return: a new population object
     """
     return globals_variables.get_simulator().create_population(
         size, cellclass, cellparams, structure, label)
@@ -287,17 +319,17 @@ def Population(size, cellclass, cellparams, structure=None, label=None):
 def Projection(presynaptic_population, postsynaptic_population,
                connector, source=None, target='excitatory',
                synapse_dynamics=None, label=None, rng=None):
-    """
+    """ builds a new projection object
 
-    :param presynaptic_population:
-    :param postsynaptic_population:
-    :param connector:
-    :param source:
-    :param target:
-    :param synapse_dynamics:
-    :param label:
-    :param rng:
-    :return:
+    :param presynaptic_population: the source pop
+    :param postsynaptic_population: the dest pop
+    :param connector: the connector describing connecitivty
+    :param source: ??????????
+    :param target: type of synapse, exicitiatory or inhibitoary for example.
+    :param synapse_dynamics: plasticity
+    :param label: human readable label
+    :param rng: random number generator if needed
+    :return: a new Projection object
     """
 
     return globals_variables.get_simulator().create_projection(
@@ -310,13 +342,13 @@ def NativeRNG(seed_value):
     :param seed_value:
     :return:
     """
-    numpy.random.seed(seed_value)
+    __numpy.random.seed(seed_value)
 
 
 def get_current_time():
     """
     returns the machine time step defined in setup
-    :return:
+    :return: the runtime currently
     """
     return globals_variables.get_simulator().get_current_time()
 
@@ -345,8 +377,8 @@ def connect(source, target, weight=0.0, delay=None, synapse_type="excitatory",
     either the random number generator supplied, or the default rng
     otherwise. Weights should be in nA or uS.
     """
-    connector = FixedProbabilityConnector(p_connect=p, weights=weight,
-                                          delays=delay)
+    connector = FixedProbabilityConnector(
+        p_connect=p, weights=weight, delays=delay)
     return Projection(source, target, connector, target=synapse_type, rng=rng)
 
 
@@ -408,7 +440,7 @@ def get_machine():
     """
     if isinstance(globals_variables.get_simulator(), FailedState):
         raise front_end_common_exceptions.ConfigurationException(
-            "You need to have ran setup to get access to the spinnaker machine"
-            "object.")
+            "You currently have not ran setup, please do so before calling "
+            "get_machine")
     else:
         return globals_variables.get_simulator().machine

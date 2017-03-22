@@ -160,21 +160,10 @@ class Projection(PyNNProjectionCommon):
         # TODO: Look at what this is randomising
         raise NotImplementedError
 
-    def __repr__(self):
-        return "projection {}".format(self._projection_edge.label)
-
     # noinspection PyPep8Naming
     def saveConnections(self, file_name, gather=True, compatible_output=True):
         """ Save connections to file in a format suitable for reading in with\
             a FromFileConnector.
-        """
-        # TODO
-        raise NotImplementedError
-
-    def size(self, gather=True):
-        """ Return the total number of connections.
-         - only local connections, if gather is False,
-         - all connections, if gather is True (default)
         """
         # TODO
         raise NotImplementedError

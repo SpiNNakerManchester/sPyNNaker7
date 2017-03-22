@@ -35,7 +35,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         a spatial structure
     :param string label:
         a label identifying the Population
-    :returns a list of vertexes and edges
     """
 
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
@@ -56,28 +55,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         RecordingCommon.__init__(
             self, self, globals_variables.get_simulator().machine_time_step)
 
-    def __add__(self, other):
-        """ Merges populations
-        """
-        # TODO: Make this add the neurons from another population to this one
-        raise NotImplementedError
-
-    def all(self):
-        """ Iterator over cell ids on all nodes.
-        """
-        # TODO: Return the cells when we have such a thing
-        raise NotImplementedError
-
-    @property
-    def conductance_based(self):
-        """ True if the population uses conductance inputs
-        """
-        return isinstance(self._vertex.input_type, InputTypeConductance)
-
     @property
     def default_parameters(self):
         """ The default parameters of the vertex from this population
-        :return:
         """
         return self._vertex.default_parameters
 
@@ -112,10 +92,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             context["structure"] = self._structure.describe(template=None)
         return descriptions.render(engine, template, context)
 
-    def __getitem__(self, index_or_slice):
-        # TODO: Used to get a single cell - not yet supported
-        raise NotImplementedError
-
     # noinspection PyPep8Naming
     def getSpikes(self, compatible_output=False, gather=True):
         """
@@ -140,13 +116,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=False):
         """
-        Return a 3-column numpy array containing cell ids, time and synaptic
+        Return a 3-column numpy array containing cell ids, time and synaptic\
         conductances for recorded cells.
-        :param gather:
-            not used - inserted to match PyNN specs
+
+        :param gather: not used - inserted to match PyNN specs
         :type gather: bool
-        :param compatible_output:
-            not used - inserted to match PyNN specs
+        :param compatible_output: not used - inserted to match PyNN specs
         :type compatible_output: bool
         """
 
@@ -162,14 +137,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=False):
         """
-        Return a 3-column numpy array containing cell ids, time, and V_m for
+        Return a 3-column numpy array containing cell ids, time, and V_m for\
         recorded cells.
 
-        :param gather:
-            not used - inserted to match PyNN specs
+        :param gather: not used - inserted to match PyNN specs
         :type gather: bool
-        :param compatible_output:
-            not used - inserted to match PyNN specs
+        :param compatible_output: not used - inserted to match PyNN specs
         :type compatible_output: bool
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
@@ -193,71 +166,16 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                 "Spynnaker 0.7 only supports compatible_output = false, will"
                 " execute as if compatible_output was false anyhow")
 
-    def id_to_index(self, cell_id):
-        """ Given the ID(s) of cell(s) in the Population, return its (their)\
-            index (order in the Population).
-        """
-
-        # TODO: Need __getitem__
-        raise NotImplementedError
-
-    def id_to_local_index(self, cell_id):
-        """ Given the ID(s) of cell(s) in the Population, return its (their)\
-            index (order in the Population), counting only cells on the local\
-            MPI node.
-        """
-        # TODO: Need __getitem__
-        raise NotImplementedError
-
     @staticmethod
     def is_local(cell_id):
         """ Determine whether the cell with the given ID exists on the local \
             MPI node.
+
         :param cell_id:
         """
 
         # Doesn't really mean anything on SpiNNaker
         return True
-
-    def can_record(self, variable):
-        """ Determine whether `variable` can be recorded from this population.
-        """
-
-        # TODO: Needs a more precise recording mechanism (coming soon)
-        raise NotImplementedError
-
-    def inject(self, current_source):
-        """ Connect a current source to all cells in the Population.
-        """
-
-        # TODO:
-        raise NotImplementedError
-
-    def __iter__(self):
-        """ Iterate over local cells
-        """
-
-        # TODO:
-        raise NotImplementedError
-
-    def __len__(self):
-        """ Get the total number of cells in the population.
-        """
-        return self._size
-
-    @property
-    def label(self):
-        """ The label of the population
-        """
-        return self._vertex.label
-
-    @property
-    def local_size(self):
-        """ The number of local cells
-        """
-
-        # Doesn't make much sense on SpiNNaker
-        return self._size
 
     # noinspection PyPep8Naming
     def meanSpikeCount(self, gather=True):
@@ -296,7 +214,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Set initial membrane potentials for all the cells in the\
             population to random values.
 
-        :param `pyNN.random.RandomDistribution` distribution:
+        :param `pyNN.random.RandomDistribution` distribution:\
             the distribution used to draw random values.
 
         """
@@ -366,6 +284,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     # noinspection PyPep8Naming
     def printSpikes(self, filename, gather=True):
         """ Write spike time information from the population to a given file.
+
         :param filename: the absolute file path for where the spikes are to\
                     be printed in
         :param gather: Supported from the PyNN language, but ignored here
@@ -391,6 +310,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def print_gsyn(self, filename, gather=True):
         """ Write conductance information from the population to a given file.
+
         :param filename: the absolute file path for where the gsyn are to be\
                     printed in
         :param gather: Supported from the PyNN language, but ignored here
@@ -410,6 +330,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         file_handle.write("# dimensions = [{}]\n".format(dimensions))
         file_handle.write("# last_id = {{}}\n".format(num_neurons - 1))
         file_handle = open(filename, "w")
+        #TODO will need adjusting when filters and views assemblies work
         for (neuronId, time, value_e, _, _, value_i) in zip(
                 gsyn_exc, gsyn_inh):
             file_handle.write("{}\t{}\t{}\t{}\n".format(
@@ -419,6 +340,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def print_v(self, filename, gather=True):
         """ Write membrane potential information from the population to a\
             given file.
+
         :param filename: the absolute file path for where the voltage are to\
                      be printed in
         :param gather: Supported from the PyNN language, but ignored here
@@ -455,6 +377,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def sample(self, n, rng=None):
         """ Return a random selection of neurons from a population in the form\
             of a population view
+
         :param n: the number of neurons to sample
         :param rng: the random number generator to use.
         """
@@ -464,6 +387,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def save_positions(self, file):  # @ReservedAssignment
         """ Save positions to file.
+
             :param file: the file to write the positions to.
         """
         file_handle = open(file, "w")
@@ -476,68 +400,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
         return self._structure
 
-    # NONE PYNN API CALL
-    def set_constraint(self, constraint):
-        """ Apply a constraint to a population that restricts the processor\
-            onto which its atoms will be placed.
-        """
-        if isinstance(constraint, AbstractConstraint):
-            self._vertex.add_constraint(constraint)
-        else:
-            raise exceptions.ConfigurationException(
-                "the constraint entered is not a recognised constraint")
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
-
-    # NONE PYNN API CALL
-    def add_placement_constraint(self, x, y, p=None):
-        """ Add a placement constraint
-
-        :param x: The x-coordinate of the placement constraint
-        :type x: int
-        :param y: The y-coordinate of the placement constraint
-        :type y: int
-        :param p: The processor id of the placement constraint (optional)
-        :type p: int
-        """
-        self._vertex.add_constraint(PlacerChipAndCoreConstraint(x, y, p))
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
-
-    # NONE PYNN API CALL
-    def set_mapping_constraint(self, constraint_dict):
-        """ Add a placement constraint - for backwards compatibility
-
-        :param constraint_dict: A dictionary containing "x", "y" and\
-                    optionally "p" as keys, and ints as values
-        :type constraint_dict: dict of str->int
-        """
-        self.add_placement_constraint(**constraint_dict)
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
-
-    # NONE PYNN API CALL
-    def set_model_based_max_atoms_per_core(self, new_value):
-        """ Supports the setting of each models max atoms per core parameter
-
-        :param new_value: the new value for the max atoms per core.
-        """
-        if hasattr(self._vertex, "set_model_max_atoms_per_core"):
-            self._vertex.set_model_max_atoms_per_core(new_value)
-        else:
-            raise exceptions.ConfigurationException(
-                "This population does not support its max_atoms_per_core "
-                "variable being adjusted by the end user")
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
-
     def tset(self, parametername, value_array):
         """ 'Topographic' set. Set the value of parametername to the values in\
             value_array, which must have the same dimensions as the Population.
+
         :param parametername: the name of the parameter
         :param value_array: the array of values which must have the correct\
                 number of elements.

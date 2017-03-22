@@ -1,9 +1,10 @@
 import unittest
-from spynnaker.pyNN.models.neural_properties.synapse_dynamics \
-    .synapse_dynamics import SynapseDynamics
+# from spynnaker.pyNN.models.neural_properties.synapse_dynamics\
+#     .synapse_dynamics import SynapseDynamics
 
 
-class MyTestCase(unittest.TestCase):
+class TestSynapseDynamics(unittest.TestCase):
+
     @unittest.skip("Not implemented")
     def test_something(self):
         self.assertEqual(True, False, "Test not implemented yet")

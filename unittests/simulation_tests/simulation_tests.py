@@ -4,9 +4,10 @@ import spynnaker.pyNN as p
 
 
 class TestgetMinDelay(unittest.TestCase):
+
     def test_get_min_delay_0_1_milisecond_timestep(self):
         """
-        tests if with no user min, the min is set to 1 timestep in millisencsd
+        tests if with no user min, the min is set to 1 timestep in milliseconds
         :return:
         """
         p.setup(0.1)
@@ -24,7 +25,7 @@ class TestgetMinDelay(unittest.TestCase):
 
     def test_invalid_min_delay_1_millisecond_timestep(self):
         """
-         tests if with invalid user min, the min raises exefpetiosn
+         tests if with invalid user min, the min raises exceptions
         :return:
         """
         with self.assertRaises(ConfigurationException):
