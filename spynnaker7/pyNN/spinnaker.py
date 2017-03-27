@@ -1,17 +1,12 @@
 # common front end imports
 import logging
-import os
 
 from pyNN.random import RandomDistribution
 
-from spinn_front_end_common.utilities.utility_objs.executable_finder \
-    import ExecutableFinder
-from spynnaker.pyNN import model_binaries
 from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
 from spynnaker7.pyNN.utilities.conf import config
-
 from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
     RandomStatsScipyImpl
 from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
@@ -19,7 +14,6 @@ from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
 
 # global objects
 logger = logging.getLogger(__name__)
-executable_finder = ExecutableFinder()
 
 
 class Spinnaker(SpiNNakerCommon):
@@ -33,13 +27,12 @@ class Spinnaker(SpiNNakerCommon):
             n_chips_required=None):
         # Determine default executable folder location
         # and add this default to end of list of search paths
-        executable_finder.add_path(os.path.dirname(model_binaries.__file__))
 
         # population holders
         SpiNNakerCommon.__init__(
             self, config=config,
             database_socket_addresses=database_socket_addresses,
-            executable_finder=executable_finder, graph_label=graph_label,
+            graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
             hostname=host_name, max_delay=max_delay, min_delay=min_delay)
 

@@ -1,136 +1,78 @@
 import inspect as __inspect
+import logging as __logging
+import os as __os
 
-from ._version import __version__, __version_name__, __version_month__,\
-    __version_year__
-
-# main entrance
-from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
-
-# pynn centric classes
-from spynnaker.pyNN.spinnaker_common import executable_finder as __exec_finder
-from spynnaker.pyNN.utilities import globals_variables
-
-# notification protocol classes (stored in front end common)
-from spinn_front_end_common.utilities.notification_protocol. \
-    socket_address import SocketAddress as __SockAddr
-
-# front end common exceptions
-from spinn_front_end_common.utilities import exceptions as \
-    front_end_common_exceptions
-
-# neural models
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
-    import IFCondExpBase as IF_cond_exp
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base \
-    import IFCurrDualExpBase as IF_curr_dual_exp
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
-    import IFCurrExpBase as IF_curr_exp
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
-    import IzkCurrExpBase as IZK_curr_exp
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.builds.izk_cond_exp_base \
-    import IzkCondExpBase as IZK_cond_exp
-
-# neural projections
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections \
-    .delay_afferent_application_edge import DelayAfferentApplicationEdge
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
-    import DelayExtensionVertex
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neural_projections.projection_application_edge \
-    import ProjectionApplicationEdge
-
-# spike sources
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.spike_source.spike_source_poisson \
-    import SpikeSourcePoisson
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.spike_source.spike_source_array \
-    import SpikeSourceArray
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.spike_source.spike_source_from_file \
-    import SpikeSourceFromFile
-
-# connections
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.all_to_all_connector \
-    import AllToAllConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors. \
-    fixed_number_pre_connector import FixedNumberPreConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors. \
-    fixed_probability_connector import FixedProbabilityConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.from_list_connector import \
-    FromListConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.from_file_connector \
-    import FromFileConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.multapse_connector \
-    import MultapseConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.one_to_one_connector \
-    import OneToOneConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors. \
-    distance_dependent_probability_connector import \
-    DistanceDependentProbabilityConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors. \
-    fixed_number_post_connector import FixedNumberPostConnector
-# noinspection PyUnresolvedReferences
-from spynnaker7.pyNN.models.connectors.small_world_connector import \
-    SmallWorldConnector
-
-# Mechanisms for synapse dynamics
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
-    import PyNNSynapseDynamics as SynapseDynamics
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
-    import SynapseDynamicsSTDP as STDPMechanism
-
-# STDP weight dependences
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence \
-    .weight_dependence_additive \
-    import WeightDependenceAdditive as AdditiveWeightDependence
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence \
-    .weight_dependence_multiplicative \
-    import WeightDependenceMultiplicative as MultiplicativeWeightDependence
-
-# STDP timing dependences
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
-    .timing_dependence_spike_pair \
-    import TimingDependenceSpikePair as SpikePairRule
-# noinspection PyUnresolvedReferences
-from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
-    .timing_dependence_pfister_spike_triplet \
-    import TimingDependencePfisterSpikeTriplet as PfisterSpikeTripletRule
-
-# needed for unit tests
-from spynnaker.pyNN.utilities import utility_calls
+import numpy as __numpy
 
 import spynnaker7
-
-# note importing star is a bad thing to do.
 from pyNN.random import NumpyRNG, RandomDistribution
 from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
-import os as __os
-import numpy as __numpy
-
-import logging as __logging
+from spinn_front_end_common.utilities import exceptions as \
+    front_end_common_exceptions
+from spinn_front_end_common.utilities.notification_protocol. \
+    socket_address import SocketAddress as __SockAddr
+from spynnaker.pyNN.models.neural_projections \
+    .delay_afferent_application_edge import DelayAfferentApplicationEdge
+from spynnaker.pyNN.models.neural_projections.projection_application_edge \
+    import ProjectionApplicationEdge
+from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
+    import IFCondExpBase as IF_cond_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base \
+    import IFCurrDualExpBase as IF_curr_dual_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
+    import IFCurrExpBase as IF_curr_exp
+from spynnaker.pyNN.models.neuron.builds.izk_cond_exp_base \
+    import IzkCondExpBase as IZK_cond_exp
+from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
+    import IzkCurrExpBase as IZK_curr_exp
+from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
+    import PyNNSynapseDynamics as SynapseDynamics
+from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
+    import SynapseDynamicsSTDP as STDPMechanism
+from spynnaker.pyNN.models.spike_source.spike_source_array \
+    import SpikeSourceArray
+from spynnaker.pyNN.models.spike_source.spike_source_from_file \
+    import SpikeSourceFromFile
+from spynnaker.pyNN.models.spike_source.spike_source_poisson \
+    import SpikeSourcePoisson
+from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
+    import DelayExtensionVertex
+from spynnaker.pyNN.utilities import globals_variables
+from spynnaker.pyNN.utilities import utility_calls
+from spynnaker7.pyNN.models.connectors.all_to_all_connector \
+    import AllToAllConnector
+from spynnaker7.pyNN.models.connectors. \
+    distance_dependent_probability_connector import \
+    DistanceDependentProbabilityConnector
+from spynnaker7.pyNN.models.connectors. \
+    fixed_number_post_connector import FixedNumberPostConnector
+from spynnaker7.pyNN.models.connectors. \
+    fixed_number_pre_connector import FixedNumberPreConnector
+from spynnaker7.pyNN.models.connectors. \
+    fixed_probability_connector import FixedProbabilityConnector
+from spynnaker7.pyNN.models.connectors.from_file_connector \
+    import FromFileConnector
+from spynnaker7.pyNN.models.connectors.from_list_connector import \
+    FromListConnector
+from spynnaker7.pyNN.models.connectors.multapse_connector \
+    import MultapseConnector
+from spynnaker7.pyNN.models.connectors.one_to_one_connector \
+    import OneToOneConnector
+from spynnaker7.pyNN.models.connectors.small_world_connector import \
+    SmallWorldConnector
+from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
+    .timing_dependence_spike_pair \
+    import TimingDependenceSpikePair as SpikePairRule
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
+    weight_dependence_additive \
+    import WeightDependenceAdditive as AdditiveWeightDependence
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
+    .weight_dependence_multiplicative \
+    import WeightDependenceMultiplicative as MultiplicativeWeightDependence
+from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
+from ._version import __version__, __version_name__, __version_month__,\
+    __version_year__
 
 # traditional logger
 logger = __logging.getLogger(__name__)
@@ -163,14 +105,6 @@ __all__ = [
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
-
-
-def register_binary_search_path(search_path):
-    """ Registers an additional binary search path for executables
-
-    :param search_path: absolute search path for binaries
-    """
-    __exec_finder.add_path(search_path)
 
 
 def end():

@@ -31,8 +31,6 @@ class Projection(PyNNProjectionCommon):
             synapse_dynamics_stdp = SynapseDynamicsStatic()
         else:
             synapse_dynamics_stdp = synapse_dynamics.slow
-        postsynaptic_population._get_vertex.synapse_dynamics = \
-            synapse_dynamics_stdp
 
         PyNNProjectionCommon.__init__(
             self, spinnaker_control=spinnaker_control, connector=connector,
@@ -75,8 +73,7 @@ class Projection(PyNNProjectionCommon):
         :param list_format:
         :param gather:
         """
-        # TODO: Need to work out what is to be returned
-        raise NotImplementedError
+        return self.get(parameter_name, list_format, gather)
 
     # noinspection PyPep8Naming
     def getWeights(self, format='list', gather=True):  # @ReservedAssignment
@@ -92,12 +89,7 @@ class Projection(PyNNProjectionCommon):
         :param gather: gather the weights from stuff. currently has no meaning\
                 in spinnaker when set to false. Therefore is always true
         """
-        if not gather:
-            exceptions.ConfigurationException(
-                "the gather param has no meaning for spinnaker when set to "
-                "false")
-
-        return self._get_synaptic_data(format == 'list', "weight")
+        return self.get("weight", format, gather)
 
     # noinspection PyPep8Naming
     def getDelays(self, format='list', gather=True):  # @ReservedAssignment
@@ -108,12 +100,7 @@ class Projection(PyNNProjectionCommon):
         connections in the projection, a 2D delay array (with NaN for
         non-existent connections).
         """
-        if not gather:
-            exceptions.ConfigurationException(
-                "the gather param has no meaning for spinnaker when set to "
-                "false")
-
-        return self._get_synaptic_data(format == 'list', "delay")
+        return self.get("delay", format, gather)
 
     def __len__(self):
         """ Return the total number of local connections.
