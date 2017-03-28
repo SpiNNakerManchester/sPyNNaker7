@@ -30,7 +30,7 @@ class Spinnaker(SpiNNakerCommon):
 
         # population holders
         SpiNNakerCommon.__init__(
-            self, config=config,
+            self, config=config, config_default_name="spynnaker7.cfg",
             database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
