@@ -43,7 +43,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         internal_cellparams = dict(cellparams)
 
         # set spinnaker targeted parameters
-        internal_cellparams['label'] = self.create_label(label)
+        model_label = None
+        if 'label' in internal_cellparams:
+            model_label = internal_cellparams['label']
+        internal_cellparams['label'] = self.create_label(model_label, label)
         internal_cellparams['n_neurons'] = size
 
         # create population vertex.
