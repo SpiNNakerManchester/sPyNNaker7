@@ -2,13 +2,9 @@ language: python
 matrix:
   include:
     - python: "2.7"
-    - pytest
 
 virtualenv:
   system_site_packages: true
-
-env:
-  - READTHEDOCS=True
 
 cache: pip
 
@@ -31,17 +27,18 @@ install:
 
 before_script:
   - echo '[Machine]' > ~/.spynnaker.cfg
-  - echo "machineName = $SPINNAKER_BOARD_ADDRESS" >> ~/.spynnaker7.cfg
-  - echo "version = ${SPINNAKER_BOARD_VERSION:-5}" >> ~/.spynnaker7.cfg
-  - echo '[Database]' >> ~/.spynnaker7.cfg
-  - echo '[Simulation]' >> ~/.spynnaker7.cfg
-  - echo '[Buffers]' >> ~/.spynnaker7.cfg
+  - echo "machineName = $SPINNAKER_BOARD_ADDRESS" >> ~/.spynnaker.cfg
+  - echo "version = ${SPINNAKER_BOARD_VERSION:-5}" >> ~/.spynnaker.cfg
+  - echo '[Database]' >> ~/.spynnaker.cfg
+  - echo '[Simulation]' >> ~/.spynnaker.cfg
+  - echo '[Buffers]' >> ~/.spynnaker.cfg
 
 script:
   - py.test unittests
-  - flake8 examples spynnaker7 pyNN-spiNNaker-src
+  # Disabled until fixed on a branch
+  # - flake8 spynnaker7 pyNN-spiNNaker-src
   - flake8 unittests
-  # DISABLED BECAUSE THEY'RE JUST *SO* BROKEN!
+  # DISABLED BECAUSE THEY'RE GOING TO BE MOVED!
   # - flake8 integration_tests
   - cd doc/source
   - sphinx-build -T -E -b html -d _build/doctrees-readthedocsdirhtml -D language=en . _build/html
