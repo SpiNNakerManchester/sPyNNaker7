@@ -38,7 +38,8 @@ script:
   # - py.test unittests
   # Disabled until fixed on a branch
   # - flake8 spynnaker7 pyNN-spiNNaker-src
-  - flake8 unittests
+  # Disabled until fixed on a branch
+  # - flake8 unittests
   # DISABLED BECAUSE THEY'RE GOING TO BE MOVED!
   # - flake8 integration_tests
   # Disabled until fixed on a branch
