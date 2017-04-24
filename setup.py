@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 from collections import defaultdict
 
-exec(open("spynnaker/pyNN/_version.py").read())
+exec(open("spynnaker7/pyNN/_version.py").read())
 
 if os.environ.get('READTHEDOCS', None) == 'True':
     # scipy must be added in config.py as a mock
