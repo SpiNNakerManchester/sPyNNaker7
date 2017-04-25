@@ -8,7 +8,8 @@ if not pyNN:
 
 
 class TestIFCurrDualExpModel(unittest.TestCase):
-    @unittest.skip("unittests\models_tests\neuron_model_tests\test_izk_curr_exp_model "
+    @unittest.skip("unittests/models_tests/neuron_model_tests/"
+                   "test_izk_curr_exp_model "
                    "test_new_if_curr_dual_exp_model")
     def test_new_if_curr_dual_exp_model(self):
         cell_params_lif = {'cm': 0.25,

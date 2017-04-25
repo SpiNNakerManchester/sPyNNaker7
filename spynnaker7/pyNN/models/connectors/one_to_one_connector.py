@@ -4,6 +4,7 @@ from pyNN.random import RandomDistribution
 from spynnaker.pyNN.models.neural_projections.connectors\
     .one_to_one_connector import OneToOneConnector as CommonOneToOneConnector
 
+
 class OneToOneConnector(CommonOneToOneConnector):
     """
     Where the pre- and postsynaptic populations have the same size, connect
@@ -21,4 +22,3 @@ class OneToOneConnector(CommonOneToOneConnector):
             random_number_class=RandomDistribution)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
-

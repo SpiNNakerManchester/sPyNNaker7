@@ -40,6 +40,7 @@ from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
 from spynnaker.pyNN.utilities import globals_variables
 from spynnaker.pyNN.utilities import utility_calls
+from spynnaker.pyNN.utilities.failed_state import FailedState
 from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 from spynnaker7.pyNN.models.connectors. \
@@ -59,8 +60,6 @@ from spynnaker7.pyNN.models.connectors.multapse_connector \
     import MultapseConnector
 from spynnaker7.pyNN.models.connectors.one_to_one_connector \
     import OneToOneConnector
-from spynnaker7.pyNN.models.connectors.small_world_connector import \
-    SmallWorldConnector
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
@@ -115,7 +114,7 @@ def end():
     prints any data recorded using the low-level API
     """
     globals_variables.get_simulator().stop()
-    _spinnaker = None
+    # _spinnaker = None
 
 
 def get_spynnaker():

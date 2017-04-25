@@ -1,13 +1,6 @@
-from pacman.model.constraints.abstract_constraint \
-    import AbstractConstraint
-from pacman.model.constraints.placer_constraints \
-    .placer_chip_and_core_constraint import PlacerChipAndCoreConstraint
-
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
-from spynnaker.pyNN.models.neuron.input_types.input_type_conductance \
-    import InputTypeConductance
 from spynnaker.pyNN.utilities import globals_variables
 
 from pyNN import descriptions
@@ -333,7 +326,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         file_handle.write("# dimensions = [{}]\n".format(dimensions))
         file_handle.write("# last_id = {{}}\n".format(num_neurons - 1))
         file_handle = open(filename, "w")
-        #TODO will need adjusting when filters and views assemblies work
+        # TODO will need adjusting when filters and views assemblies work
         for (neuronId, time, value_e, _, _, value_i) in zip(
                 gsyn_exc, gsyn_inh):
             file_handle.write("{}\t{}\t{}\t{}\n".format(

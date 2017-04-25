@@ -2,7 +2,6 @@ from spynnaker.pyNN.models.neural_projections.connectors.from_list_connector\
     import FromListConnector as CommonFromListConnector
 from spynnaker.pyNN import exceptions
 import logging
-import numpy
 
 logger = logging.getLogger(__name__)
 

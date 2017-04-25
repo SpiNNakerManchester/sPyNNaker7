@@ -118,7 +118,8 @@ class TestPyNNPopulation(unittest.TestCase):
             self.assertEqual(default_params[param], boxed_defaults[param])
 
     @unittest.skip("unittests\models_tests\test_pynn_population "
-                   "test_get_default_parameters_of_if_curr_exp_no_instaniation")
+                   "test_get_default_parameters_of_if_"
+                   "curr_exp_no_instaniation")
     def test_get_default_parameters_of_if_curr_exp_no_instaniation(self):
         default_params = pyNN.IF_curr_exp.default_parameters
         boxed_defaults = \
