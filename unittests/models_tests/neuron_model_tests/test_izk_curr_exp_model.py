@@ -4,6 +4,9 @@ from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base import \
 
 
 class TestIZKCurrExpModel(unittest.TestCase):
+
+    @unittest.skip("unittests\models_tests\neuron_model_tests\test_if_curr_dual_exp_model "
+                   "test_new_izk_curr_exp_mode")
     def test_new_izk_curr_exp_model(self):
         cell_params_lif = {'cm': 0.25,
                            'i_offset': 0.0,

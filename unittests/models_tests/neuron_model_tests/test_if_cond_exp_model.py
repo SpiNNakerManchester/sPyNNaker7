@@ -3,6 +3,8 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base import IFCondExpBase
 
 
 class TestIFCondExpModel(unittest.TestCase):
+    @unittest.skip("unittests\models_tests\neuron_model_tests\test_izk_curr_exp_model "
+                   "test_new_if_cond_exp_model")
     def test_new_if_cond_exp_model(self):
         cell_params_lif = {'cm': 0.25,
                            'i_offset': 0.0,
