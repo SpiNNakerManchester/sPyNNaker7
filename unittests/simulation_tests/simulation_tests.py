@@ -1,6 +1,6 @@
 import unittest
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 
 class TestgetMinDelay(unittest.TestCase):
