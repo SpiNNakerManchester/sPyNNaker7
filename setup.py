@@ -6,11 +6,12 @@ exec(open("spynnaker7/pyNN/_version.py").read())
 
 if os.environ.get('READTHEDOCS', None) == 'True':
     # scipy must be added in config.py as a mock
-    install_requires = ['sPyNNaker >= 4.0.0, < 5.0.0',
+    # sPyNNaker has a fixed version to disinquish the one for the pynn split
+    install_requires = ['sPyNNaker == 1!4.0.0a3',
                         'pyNN >= 0.7, < 0.8',
                         'numpy', 'lxml', 'six', 'bitarray']
 else:
-    install_requires = ['sPyNNaker >= 4.0.0, < 5.0.0',
+    install_requires = ['sPyNNaker == 1!4.0.0a3',
                         'pyNN >= 0.7, < 0.8',
                         'numpy', 'scipy', 'lxml', 'six', 'bitarray']
 
