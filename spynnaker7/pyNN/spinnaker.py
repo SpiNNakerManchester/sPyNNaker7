@@ -1,6 +1,7 @@
 # common front end imports
 import logging
 
+from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
 
 from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
@@ -92,4 +93,30 @@ class Spinnaker(SpiNNakerCommon):
 
     @staticmethod
     def get_random_distribution():
+        """
+        Depricated use  is_a_pynn_random instead
+        """
         return RandomDistribution
+
+    @staticmethod
+    def  is_a_pynn_random(thing):
+        """
+        Checks if the thing is a pynn random
+
+        The exact definition of a pynn random can or could change between
+        pynn versions so can only be checked against a specific pynn version
+
+        :param thing: any object
+        :return: True if this object is a pynn random
+        :trype: bol
+        """
+        return isinstance(thing, RandomDistribution)
+
+    @staticmethod
+    def get_pynn_NumpyRNG():
+        """
+        get specfic PyNN version of NumpyRNG
+        :return: NumpyRNG
+        :rtype: NumpyRNG
+        """
+        return NumpyRNG()
