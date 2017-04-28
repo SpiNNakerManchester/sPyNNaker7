@@ -99,7 +99,7 @@ class Spinnaker(SpiNNakerCommon):
         return RandomDistribution
 
     @staticmethod
-    def  is_a_pynn_random(thing):
+    def is_a_pynn_random(thing):
         """
         Checks if the thing is a pynn random
 
