@@ -70,8 +70,10 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
-from ._version import __version__, __version_name__, __version_month__,\
-    __version_year__
+from spynnaker7._version import __version__  # NOQA
+from spynnaker7._version import __version_name__  # NOQA
+from spynnaker7._version import __version_month__  # NOQA
+from spynnaker7._version import __version_year__  # NOQA
 
 # traditional logger
 logger = __logging.getLogger(__name__)

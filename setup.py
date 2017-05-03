@@ -2,16 +2,24 @@ import os
 from setuptools import setup
 from collections import defaultdict
 
-exec(open("spynnaker7/pyNN/_version.py").read())
+__version__ = None
+exec(open("spynnaker7/_version.py").read())
+assert __version__
 
 if os.environ.get('READTHEDOCS', None) == 'True':
     # scipy must be added in config.py as a mock
     # sPyNNaker has a fixed version to disinquish the one for the pynn split
-    install_requires = ['sPyNNaker == 1!4.0.0a3',
+    install_requires = ['SpiNNUtilities >= 1!4.0.0a5, < 1!5.0.0',
+                        'SpiNNaker_PACMAN >= 1!4.0.0a5, < 1!5.0.0',
+                        'SpiNNFrontEndCommon >= 1!4.0.0a5, < 1!5.0.0',
+                        'sPyNNaker == 1!4.0.0a5',
                         'pyNN >= 0.7, < 0.8',
                         'numpy', 'lxml', 'six', 'bitarray']
 else:
-    install_requires = ['sPyNNaker == 1!4.0.0a3',
+    install_requires = ['SpiNNUtilities >= 1!4.0.0a5, < 1!5.0.0',
+                        'SpiNNaker_PACMAN >= 1!4.0.0a5, < 1!5.0.0',
+                        'SpiNNFrontEndCommon >= 1!4.0.0a5, < 1!5.0.0',
+                        'sPyNNaker == 1!4.0.0a5',
                         'pyNN >= 0.7, < 0.8',
                         'numpy', 'scipy', 'lxml', 'six', 'bitarray']
 
