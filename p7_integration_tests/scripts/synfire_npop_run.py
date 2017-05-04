@@ -4,7 +4,7 @@ Synfirechain-like example
 """
 import numpy
 
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 
 def do_run(nNeurons, n_pops, neurons_per_core, runtime=25000):

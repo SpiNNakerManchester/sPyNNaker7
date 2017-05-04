@@ -2,8 +2,8 @@ import os
 import sys
 import unittest
 
-import spynnaker.pyNN.utilities.conf as conf
-from spynnaker.pyNN.spinnaker import Spinnaker as Spinnaker
+import spynnaker7.pyNN.utilities.conf as conf
+from spynnaker7.pyNN.spinnaker import Spinnaker as Spinnaker
 
 
 class BaseTestCase(unittest.TestCase):

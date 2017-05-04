@@ -4,7 +4,7 @@ Synfirechain-like example
 """
 import unittest
 
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 from spynnaker.pyNN.exceptions import SynapticConfigurationException
 

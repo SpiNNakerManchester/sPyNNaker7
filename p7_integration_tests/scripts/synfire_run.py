@@ -1,13 +1,10 @@
 """
 Synfirechain-like example
 """
-try:
-    import pyNN.spiNNaker as p
-except Exception as e:
-    import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
-from spynnaker.pyNN.models.neuron.builds.if_curr_exp \
-    import IFCurrExp as IF_curr_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
+    import IFCurrExpBase as IF_curr_exp
 from spynnaker.pyNN.models.spike_source.spike_source_array import \
     SpikeSourceArray
 

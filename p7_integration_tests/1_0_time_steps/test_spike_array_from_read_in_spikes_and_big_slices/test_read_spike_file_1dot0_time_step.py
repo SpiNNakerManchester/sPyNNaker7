@@ -3,7 +3,7 @@ Synfirechain-like example
 """
 
 # spynnaker imports
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 # general imports
 from p7_integration_tests.base_test_case import BaseTestCase

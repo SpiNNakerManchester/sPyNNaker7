@@ -1,4 +1,4 @@
-import spynnaker.pyNN as pynn
+import spynnaker7.pyNN as pynn
 import numpy as np
 from pyNN.random import NumpyRNG, RandomDistribution
 

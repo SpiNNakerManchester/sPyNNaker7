@@ -3,7 +3,7 @@ Synfirechain-like example
 """
 
 # spynnaker imports
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 # general imports
 import os

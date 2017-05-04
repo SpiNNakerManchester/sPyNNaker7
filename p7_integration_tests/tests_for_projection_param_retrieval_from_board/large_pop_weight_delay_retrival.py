@@ -1,7 +1,7 @@
 import numpy
 
 from p7_integration_tests.base_test_case import BaseTestCase
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 n_neurons = 900
 

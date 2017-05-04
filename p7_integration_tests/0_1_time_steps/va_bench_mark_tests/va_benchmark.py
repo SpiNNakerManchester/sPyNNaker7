@@ -17,7 +17,7 @@ $Id:VAbenchmarks.py 5 2007-04-16 15:01:24Z davison $
 import socket
 import unittest
 from p7_integration_tests.base_test_case import BaseTestCase
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 from pyNN.random import NumpyRNG, RandomDistribution
 from pyNN.utility import Timer
 from spinnman.exceptions import SpinnmanTimeoutException

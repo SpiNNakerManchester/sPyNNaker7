@@ -4,7 +4,7 @@ Synfirechain-like example with 6 chains
 """
 
 from p7_integration_tests.base_test_case import BaseTestCase
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 
 def do_run(nNeurons):

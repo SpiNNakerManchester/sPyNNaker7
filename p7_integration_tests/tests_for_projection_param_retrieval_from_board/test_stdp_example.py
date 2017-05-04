@@ -31,7 +31,7 @@ Authors : Catherine Wacongne < catherine.waco@gmail.com >
 April 2013
 """
 
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 import unittest
 import spynnaker.plot_utils as plot_utils
 from p7_integration_tests.base_test_case import BaseTestCase

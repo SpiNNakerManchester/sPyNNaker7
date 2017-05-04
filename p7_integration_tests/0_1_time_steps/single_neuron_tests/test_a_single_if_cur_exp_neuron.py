@@ -7,10 +7,10 @@ import numpy
 import unittest
 
 from p7_integration_tests.base_test_case import BaseTestCase
-import spynnaker.pyNN as p
+import spynnaker7.pyNN as p
 
 from p7_integration_tests.scripts.synfire_run import TestRun
-from spynnaker.pyNN import SpikeSourcePoisson
+from spynnaker7.pyNN import SpikeSourcePoisson
 
 cell_params = {'cm': 0.25,
                'i_offset': 0.0,
