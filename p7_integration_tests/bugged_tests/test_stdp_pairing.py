@@ -1,6 +1,6 @@
 from p7_integration_tests.base_test_case import BaseTestCase
 
-import spynnaker.pyNN as sim
+import spynnaker7.pyNN as sim
 
 
 def do_run():
