@@ -327,7 +327,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         file_handle.write("# last_id = {{}}\n".format(num_neurons - 1))
         file_handle = open(filename, "w")
         # TODO will need adjusting when filters and views assemblies work
-        for (neuronId, time, value_e, _, _, value_i) in zip(
+        for ((neuronId, time, value_e), (_, _, value_i)) in zip(
                 gsyn_exc, gsyn_inh):
             file_handle.write("{}\t{}\t{}\t{}\n".format(
                 time, neuronId, value_e, value_i))
