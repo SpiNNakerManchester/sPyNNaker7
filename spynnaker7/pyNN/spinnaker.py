@@ -120,3 +120,25 @@ class Spinnaker(SpiNNakerCommon):
         :rtype: NumpyRNG
         """
         return NumpyRNG()
+
+    @staticmethod
+    def _set_config(new_config):
+        """
+        Backdoor method to change the config.
+
+        This method is only required until a proper global config exists.
+
+        Not recommend for use outside of testing!
+
+        Changes the static config used by the Spinnaker module
+        but will have an undettermined effect on other modules
+
+        Unless called again the new config will apply to all future instances.
+        :param new_config: Config to replace the static config
+        :type new_config: RawConfigParser
+        :rtype: None:
+        """
+        global config
+        config = new_config
+        logger.warn("Backdoor set_config called. "
+                    "This config will apply to all instance of Spinnaker")
