@@ -93,14 +93,14 @@ __all__ = [
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
     'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
-    'MultiplicativeWeightDependence', 'PfisterSpikeTripletRule',
+    'MultiplicativeWeightDependence',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
     # Stuff from pyNN.space
     'distance', 'Space', 'Line', 'Grid2D', 'Grid3D', 'Cuboid', 'Sphere',
     'RandomStructure',
     # Stuff that we define
-    'register_binary_search_path', 'end', 'setup', 'run', 'get_spynnaker',
+    'end', 'setup', 'run', 'get_spynnaker',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
     'register_database_notification_request', 'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
