@@ -25,7 +25,7 @@ class SynfireIfCurrExp(BaseTestCase):
         spikes = synfire_run.get_output_pop_spikes()
 
         self.assertIsNone(gsyn)
-        self.assertIsNone(v)
+        self.assertIsNotNone(v)
         self.assertIsNone(spikes)
 
 
