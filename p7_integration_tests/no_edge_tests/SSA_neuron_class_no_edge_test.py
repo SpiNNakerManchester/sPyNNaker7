@@ -1,5 +1,5 @@
 import unittest
-import spynnaker.pyNN as sim
+import spynnaker7.pyNN as sim
 from p7_integration_tests.base_test_case import BaseTestCase
 
 
