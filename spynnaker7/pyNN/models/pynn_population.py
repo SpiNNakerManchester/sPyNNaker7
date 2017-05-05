@@ -367,9 +367,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
         self.set(parametername, rand_distr)
 
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
-
     def sample(self, n, rng=None):
         """ Return a random selection of neurons from a population in the form\
             of a population view
@@ -410,9 +407,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                 "the size of the population. Please change this and try "
                 "again, or alternatively, use set()")
         self.set(parametername, value_array)
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
 
     def _end(self):
         """ Do final steps at the end of the simulation
