@@ -1,6 +1,6 @@
 import unittest
 
-import p7_integration_tests.buffer_manager.poission_with_recording.\
+import p7_integration_tests.test_buffer_manager.poission_with_recording.\
     pynnBrunnelPlot as pblt
 
 from p7_integration_tests.base_test_case import BaseTestCase
