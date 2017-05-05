@@ -4,7 +4,7 @@ Synfirechain-like example
 from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
 import spynnaker7.pyNN as p
 from spinnman.exceptions import SpinnmanTimeoutException
-from fake_if_curr import FakeIFCurrExp
+from p7_integration_tests.scripts.fake_if_curr import FakeIFCurrExp
 from p7_integration_tests.base_test_case import BaseTestCase
 
 import os
