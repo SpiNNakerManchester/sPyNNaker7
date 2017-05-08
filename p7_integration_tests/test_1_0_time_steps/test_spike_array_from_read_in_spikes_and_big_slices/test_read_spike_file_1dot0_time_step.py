@@ -107,7 +107,8 @@ class TestReadingSpikeArrayDataAndBigSlices(BaseTestCase):
         """
         try:
             spikes = do_run()
-            self.assertEqual(8588, len(spikes))
+            self.assertLess(8400, len(spikes))
+            self.assertGreater(8800, len(spikes))
         except SpinnmanTimeoutException as ex:
             # System intentional overload so may error
             raise SkipTest(ex)
