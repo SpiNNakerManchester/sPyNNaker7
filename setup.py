@@ -6,15 +6,6 @@ __version__ = None
 exec(open("spynnaker7/_version.py").read())
 assert __version__
 
-if os.environ.get('READTHEDOCS', None) == 'True':
-    # scipy must be added in config.py as a mock
-    # sPyNNaker has a fixed version to disinquish the one for the pynn split
-    install_requires = ['sPyNNaker >= 1!4.0.0a5, < 1!5.0.0',
-                        'pyNN >= 0.7, < 0.8']
-else:
-    install_requires = ['sPyNNaker >= 1!4.0.0a5, < 1!5.0.0',
-                        'pyNN >= 0.7, < 0.8']
-
 # Build a list of all project modules, as well as supplementary files
 main_package = "spynnaker7"
 data_extensions = {".aplx", ".xml", ".json", ".xsd"}
@@ -47,5 +38,7 @@ setup(
     url="https://github.com/SpiNNakerManchester/SpyNNaker7",
     packages=packages,
     package_data=package_data,
-    install_requires=install_requires
+    install_requires=[
+        'sPyNNaker >= 1!4.0.0a5, < 1!5.0.0',
+        'pyNN >= 0.7, < 0.8']
 )
