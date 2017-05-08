@@ -34,7 +34,7 @@ class TestPrintGsyn(BaseTestCase):
         spikes = synfire_run.get_output_pop_spikes()
         gsyn = synfire_run.get_output_pop_gsyn()
 
-        self.assertEquals(56, len(spikes))
+        self.assertEquals(12, len(spikes))
         spike_checker.synfire_spike_checker(spikes, n_neurons)
         gsyn_tools.check_path_gysn(gsyn_path, n_neurons, runtime, gsyn)
         os.remove(gsyn_path)
