@@ -11,9 +11,9 @@ class DistanceDependentProbabilityConnector(
     """
 
     def __init__(
-            self, d_expression, allow_self_connections=True, space=Space(),
-            safe=True, verbose=False, n_connections=None, weights=0.0,
-            delays=1):
+            self, d_expression, weights=0.0, delays=1,
+            allow_self_connections=True, space=Space(),
+            safe=True, verbose=False, n_connections=None):
         """
 
         :param `string` d_expression:

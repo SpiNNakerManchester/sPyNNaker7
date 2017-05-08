@@ -13,8 +13,8 @@ class OneToOneConnector(CommonOneToOneConnector):
     """
 
     def __init__(
-            self, space=Space(), safe=True, verbose=False, weights=0.0,
-            delays=1):
+            self, weights=0.0, delays=1, space=Space(), safe=True,
+            verbose=False):
         """
         """
         CommonOneToOneConnector.__init__(

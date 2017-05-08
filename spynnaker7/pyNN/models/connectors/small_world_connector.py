@@ -8,9 +8,9 @@ from spynnaker.pyNN.models.neural_projections.connectors\
 class SmallWorldConnector(CommonSmallWorldConnector):
 
     def __init__(
-            self, degree, rewiring, allow_self_connections=True, space=Space(),
-            safe=True, verbose=False, n_connections=None, weights=0.0,
-            delays=1):
+            self, degree, rewiring, weights=0.0,
+            delays=1, allow_self_connections=True, space=Space(),
+            safe=True, verbose=False, n_connections=None):
         CommonSmallWorldConnector.__init__(
             self, degree=degree, rewiring=rewiring,
             allow_self_connections=allow_self_connections, safe=safe,
