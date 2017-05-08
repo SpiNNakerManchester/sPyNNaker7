@@ -13,8 +13,6 @@ import unittest
 
 class ProvenanceWhenNotFinishedTest(BaseTestCase):
 
-    @unittest.skip("BROKEN SINCE SPLIT! p7_integration_tests/no_edge_tests/"
-                   "SSA_neuron_class_no_edge_test.py")
     def test_tun(self):
         with self.assertRaises(SpinnmanTimeoutException):
             p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
