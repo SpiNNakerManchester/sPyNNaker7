@@ -1,8 +1,8 @@
 import spynnaker7.pyNN as p
-from matplotlib import pylab
+from p7_integration_tests.base_test_case import BaseTestCase
 
-# TODO unittest
-if __name__ == '__main__':
+
+def do_run():
     p.setup(1.0)
 
     # p.set_number_of_neurons_per_core(p.SpikeSourcePoisson, 27)
@@ -24,14 +24,8 @@ if __name__ == '__main__':
 
     p.run(100)
 
-    pop_spikes = pop.getSpikes()
-    inp_spikes = inp.getSpikes()
-
-    pylab.subplot(2, 1, 1)
-    pylab.plot(inp_spikes[:, 1], inp_spikes[:, 0], "r.")
-    pylab.subplot(2, 1, 2)
-    pylab.plot(pop_spikes[:, 1], pop_spikes[:, 0], "b.")
-    pylab.show()
+    pop_spikes1 = pop.getSpikes()
+    inp_spikes1 = inp.getSpikes()
 
     p.reset()
 
@@ -41,13 +35,34 @@ if __name__ == '__main__':
 
     p.run(100)
 
-    pop_spikes = pop.getSpikes()
-    inp_spikes = inp.getSpikes()
-
-    pylab.subplot(2, 1, 1)
-    pylab.plot(inp_spikes[:, 1], inp_spikes[:, 0], "r.")
-    pylab.subplot(2, 1, 2)
-    pylab.plot(pop_spikes[:, 1], pop_spikes[:, 0], "b.")
-    pylab.show()
+    pop_spikes2 = pop.getSpikes()
+    inp_spikes2 = inp.getSpikes()
 
     p.end()
+
+    return (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2)
+
+
+def plot_spikes(pop_spikes, inp_spikes):
+    try:
+        from matplotlib import pylab
+        pylab.subplot(2, 1, 1)
+        pylab.plot(inp_spikes[:, 1], inp_spikes[:, 0], "r.")
+        pylab.subplot(2, 1, 2)
+        pylab.plot(pop_spikes[:, 1], pop_spikes[:, 0], "b.")
+        pylab.show()
+    except:
+        print "matplotlib not installed so plotting skipped"
+
+
+class TestChangeParameter(BaseTestCase):
+    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
+    # print len()
+    # print len()
+    # print len()
+    # print len()
+
+if __name__ == '__main__':
+    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
+    plot_spikes(pop_spikes1, inp_spikes1)
+    plot_spikes(pop_spikes2, inp_spikes2)
