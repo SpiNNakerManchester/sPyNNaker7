@@ -13,9 +13,9 @@ class FixedProbabilityConnector(
     """
 
     def __init__(
-            self, p_connect,
-            allow_self_connections=True, safe=True, space=Space(),
-            verbose=False, weights=0.0, delays=1):
+            self, p_connect, weights=0.0, delays=1,
+            allow_self_connections=True, space=Space(), safe=True,
+            verbose=False):
         """ For each pair of pre-post cells, the connection probability is
          constant.
 

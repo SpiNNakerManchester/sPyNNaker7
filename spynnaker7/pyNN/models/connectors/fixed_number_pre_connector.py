@@ -17,7 +17,7 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
     """
 
     def __init__(
-            self, n, allow_self_connections=True, weights=0.0, delays=1,
+            self, n, weights=0.0, delays=1, allow_self_connections=True,
             space=Space(), safe=True, verbose=False):
         """
         :param n:
@@ -42,6 +42,6 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
 
         CommonFixedNumberPreConnector.__init__(
             self, n=n, safe=safe,
-            allow_self_connections=allow_self_connections,  verbose=verbose)
+            allow_self_connections=allow_self_connections, verbose=verbose)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)

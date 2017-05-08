@@ -18,8 +18,8 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
     """
 
     def __init__(
-            self, n, allow_self_connections=True,
-            space=Space(), safe=True, verbose=False, weights=0.0, delays=1):
+            self, n, weights=0.0, delays=1, allow_self_connections=True,
+            space=Space(), safe=True, verbose=False):
         """
 
         :param n: number of random post-synaptic neurons connected to output
