@@ -34,6 +34,7 @@ class TestPrintGsyn(BaseTestCase):
                                neurons_per_core=neurons_per_core, delay=delay,
                                run_times=[runtime], gsyn_path=gsyn_path)
             spikes = synfire_run.get_output_pop_spikes()
+            g_syn = synfire_run.get_output_pop_gsyn()
             # no check of spikes length as the system overloads
             spike_checker.synfire_spike_checker(spikes, n_neurons)
             # compares to own printout so ok
