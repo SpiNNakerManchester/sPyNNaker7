@@ -2,17 +2,9 @@ import os
 from setuptools import setup
 from collections import defaultdict
 
-exec(open("spynnaker7/pyNN/_version.py").read())
-
-if os.environ.get('READTHEDOCS', None) == 'True':
-    # scipy must be added in config.py as a mock
-    install_requires = ['sPyNNaker >= 3.0.0, < 4.0.0',
-                        'pyNN >= 0.7, < 0.8',
-                        'numpy', 'lxml', 'six', 'bitarray']
-else:
-    install_requires = ['sPyNNaker >= 3.0.0, < 4.0.0',
-                        'pyNN >= 0.7, < 0.8',
-                        'numpy', 'scipy', 'lxml', 'six', 'bitarray']
+__version__ = None
+exec(open("spynnaker7/_version.py").read())
+assert __version__
 
 # Build a list of all project modules, as well as supplementary files
 main_package = "spynnaker7"
@@ -46,5 +38,7 @@ setup(
     url="https://github.com/SpiNNakerManchester/SpyNNaker7",
     packages=packages,
     package_data=package_data,
-    install_requires=install_requires
+    install_requires=[
+        'sPyNNaker >= 1!4.0.0a5, < 1!5.0.0',
+        'pyNN >= 0.7, < 0.8']
 )

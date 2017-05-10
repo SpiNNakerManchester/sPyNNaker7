@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import unittest
 import spinn_front_end_common.utilities.exceptions as exc
-import spynnaker.pyNN as pyNN
-from spynnaker.pyNN.models.pynn_projection import Projection
+import spynnaker7.pyNN as pyNN
+from spynnaker7.pyNN.models.pynn_projection import Projection
 
 projections = list()
 populations = list()

@@ -1,6 +1,4 @@
 import unittest
-from spynnaker.pyNN.models.neural_projections.projection_machine_edge \
-    import ProjectionMachineEdge
 
 
 class MyTestCase(unittest.TestCase):

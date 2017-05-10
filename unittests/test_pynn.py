@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import unittest
 
-import spynnaker.pyNN.utilities.conf as conf
+import spynnaker7.pyNN as pynn
+import spynnaker7.pyNN.utilities.conf as conf
 
 
 class TestPyNNSetup(unittest.TestCase):
 
     def test_initial_setup(self):
-        import spynnaker.pyNN as pynn
         self.assertEqual(pynn.setup(timestep=1, min_delay=1, max_delay=15.0),
                          0)
         try:

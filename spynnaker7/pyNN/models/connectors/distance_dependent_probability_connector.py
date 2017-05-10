@@ -1,7 +1,7 @@
 from spynnaker.pyNN.models.neural_projections.connectors. \
     distance_dependent_probability_connector import \
     DistanceDependentProbabilityConnector as \
-        CommonDistanceDependentProbabilityConnector
+    CommonDistanceDependentProbabilityConnector
 from pyNN.space import Space
 
 
@@ -11,9 +11,9 @@ class DistanceDependentProbabilityConnector(
     """
 
     def __init__(
-            self, d_expression, allow_self_connections=True, space=Space(),
-            safe=True, verbose=False, n_connections=None, weights=0.0,
-            delays=1):
+            self, d_expression, weights=0.0, delays=1,
+            allow_self_connections=True, space=Space(),
+            safe=True, verbose=False, n_connections=None):
         """
 
         :param `string` d_expression:
@@ -47,4 +47,3 @@ class DistanceDependentProbabilityConnector(
             verbose=verbose, n_connections=n_connections)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
-

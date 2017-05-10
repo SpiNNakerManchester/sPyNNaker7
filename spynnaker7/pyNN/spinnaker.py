@@ -1,6 +1,7 @@
 # common front end imports
 import logging
 
+from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
 
 from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
@@ -92,4 +93,52 @@ class Spinnaker(SpiNNakerCommon):
 
     @staticmethod
     def get_random_distribution():
+        """
+        Depricated use  is_a_pynn_random instead
+        """
         return RandomDistribution
+
+    @staticmethod
+    def is_a_pynn_random(thing):
+        """
+        Checks if the thing is a pynn random
+
+        The exact definition of a pynn random can or could change between
+        pynn versions so can only be checked against a specific pynn version
+
+        :param thing: any object
+        :return: True if this object is a pynn random
+        :trype: bol
+        """
+        return isinstance(thing, RandomDistribution)
+
+    @staticmethod
+    def get_pynn_NumpyRNG():
+        """
+        get specfic PyNN version of NumpyRNG
+        :return: NumpyRNG
+        :rtype: NumpyRNG
+        """
+        return NumpyRNG()
+
+    @staticmethod
+    def _set_config(new_config):
+        """
+        Backdoor method to change the config.
+
+        This method is only required until a proper global config exists.
+
+        Not recommend for use outside of testing!
+
+        Changes the static config used by the Spinnaker module
+        but will have an undettermined effect on other modules
+
+        Unless called again the new config will apply to all future instances.
+        :param new_config: Config to replace the static config
+        :type new_config: RawConfigParser
+        :rtype: None:
+        """
+        global config
+        config = new_config
+        logger.warn("Backdoor set_config called. "
+                    "This config will apply to all instance of Spinnaker")

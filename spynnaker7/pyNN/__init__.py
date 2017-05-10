@@ -40,6 +40,7 @@ from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
 from spynnaker.pyNN.utilities import globals_variables
 from spynnaker.pyNN.utilities import utility_calls
+from spynnaker.pyNN.utilities.failed_state import FailedState
 from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 from spynnaker7.pyNN.models.connectors. \
@@ -59,8 +60,6 @@ from spynnaker7.pyNN.models.connectors.multapse_connector \
     import MultapseConnector
 from spynnaker7.pyNN.models.connectors.one_to_one_connector \
     import OneToOneConnector
-from spynnaker7.pyNN.models.connectors.small_world_connector import \
-    SmallWorldConnector
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
@@ -71,8 +70,10 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
-from ._version import __version__, __version_name__, __version_month__,\
-    __version_year__
+from spynnaker7._version import __version__  # NOQA
+from spynnaker7._version import __version_name__  # NOQA
+from spynnaker7._version import __version_month__  # NOQA
+from spynnaker7._version import __version_year__  # NOQA
 
 # traditional logger
 logger = __logging.getLogger(__name__)
@@ -92,14 +93,14 @@ __all__ = [
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
     'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
-    'MultiplicativeWeightDependence', 'PfisterSpikeTripletRule',
+    'MultiplicativeWeightDependence',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
     # Stuff from pyNN.space
     'distance', 'Space', 'Line', 'Grid2D', 'Grid3D', 'Cuboid', 'Sphere',
     'RandomStructure',
     # Stuff that we define
-    'register_binary_search_path', 'end', 'setup', 'run', 'get_spynnaker',
+    'end', 'setup', 'run', 'get_spynnaker',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
     'register_database_notification_request', 'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
@@ -115,7 +116,7 @@ def end():
     prints any data recorded using the low-level API
     """
     globals_variables.get_simulator().stop()
-    _spinnaker = None
+    # _spinnaker = None
 
 
 def get_spynnaker():

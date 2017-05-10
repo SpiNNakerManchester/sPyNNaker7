@@ -1,13 +1,16 @@
 import unittest
 from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base import \
     IFCurrDualExpBase
-import spynnaker.pyNN as pyNN
+import spynnaker7.pyNN as pyNN
 
 if not pyNN:
     pyNN.setup(1, 1, 15)
 
 
 class TestIFCurrDualExpModel(unittest.TestCase):
+    @unittest.skip("unittests/models_tests/neuron_model_tests/"
+                   "test_izk_curr_exp_model "
+                   "test_new_if_curr_dual_exp_model")
     def test_new_if_curr_dual_exp_model(self):
         cell_params_lif = {'cm': 0.25,
                            'i_offset': 0.0,

@@ -1,13 +1,6 @@
-from pacman.model.constraints.abstract_constraint \
-    import AbstractConstraint
-from pacman.model.constraints.placer_constraints \
-    .placer_chip_and_core_constraint import PlacerChipAndCoreConstraint
-
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
-from spynnaker.pyNN.models.neuron.input_types.input_type_conductance \
-    import InputTypeConductance
 from spynnaker.pyNN.utilities import globals_variables
 
 from pyNN import descriptions
@@ -96,7 +89,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return descriptions.render(engine, template, context)
 
     # noinspection PyPep8Naming
-    def getSpikes(self, compatible_output=False, gather=True):
+    def getSpikes(self, compatible_output=True, gather=True):
         """
         Return a 2-column numpy array containing cell ids and spike times for\
         recorded cells.
@@ -117,7 +110,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return n_spikes
 
     # noinspection PyUnusedLocal
-    def get_gsyn(self, gather=True, compatible_output=False):
+    def get_gsyn(self, gather=True, compatible_output=True):
         """
         Return a 3-column numpy array containing cell ids, time and synaptic\
         conductances for recorded cells.
@@ -138,7 +131,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return numpy.delete(merged, [3, 4], 1)
 
     # noinspection PyUnusedLocal
-    def get_v(self, gather=True, compatible_output=False):
+    def get_v(self, gather=True, compatible_output=True):
         """
         Return a 3-column numpy array containing cell ids, time, and V_m for\
         recorded cells.
@@ -161,12 +154,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
         if not gather:
             logger.warn(
-                "Spynnaker 0.7 only supports gather = true, will  execute "
+                "Spynnaker 0.7 only supports gather = True, will  execute "
                 "as if gather was true anyhow")
 
-        if compatible_output:
+        if not compatible_output:
             logger.warn(
-                "Spynnaker 0.7 only supports compatible_output = false, will"
+                "Spynnaker 0.7 only supports compatible_output = True, will"
                 " execute as if compatible_output was false anyhow")
 
     @staticmethod
@@ -333,8 +326,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         file_handle.write("# dimensions = [{}]\n".format(dimensions))
         file_handle.write("# last_id = {{}}\n".format(num_neurons - 1))
         file_handle = open(filename, "w")
-        #TODO will need adjusting when filters and views assemblies work
-        for (neuronId, time, value_e, _, _, value_i) in zip(
+        # TODO will need adjusting when filters and views assemblies work
+        for ((neuronId, time, value_e), (_, _, value_i)) in zip(
                 gsyn_exc, gsyn_inh):
             file_handle.write("{}\t{}\t{}\t{}\n".format(
                 time, neuronId, value_e, value_i))
@@ -373,9 +366,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                      to
         """
         self.set(parametername, rand_distr)
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
 
     def sample(self, n, rng=None):
         """ Return a random selection of neurons from a population in the form\
@@ -417,9 +407,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                 "the size of the population. Please change this and try "
                 "again, or alternatively, use set()")
         self.set(parametername, value_array)
-
-        # state that something has changed in the population,
-        self._change_requires_mapping = True
 
     def _end(self):
         """ Do final steps at the end of the simulation

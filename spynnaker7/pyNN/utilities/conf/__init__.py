@@ -19,6 +19,7 @@ from spynnaker7.pyNN.utilities.conf import log
 
 from spinn_front_end_common.utilities import exceptions
 
+
 def _install_cfg(filename):
     template_cfg = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                                 "{}.template".format(filename))
@@ -62,9 +63,8 @@ def _load_config(filename, config_parsers=[]):
 
     if len(located_spynnaker) == 0:
         raise exceptions.ConfigurationException(
-            "You need to have at least one spynnaker.cfg file located in one of"
-            " the following locations: {}".format(spynnaker_others))
-
+            "You need to have at least one spynnaker.cfg file located in one "
+            "of the following locations: {}".format(spynnaker_others))
 
     with open(default) as f:
         config.readfp(f)
@@ -111,6 +111,25 @@ def _logging_parser(config):
     except ConfigParser.NoOptionError:
         pass
     return None
+
+
+def load_config():
+    """
+    Reloads the config.
+
+    Warning until a global config exists this will not affect the config of
+    already imported modules
+
+    Will read in the config based on the current path.
+
+    Warning: Should only be used for testing as which configs will and
+    will not be effected is uncertain.
+
+    :return:
+    :rytpe RawConfigParser
+    """
+    return _load_config("spynnaker.cfg", [("Machine", _machine_spec_parser),
+                                          ("Logging", _logging_parser)])
 
 
 # Create a config, read global defaults and then read in additional files
