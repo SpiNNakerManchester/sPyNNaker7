@@ -79,7 +79,7 @@ def do_run():
     # Simulate using both simulators
     synfire_run.do_run(
         n_neurons=1, input_class=SpikeSourcePoisson, rate=noise_rate,
-        start_time=0, duration=simtime, use_loop_connections=False,
+        start_time=0, duration=simtime, use_spike_connections=False,
         cell_params=cell_params, run_times=[simtime], record=True,
         record_v=True, randomise_v_init=True, record_input_spikes=True,
         weight_to_spike=0.4)

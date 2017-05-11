@@ -30,11 +30,12 @@ class TestRun(object):
             placement_constraint=None, weight_to_spike=2.0, delay=17,
             neurons_per_core=10, cell_class=IF_curr_exp, constraint=None,
             cell_params=CELL_PARAMS_LIF, run_times=None, reset=False,
-            extract_between_runs=True, new_pop=False,
+            extract_between_runs=True, set_between_runs=None, new_pop=False,
             record_input_spikes=False, record=True, get_spikes=None,
             spike_path=None, record_v=True, get_v=None, v_path=None,
             record_gsyn=True, get_gsyn=None, gsyn_path=None,
-            use_loop_connections=True, get_weights=False, get_delays=False,
+            use_spike_connections=True, use_wrap_around_connections=True,
+            get_weights=False, get_delays=False,
             end_before_print=False, randomise_v_init=False):
         """
 
@@ -85,6 +86,14 @@ class TestRun(object):
         :param extract_between_runs: If True reads V, gysn and spikes
             between each run.
         :type extract_between_runs: bool
+        :param set_between_runs set instuctions to be carried out between runs.
+            Should be a list of tuples.
+            First element of each tuple is 0 or 1
+                0 for main population
+                1 for input polulation
+            Second element a String for name of peroperty to change
+            Third element the new value
+        :type set_between_runs: List[(int, String, any)]
         :param new_pop: If True will add a new population before the second run
         :type new_pop: bool
         :param record_input_spikes: check for recording input spikes
@@ -126,13 +135,22 @@ class TestRun(object):
         :type end_before_print: bool
         :param randomise_v_init: randomises the v_init of the output pop.
         :type randomise_v_init: bool
-        :param use_loop_connections: True will put looping connections in.
-            falswont
-        :type use_loop_connections: bool
+        :param use_spike_connections: Will put the spike connections in
+        :type use_spike_connections: bool
+        :param use_wrap_around_connections: Will also put in a connector from
+            the last spike neuron back to the first
+            Note: Has no effect if use_spike_connections == False
+        :type use_wrap_around_connections: bool
         """
 
         if run_times is None:
             run_times = [1000]
+
+        if set_between_runs is None:
+            set_between_runs = []
+
+        if len(set_between_runs) > 0 and len(run_times) != 2:
+            raise Exception("set_between_runs requires exactly 2 run times")
 
         if spike_times is None:
             spike_times = [[0]]
@@ -154,10 +172,15 @@ class TestRun(object):
         projections = list()
 
         loop_connections = list()
-        for i in range(0, n_neurons):
-            single_connection = \
-                (i, ((i + 1) % n_neurons), weight_to_spike, delay)
-            loop_connections.append(single_connection)
+        if use_wrap_around_connections:
+            for i in range(0, n_neurons):
+                single_connection = \
+                    (i, ((i + 1) % n_neurons), weight_to_spike, delay)
+                loop_connections.append(single_connection)
+        else:
+            for i in range(0, n_neurons - 1):
+                single_connection = (i, i + 1, weight_to_spike, delay)
+                loop_connections.append(single_connection)
 
         injection_connection = [(0, 0, weight_to_spike, 1)]
 
@@ -192,7 +215,7 @@ class TestRun(object):
                 label='inputSSP_1'))
 
         # handle projections
-        if use_loop_connections:
+        if use_spike_connections:
             projections.append(p.Projection(populations[0], populations[0],
                                p.FromListConnector(loop_connections)))
 
@@ -238,6 +261,12 @@ class TestRun(object):
 
             if spike_times_list is not None:
                 populations[1].tset("spike_times", spike_times_list[run_count])
+
+            for (pop, name, value) in set_between_runs:
+                if pop == 0:
+                    populations[0].set(name, value)
+                else:
+                    populations[1].set(name, value)
 
             if reset:
                 p.reset()

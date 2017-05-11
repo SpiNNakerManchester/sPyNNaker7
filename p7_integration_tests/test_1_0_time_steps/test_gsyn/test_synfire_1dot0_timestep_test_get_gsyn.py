@@ -39,7 +39,6 @@ if __name__ == '__main__':
     gsyn = synfire_run.get_output_pop_gsyn()
     v = synfire_run.get_output_pop_voltage()
     spikes = synfire_run.get_output_pop_spikes()
-    print len(spikes)
     plot_utils.plot_spikes(spikes)
     plot_utils.heat_plot(v)
     plot_utils.heat_plot(gsyn)
