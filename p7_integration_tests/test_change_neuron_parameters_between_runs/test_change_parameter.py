@@ -45,7 +45,7 @@ def do_run():
 
 def plot_spikes(pop_spikes, inp_spikes):
     try:
-        from matplotlib import pylab
+        import pylab  # deferred so unittest are not dependent on it
         pylab.subplot(2, 1, 1)
         pylab.plot(inp_spikes[:, 1], inp_spikes[:, 0], "r.")
         pylab.subplot(2, 1, 2)
@@ -56,11 +56,16 @@ def plot_spikes(pop_spikes, inp_spikes):
 
 
 class TestChangeParameter(BaseTestCase):
-    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
-    # print len()
-    # print len()
-    # print len()
-    # print len()
+
+    def test_run(self):
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
+        self.assertLess(1100, len(pop_spikes1))
+        self.assertGreater(1300, len(pop_spikes1))
+        self.assertLess(1100, len(inp_spikes1))
+        self.assertGreater(1300, len(inp_spikes1))
+        self.assertLess(450, len(pop_spikes2))
+        self.assertGreater(600, len(pop_spikes2))
+        self.assertEqual(0, len(inp_spikes2))
 
 if __name__ == '__main__':
     (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
