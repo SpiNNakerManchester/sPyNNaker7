@@ -2,7 +2,7 @@ import unittest
 
 from p7_integration_tests.base_test_case import BaseTestCase
 
-import spynnaker.pyNN as sim
+import spynnaker7.pyNN as sim
 import spynnaker.plot_utils as plot_utils
 
 
@@ -32,11 +32,7 @@ def do_run():
 
 
 class TestPoisson(BaseTestCase):
-    # Raises SpinnmanException: 2 cores have reached an error state
-    # CPUState.RUN_TIME_EXCEPTION:
-    # See prior_integration_tests/bugged_tests/test_poisson.py
-    @unittest.skip("Skipping bugged_tests/test_poisson.py")
-    def test_run(self):
+     def test_run(self):
         (spikes1, spikes2) = do_run()
         self.assertLess(10, len(spikes1))
         self.assertGreater(25, len(spikes1))
@@ -46,4 +42,8 @@ class TestPoisson(BaseTestCase):
 
 if __name__ == '__main__':
     (spikes1, spikes2) = do_run()
-    plot_utils.plot_spikes(spikes1, spikes2)
+    print (len(spikes1))
+    print (spikes1)
+    print (len(spikes2))
+    print (spikes2)
+    plot_utils.plot_spikes([spikes1, spikes2])
