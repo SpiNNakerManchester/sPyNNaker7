@@ -89,7 +89,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return descriptions.render(engine, template, context)
 
     # noinspection PyPep8Naming
-    def getSpikes(self, compatible_output=False, gather=True):
+    def getSpikes(self, compatible_output=True, gather=True):
         """
         Return a 2-column numpy array containing cell ids and spike times for\
         recorded cells.
@@ -110,7 +110,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return n_spikes
 
     # noinspection PyUnusedLocal
-    def get_gsyn(self, gather=True, compatible_output=False):
+    def get_gsyn(self, gather=True, compatible_output=True):
         """
         Return a 3-column numpy array containing cell ids, time and synaptic\
         conductances for recorded cells.
@@ -131,7 +131,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         return numpy.delete(merged, [3, 4], 1)
 
     # noinspection PyUnusedLocal
-    def get_v(self, gather=True, compatible_output=False):
+    def get_v(self, gather=True, compatible_output=True):
         """
         Return a 3-column numpy array containing cell ids, time, and V_m for\
         recorded cells.
@@ -154,12 +154,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
         if not gather:
             logger.warn(
-                "Spynnaker 0.7 only supports gather = true, will  execute "
+                "Spynnaker 0.7 only supports gather = True, will  execute "
                 "as if gather was true anyhow")
 
-        if compatible_output:
+        if not compatible_output:
             logger.warn(
-                "Spynnaker 0.7 only supports compatible_output = false, will"
+                "Spynnaker 0.7 only supports compatible_output = True, will"
                 " execute as if compatible_output was false anyhow")
 
     @staticmethod
