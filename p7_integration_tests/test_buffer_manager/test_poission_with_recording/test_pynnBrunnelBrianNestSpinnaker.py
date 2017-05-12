@@ -28,17 +28,17 @@ def plot(esp, sim_time, N_E):
 
 class PynnBrunnelBrianNestSpinnaker(BaseTestCase):
 
-    # Raises SpinnmanException: 30 cores have reached an error state
-    # CPUState.RUN_TIME_EXCEPTION:
-    # See prior_integration_tests/buffer_manager/
-    # poission_with_recording/pynnBrunnelBrianNestSpinnaker.py
-    @unittest.skip("Skipped buffer_manager/"
-                   "poission_with_recording/"
-                   "test_pynnBrunnelBrianNestSpinnaker")
     def test_run(self):
-        (esp, s, N_E) = script.do_run(Neurons, sim_time, True)
-
+        (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
+        self.assertLess(200, len(esp))
+        self.assertGreater(300, len(esp))
+        self.assertLess(22000, len(s))
+        self.assertGreater(26000, len(s))
+        self.assertEquals(2400, N_E)
 
 if __name__ == '__main__':
-    (esp, s, N_E) = script.do_run(Neurons, sim_time, True)
+    (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
     plot(esp, sim_time, N_E)
+    print len(esp)
+    print len(s)
+    print N_E
