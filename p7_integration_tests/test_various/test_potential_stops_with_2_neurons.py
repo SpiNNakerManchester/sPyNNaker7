@@ -53,7 +53,6 @@ def do_run(nNeurons):
 
 class ParamsSetAsList(BaseTestCase):
 
-    # @unittest.skip("skipping test_bugged_tests/params_set_as_list")
     def test_run(self):
         nNeurons = 2  # number of neurons in each population
         (v, gsyn, spikes) = do_run(nNeurons)
