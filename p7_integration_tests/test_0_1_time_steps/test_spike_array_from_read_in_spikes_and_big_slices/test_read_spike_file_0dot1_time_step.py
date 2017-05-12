@@ -116,10 +116,14 @@ class TestReadingSpikeArrayDataAndBigSlices(BaseTestCase):
         """
         try:
             spikes = do_run()
+            # System intentional overload so may error
+        except SpinnmanTimeoutException as ex:
+            raise SkipTest(ex)
+        try:
             self.assertLess(430, len(spikes))
             self.assertGreater(460, len(spikes))
-        # System intentional overload so may error
-        except SpinnmanTimeoutException as ex:
+        except Exception as ex:
+            # Just in case the range failed
             raise SkipTest(ex)
 
 
