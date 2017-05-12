@@ -1,11 +1,10 @@
 import spynnaker7.pyNN as sim
-
 from p7_integration_tests.base_test_case import BaseTestCase
 
 
 class SSPNeuronClassNoEdgeTest(BaseTestCase):
 
-    def test_tun(self):
+    def test_run(self):
         sim.setup()
 
         sim.Population(3, sim.SpikeSourcePoisson, {"rate": 100})
