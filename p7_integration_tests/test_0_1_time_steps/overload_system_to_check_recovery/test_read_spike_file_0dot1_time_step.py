@@ -7,6 +7,25 @@ from spinnman.exceptions import SpinnmanTimeoutException
 import os
 
 
+def read_spikefile(file_name, n_neurons):
+    """
+    helper method for reading in spike data
+    :param file_name:
+    :param n_neurons:
+    :return:
+    """
+    spike_array = [[] for x in range(n_neurons)]
+    with open(file_name) as f_spike:
+        for line in f_spike:
+            cut_index = line.find(';')
+            time_stamp = int(line[0:cut_index])
+            neuron_list = line[cut_index+1:-1].split(',')
+            for neuron in neuron_list:
+                neuron_id = int(neuron)
+                spike_array[neuron_id].append(time_stamp)
+    return spike_array
+
+
 def do_run():
     """
     test that tests the printing of v from a pre determined recording
@@ -39,7 +58,6 @@ def do_run():
     spikes_file = os.path.join(current_file_path, 'test.spikes')
 
     spikes = read_spikefile(spikes_file, n_neurons)
-    print spikes
     spike_array = {'spike_times': spikes}
 
     populations.append(p.Population(
