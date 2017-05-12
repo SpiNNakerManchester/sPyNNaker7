@@ -32,7 +32,6 @@ April 2013
 """
 
 import spynnaker7.pyNN as p
-import unittest
 import spynnaker.plot_utils as plot_utils
 from p7_integration_tests.base_test_case import BaseTestCase
 
@@ -192,8 +191,6 @@ def do_run():
 
 class stdp_example(BaseTestCase):
 
-    @unittest.skip("Skipping tests_for_projection_param_retrieval_from_board/"
-                   "test_stdp_example.py")
     def test_run(self):
         (weights, pre_spikes, post_spikes) = do_run()
         self.assertLess(140, len(pre_spikes))

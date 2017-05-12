@@ -64,4 +64,3 @@ if __name__ == '__main__':
     plot_utils.plot_spikes(input, spikes2=spikes)
     plot_utils.heat_plot(v)
     plot_utils.heat_plot(gsyn)
-

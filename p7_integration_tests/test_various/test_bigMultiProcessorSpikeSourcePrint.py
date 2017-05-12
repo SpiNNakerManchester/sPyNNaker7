@@ -8,6 +8,7 @@ import spynnaker.plot_utils as plot_utils
 
 from unittest import SkipTest
 
+
 def do_run(nNeurons):
     cell_params_lif = {'cm': 0.25,  # nF
                        'i_offset': 0.0,

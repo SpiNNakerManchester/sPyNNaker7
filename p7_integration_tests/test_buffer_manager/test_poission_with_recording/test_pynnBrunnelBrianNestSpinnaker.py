@@ -40,6 +40,7 @@ class PynnBrunnelBrianNestSpinnaker(BaseTestCase):
             # Just in case the range failed
             raise SkipTest(ex)
 
+
 if __name__ == '__main__':
     (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
     plot(esp, sim_time, N_E)

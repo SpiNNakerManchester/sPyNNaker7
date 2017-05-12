@@ -23,9 +23,6 @@ def do_run(n_neurons, n_cores, new_i_offset):
 
     populations = list()
 
-    weight_to_spike = 2.0
-    delay = 17
-
     populations.append(p.Population(n_neurons, p.IF_curr_exp, cell_params_lif,
                                     label='pop_1'))
 
@@ -69,6 +66,7 @@ class TestSetTOffset(BaseTestCase):
         times = set(spikes[:, 1])
         self.assertEquals(n_neurons * len(times), len(spikes))
 
+
 if __name__ == '__main__':
     n_neurons = 40
     n_cores = 3
@@ -81,4 +79,3 @@ if __name__ == '__main__':
 
     times = set(spikes[:, 1])
     print n_neurons * len(times), len(spikes)
-

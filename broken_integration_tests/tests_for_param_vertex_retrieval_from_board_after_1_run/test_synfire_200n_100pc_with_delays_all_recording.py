@@ -2,7 +2,6 @@
 """
 Synfirechain-like example
 """
-import unittest
 import numpy
 import os.path
 
@@ -44,9 +43,9 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
 if __name__ == '__main__':
     synfire_run = TestRun()
     synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
-                      placement_constraint=placement_constraint,
-                      run_times=[runtime],
-                      record=True, record_v=True, record_gsyn=True)
+                       placement_constraint=placement_constraint,
+                       run_times=[runtime],
+                       record=True, record_v=True, record_gsyn=True)
     gsyn = synfire_run.get_output_pop_gsyn()
     v = synfire_run.get_output_pop_voltage()
     spikes = synfire_run.get_output_pop_spikes()

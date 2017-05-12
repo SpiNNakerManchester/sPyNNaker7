@@ -1,5 +1,3 @@
-import unittest
-
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 

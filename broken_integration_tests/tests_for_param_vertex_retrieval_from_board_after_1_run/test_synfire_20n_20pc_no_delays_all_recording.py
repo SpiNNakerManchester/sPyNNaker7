@@ -2,7 +2,6 @@
 """
 Synfirechain-like example
 """
-import unittest
 import numpy
 import os.path
 

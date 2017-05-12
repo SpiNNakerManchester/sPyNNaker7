@@ -4,7 +4,6 @@ Synfirechain-like example
 """
 import numpy
 import os.path
-import unittest
 
 import spynnaker.spike_checker as spike_checker
 import spynnaker.plot_utils as plot_utils

@@ -29,9 +29,6 @@ Authors : Catherine Wacongne < catherine.waco@gmail.com >
 
 April 2013
 """
-
-import unittest
-
 import spynnaker7.pyNN as sim
 import spynnaker.plot_utils as plot_utils
 
