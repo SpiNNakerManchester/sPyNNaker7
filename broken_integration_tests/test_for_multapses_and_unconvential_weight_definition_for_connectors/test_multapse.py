@@ -47,8 +47,6 @@ def do_run():
 
 class TestGsyn(BaseTestCase):
 
-    @unittest.skip("p7_integration_tests/test_for_multapses_and_unconvential"
-                   "_weight_definition_for_connectors/test_multapse.py")
     def test_get_gsyn(self):
         do_run()
 
