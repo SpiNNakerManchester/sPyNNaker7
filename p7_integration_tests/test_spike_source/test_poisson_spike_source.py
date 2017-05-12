@@ -3,11 +3,7 @@ import spynnaker7.pyNN as p
 
 
 class MyTestCase(unittest.TestCase):
-    @unittest.skip("Not implemented")
-    def test_something(self):
-        self.assertEqual(True, False, "Test not implemented yet")
 
-    @unittest.skip("Not implemented")
     def test_recording_poisson_spikes(self):
         p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
         n_neurons = 256  # number of neurons in each population
@@ -45,7 +41,6 @@ class MyTestCase(unittest.TestCase):
 
         p.end()
 
-    @unittest.skip("Not implemented")
     def test_recording_poisson_large_spikes(self):
         p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
         n_neurons = 2560  # number of neurons in each population
