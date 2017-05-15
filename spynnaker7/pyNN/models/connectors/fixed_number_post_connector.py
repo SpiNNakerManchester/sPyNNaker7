@@ -13,7 +13,7 @@ logger = logging.getLogger(__file__)
 
 class FixedNumberPostConnector(CommonFixedNumberPostConnector):
     """ pynn connector that puts a fixed number of connections on each of the
-     post neurons
+        post neurons
 
     """
 
@@ -28,7 +28,7 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
         :param space: a Space object, needed if you wish to specify distance-
             dependent weights or delays
         :param safe: if True, check that weights and delays have valid values.
-         If False, this check is skipped.
+            If False, this check is skipped.
         :param verbose: ??????????
         :param `float` weights:
             may either be a float, a !RandomDistribution object, a list/
