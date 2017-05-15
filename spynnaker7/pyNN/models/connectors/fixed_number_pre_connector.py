@@ -31,7 +31,7 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
             a Space object, needed if you wish to specify distance-
             dependent weights or delays - not implemented
         :param safe: if True, check that weights and delays have valid values.
-        If False, this check is skipped.
+            If False, this check is skipped.
         :param verbose:
         """
 
