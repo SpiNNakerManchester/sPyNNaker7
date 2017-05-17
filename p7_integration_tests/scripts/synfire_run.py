@@ -15,14 +15,6 @@ CELL_PARAMS_LIF = {'cm': 0.25, 'i_offset': 0.0, 'tau_m': 20.0,
 
 class TestRun(object):
 
-    def __init__(self):
-        self._recorded_v = []
-        self._recorded_spikes = []
-        self._recorded_gsyn = []
-        self._input_spikes_recorded = []
-        self._weights = []
-        self._delays = []
-
     def do_run(
             self, n_neurons, time_step=1, max_delay=144.0,
             input_class=SpikeSourceArray, spike_times=None, rate=None,
@@ -142,6 +134,13 @@ class TestRun(object):
             Note: Has no effect if use_spike_connections == False
         :type use_wrap_around_connections: bool
         """
+
+        self._recorded_v = []
+        self._recorded_spikes = []
+        self._recorded_gsyn = []
+        self._input_spikes_recorded = []
+        self._weights = []
+        self._delays = []
 
         if run_times is None:
             run_times = [1000]
