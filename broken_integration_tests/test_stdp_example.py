@@ -29,10 +29,7 @@ Authors : Catherine Wacongne < catherine.waco@gmail.com >
 
 April 2013
 """
-
-import unittest
-
-import spynnaker.pyNN as sim
+import spynnaker7.pyNN as sim
 import spynnaker.plot_utils as plot_utils
 
 from p7_integration_tests.base_test_case import BaseTestCase
@@ -201,7 +198,9 @@ def do_run():
 
 class StdpExample(BaseTestCase):
 
-    @unittest.skip("Skipping bugged_tests/test_stdp_example.py")
+    # spinn_front_end_common.utilities.exceptions.ConfigurationException:
+    # The number of params does not equal with
+    # the number of atoms in the vertex
     def test_run(self):
         (pre_spikes, post_spikes) = do_run()
         self.assertLess(130, len(pre_spikes))
@@ -214,4 +213,4 @@ if __name__ == '__main__':
     (pre_spikes, post_spikes) = do_run()
     print len(pre_spikes)
     print len(post_spikes)
-    plot_utils.plot_spikes(pre_spikes, post_spikes)
+    plot_utils.plot_spikes([pre_spikes, post_spikes])

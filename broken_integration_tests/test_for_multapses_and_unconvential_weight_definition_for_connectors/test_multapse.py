@@ -1,5 +1,3 @@
-import unittest
-
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 
@@ -47,8 +45,6 @@ def do_run():
 
 class TestGsyn(BaseTestCase):
 
-    @unittest.skip("p7_integration_tests/test_for_multapses_and_unconvential"
-                   "_weight_definition_for_connectors/test_multapse.py")
     def test_get_gsyn(self):
         do_run()
 

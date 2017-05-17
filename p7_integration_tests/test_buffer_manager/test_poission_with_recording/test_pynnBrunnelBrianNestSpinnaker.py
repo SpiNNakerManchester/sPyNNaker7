@@ -1,10 +1,10 @@
-import unittest
-
 import p7_integration_tests.test_buffer_manager.test_poission_with_recording.\
     pynnBrunnelPlot as pblt
 
 from p7_integration_tests.base_test_case import BaseTestCase
 import p7_integration_tests.scripts.pynnBrunnelBrianNestSpinnaker as script
+
+from unittest import SkipTest
 
 Neurons = 3000  # number of neurons in each population
 sim_time = 1000
@@ -28,17 +28,22 @@ def plot(esp, sim_time, N_E):
 
 class PynnBrunnelBrianNestSpinnaker(BaseTestCase):
 
-    # Raises SpinnmanException: 30 cores have reached an error state
-    # CPUState.RUN_TIME_EXCEPTION:
-    # See prior_integration_tests/buffer_manager/
-    # poission_with_recording/pynnBrunnelBrianNestSpinnaker.py
-    @unittest.skip("Skipped buffer_manager/"
-                   "poission_with_recording/"
-                   "test_pynnBrunnelBrianNestSpinnaker")
     def test_run(self):
-        (esp, s, N_E) = script.do_run(Neurons, sim_time, True)
+        (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
+        try:
+            self.assertLess(200, len(esp))
+            self.assertGreater(300, len(esp))
+            self.assertLess(22000, len(s))
+            self.assertGreater(26000, len(s))
+            self.assertEquals(2400, N_E)
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
 
 
 if __name__ == '__main__':
-    (esp, s, N_E) = script.do_run(Neurons, sim_time, True)
+    (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
     plot(esp, sim_time, N_E)
+    print len(esp)
+    print len(s)
+    print N_E

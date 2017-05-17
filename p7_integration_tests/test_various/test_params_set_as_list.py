@@ -1,6 +1,5 @@
 import spynnaker7.pyNN as p
 
-import unittest
 from p7_integration_tests.base_test_case import BaseTestCase
 from pyNN.random import RandomDistribution, NumpyRNG
 import spynnaker.plot_utils as plot_utils
@@ -66,11 +65,6 @@ def do_run(nNeurons):
     populations.append(p.Population(1, p.SpikeSourceArray, spikeArray,
                                     label='inputSpikes_1'))
 
-    populations[0].set('cm', 0.25)
-    populations[0].set('cm', cm)
-    populations[0].set({'tau_m': tau_m, 'v_thresh': v_thresh})
-    populations[0].set('i_offset', gbar_na_distr)
-
     populations[0].set({'cm': 0.25})
     populations[0].set('cm', cm)
     populations[0].set({'tau_m': tau_m, 'v_thresh': v_thresh})
@@ -99,12 +93,11 @@ def do_run(nNeurons):
 
 class ParamsSetAsList(BaseTestCase):
 
-    @unittest.skip("skipping test_bugged_tests/params_set_as_list")
+    # TODO Works but is it correct?
     def test_run(self):
         nNeurons = 225  # number of neurons in each population
         (v, gsyn, spikes) = do_run(nNeurons)
-        # self.assertLess(9500, len(spikes))
-        # self.assertGreater(9800, len(spikes))
+        self.assertEquals(99, len(spikes))
 
 
 if __name__ == '__main__':

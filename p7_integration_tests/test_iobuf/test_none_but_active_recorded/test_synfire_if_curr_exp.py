@@ -1,7 +1,6 @@
 """
 Synfirechain-like example
 """
-import unittest
 from p7_integration_tests.base_test_case import BaseTestCase
 from p7_integration_tests.scripts.synfire_run import TestRun
 
@@ -13,8 +12,7 @@ synfire_run = TestRun()
 
 class SynfireIfCurrExp(BaseTestCase):
 
-    @unittest.skip("skipping test_buffer_manager/if_curr_exp_live_buiffer/"
-                   "SynfireIfCurrExp")
+    # TODO How to check this worked
     def test_run(self):
         synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
                            run_times=runtimes, record=False, record_v=False,
