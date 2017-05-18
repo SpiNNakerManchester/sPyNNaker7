@@ -2,7 +2,6 @@ import os
 import sys
 import unittest
 
-import spynnaker7.pyNN.utilities.conf as conf
 from spynnaker7.pyNN.spinnaker import Spinnaker as Spinnaker
 from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
@@ -26,8 +25,6 @@ class BaseTestCase(unittest.TestCase):
         class_file = sys.modules[self.__module__].__file__
         path = os.path.dirname(os.path.abspath(class_file))
         os.chdir(path)
-        config = conf.load_config()
-        Spinnaker._set_config(config)
         # Some tests changes this so change it back here!
         IF_cond_exp.set_model_max_atoms_per_core()
         IF_curr_dual_exp.set_model_max_atoms_per_core()

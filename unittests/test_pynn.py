@@ -2,16 +2,16 @@
 import unittest
 
 import spynnaker7.pyNN as pynn
-import spynnaker7.pyNN.utilities.conf as conf
-
+from spynnaker.pyNN.utilities import globals_variables
 
 class TestPyNNSetup(unittest.TestCase):
 
     def test_initial_setup(self):
         self.assertEqual(pynn.setup(timestep=1, min_delay=1, max_delay=15.0),
                          0)
+        simulator = globals_variables.get_simulator()
         try:
-            self.assertEqual(conf.config.getint("Machine", "machineTimeStep"),
+            self.assertEqual(simulator._config.getint("Machine", "machineTimeStep"),
                              1 * 1000)
             self.assertEqual(pynn.get_min_delay(), 1)
             self.assertEqual(pynn.get_max_delay(), 15.0)
