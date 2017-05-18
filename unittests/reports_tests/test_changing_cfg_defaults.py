@@ -10,8 +10,7 @@ from spynnaker7.pyNN.spinnaker import Spinnaker
 class TestCFGs(unittest.TestCase):
 
     def setUp(self):
-        conf_loader.load_config(spynnaker.pyNN, "spynnaker.cfg")
-        conf = conf_loader.get_config()
+        conf = conf_loader.load_config(spynnaker.pyNN, "spynnaker.cfg")
 
         self._previous_reportsEnabled = conf.get(
             "Reports", "reportsEnabled")
@@ -19,7 +18,7 @@ class TestCFGs(unittest.TestCase):
             "Reports", "defaultReportFilePath")
 
     def tearDown(self):
-        conf = conf_loader.get_config()
+        conf = conf_loader.load_config(spynnaker.pyNN, "spynnaker.cfg")
         conf.set("Reports", "defaultReportFilePath",
                         self.previous_defaultReportFilePath)
         conf.set("Reports", "reportsEnabled",
@@ -27,7 +26,7 @@ class TestCFGs(unittest.TestCase):
 
     @unittest.skip("broken")
     def test_reports_creation_custom_location(self):
-        conf = conf_loader.get_config()
+        conf = conf_loader.load_config(spynnaker.pyNN, "spynnaker.cfg")
         current_path = os.path.dirname(os.path.abspath(__file__))
         conf.set("Reports", "defaultReportFilePath", current_path)
         conf.set("Reports", "reportsEnabled", "True")

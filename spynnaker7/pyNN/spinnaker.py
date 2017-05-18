@@ -3,7 +3,7 @@ import logging
 
 from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
-
+from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
@@ -11,9 +11,14 @@ from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
     RandomStatsScipyImpl
 from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
     RandomStatsUniformImpl
+from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
+    import Spynnaker7FailedState
 
 # global objects
 logger = logging.getLogger(__name__)
+
+# At import time change the default FailedState
+globals_variables.set_failed_state(Spynnaker7FailedState())
 
 
 class Spinnaker(SpiNNakerCommon):

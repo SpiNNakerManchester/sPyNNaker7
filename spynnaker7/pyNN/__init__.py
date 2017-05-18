@@ -38,9 +38,8 @@ from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
-from spynnaker.pyNN.utilities import globals_variables
+from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.utilities import utility_calls
-from spynnaker.pyNN.utilities.failed_state import FailedState
 from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 from spynnaker7.pyNN.models.connectors. \
