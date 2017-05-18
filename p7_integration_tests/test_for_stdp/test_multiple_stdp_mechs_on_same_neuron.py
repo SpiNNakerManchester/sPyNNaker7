@@ -13,9 +13,6 @@ class TestMultipleStdpMechsOnSameNeuron(BaseTestCase):
     """
     tests the get spikes given a simulation at 0.1 ms time steps
     """
-
-    @unittest.skip("BROKEN SINCE SPLIT! p7_integration_tests/test_for_stdp/"
-                   "test_multiple_stdp_mechs_on_same_neuron.py")
     def run_multiple_stdp_mechs_on_same_neuron(self):
         p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
         nNeurons = 200  # number of neurons in each population
@@ -41,32 +38,24 @@ class TestMultipleStdpMechsOnSameNeuron(BaseTestCase):
         stdp_model1 = p.STDPMechanism(
             timing_dependence=p.SpikePairRule(
                 tau_plus=16.7, tau_minus=33.7),
-            # TODO What happened to nearest
-            # timing_dependence=p.SpikePairRule(
-            #    tau_plus=16.7, tau_minus=33.7, nearest=True),
             weight_dependence=p.AdditiveWeightDependence(
                 w_min=0.0, w_max=1.0, A_plus=0.005, A_minus=0.005),
-            # TODO What happened to mad
-            # mad=True
         )
 
         # Plastic Connection between pre_pop and post_pop
         stdp_model2 = p.STDPMechanism(
-            # TODO What replaces PfisterSpikeTripletRule
-            timing_dependence=p.PfisterSpikeTripletRule(
-                tau_plus=16.7, tau_minus=33.7, tau_x=44, tau_y=44),
+            timing_dependence=p.SpikePairRule(
+                tau_plus=16.7, tau_minus=33.7),
             weight_dependence=p.AdditiveWeightDependence(
                 w_min=0.0, w_max=1.0, A_plus=0.005, A_minus=0.005),
-            mad=True
         )
 
         # Plastic Connection between pre_pop and post_pop
         stdp_model3 = p.STDPMechanism(
             timing_dependence=p.SpikePairRule(
-                tau_plus=16.7, tau_minus=33.7, nearest=True),
+                tau_plus=16.7, tau_minus=33.7),
             weight_dependence=p.MultiplicativeWeightDependence(
                 w_min=0.0, w_max=1.0, A_plus=0.005, A_minus=0.005),
-            mad=True
         )
 
         injectionConnection = [(0, 0, weight_to_spike, 1)]

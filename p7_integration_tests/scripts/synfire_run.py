@@ -193,8 +193,12 @@ class TestRun(object):
             n_neurons, cell_class, cell_params, label='pop_1'))
 
         if placement_constraint is not None:
-            (x, y, proc) = placement_constraint
-            populations[0].add_placement_constraint(x=x, y=y, p=proc)
+            if len(placement_constraint) == 2:
+                (x, y) = placement_constraint
+                populations[0].add_placement_constraint(x=x, y=y)
+            else:
+                (x, y, proc) = placement_constraint
+                populations[0].add_placement_constraint(x=x, y=y, p=proc)
 
         if randomise_v_init:
             rng = p.NumpyRNG(seed=28375)
