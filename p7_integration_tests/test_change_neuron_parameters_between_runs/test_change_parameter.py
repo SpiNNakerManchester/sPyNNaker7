@@ -62,6 +62,7 @@ class TestChangeParameter(BaseTestCase):
     # print len()
     # print len()
 
+
 if __name__ == '__main__':
     (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
     plot_spikes(pop_spikes1, inp_spikes1)

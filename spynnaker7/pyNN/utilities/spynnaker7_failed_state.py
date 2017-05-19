@@ -1,5 +1,6 @@
 from spinn_front_end_common.utilities import exceptions
-from spynnaker.pyNN.utilities.spynnaker_failed_state import SpynnakerFailedState
+from spynnaker.pyNN.utilities.spynnaker_failed_state \
+    import SpynnakerFailedState
 from spynnaker7.pyNN.spynnaker7_simulator_interface \
     import Spynnaker7SimulatorInterface
 

@@ -2,7 +2,6 @@ import os
 import sys
 import unittest
 
-from spynnaker7.pyNN.spinnaker import Spinnaker as Spinnaker
 from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base \

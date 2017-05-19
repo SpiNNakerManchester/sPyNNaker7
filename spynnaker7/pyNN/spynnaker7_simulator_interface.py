@@ -1,7 +1,7 @@
 from six import add_metaclass
 
 from spinn_utilities.abstract_base import AbstractBase
-from spinn_utilities.abstract_base import abstractproperty
+# from spinn_utilities.abstract_base import abstractproperty
 from spinn_utilities.abstract_base import abstractmethod
 
 from spynnaker.pyNN.spynnaker_simulator_interface \
@@ -23,4 +23,3 @@ class Spynnaker7SimulatorInterface(SpynnakerSimulatorInterface):
                           postsynaptic_population, connector, source,
                           target, synapse_dynamics, label, rng):
         pass
-

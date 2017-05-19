@@ -190,12 +190,12 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     if len(extra_params) > 0:
         logger.warn("Extra params {} have been applied to the setup "
                     "command which we do not consider".format(extra_params))
-    spinnaker_control = __Spinnaker(
+    __Spinnaker(
         host_name=machine, timestep=timestep, min_delay=min_delay,
         max_delay=max_delay,
         database_socket_addresses=database_socket_addresses,
         n_chips_required=n_chips_required)
-    globals_variables.set_simulator(spinnaker_control)
+
     # the PyNN API expects the MPI rank to be returned
     return rank()
 
@@ -372,7 +372,7 @@ def record_gsyn(source, filename):
 def get_machine():
     """ Get the spinnaker machine in use
     """
-    if isinstance(globals_variables.get_simulator(), FailedState):
+    if globals_variables.has_simulator():
         raise front_end_common_exceptions.ConfigurationException(
             "You currently have not ran setup, please do so before calling "
             "get_machine")

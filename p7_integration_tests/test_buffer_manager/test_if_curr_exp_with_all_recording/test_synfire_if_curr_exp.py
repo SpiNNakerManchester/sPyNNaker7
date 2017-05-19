@@ -24,6 +24,7 @@ class SynfireIfCurrExp(BaseTestCase):
         if len(spikes) != 263:
             raise SkipTest(Exception("Unexpected length of spikes"))
 
+
 if __name__ == '__main__':
     synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
                        run_times=[runtime])

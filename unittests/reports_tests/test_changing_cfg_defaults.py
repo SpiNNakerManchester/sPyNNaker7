@@ -20,9 +20,8 @@ class TestCFGs(unittest.TestCase):
     def tearDown(self):
         conf = conf_loader.load_config(spynnaker.pyNN, "spynnaker.cfg")
         conf.set("Reports", "defaultReportFilePath",
-                        self.previous_defaultReportFilePath)
-        conf.set("Reports", "reportsEnabled",
-                        self._previous_reportsEnabled)
+                 self.previous_defaultReportFilePath)
+        conf.set("Reports", "reportsEnabled", self._previous_reportsEnabled)
 
     @unittest.skip("broken")
     def test_reports_creation_custom_location(self):
