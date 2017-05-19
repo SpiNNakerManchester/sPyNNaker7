@@ -111,8 +111,8 @@ def do_run():
     # Test post pairing : only pre_pop is stimulated
     # (and should trigger activity in Post)
     for i in range(n_stim_test):
-        start = start_pairing + ISI * (n_stim_pairing) + \
-                start_test_post_pairing + ISI * (i),
+        start = start_pairing + ISI * n_stim_pairing + \
+                start_test_post_pairing + ISI * i
         IAddPre.append(
                 sim.Population(pop_size,
                                sim.SpikeSourcePoisson,
@@ -158,8 +158,7 @@ def do_run():
 
     # Plastic Connections between pre_pop and post_pop
     stdp_model = sim.STDPMechanism(
-        timing_dependence=sim.SpikePairRule(tau_plus=20., tau_minus=50.0,
-                                            nearest=True),
+        timing_dependence=sim.SpikePairRule(tau_plus=20., tau_minus=50.0),
         weight_dependence=sim.AdditiveWeightDependence(w_min=0, w_max=0.9,
                                                        A_plus=0.02,
                                                        A_minus=0.02)
