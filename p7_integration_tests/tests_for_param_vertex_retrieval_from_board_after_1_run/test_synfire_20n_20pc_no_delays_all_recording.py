@@ -2,7 +2,6 @@
 """
 Synfirechain-like example
 """
-import unittest
 import numpy
 import os.path
 
@@ -24,6 +23,7 @@ gysn_file = os.path.join(current_file_path, "20_1_gsyn.csv")
 
 
 class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
+
     def test_all_no_constarint(self):
         synfire_run = TestRun()
         synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
@@ -80,35 +80,12 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
         read_gsyn = numpy.loadtxt(gysn_file, delimiter=',')
         self.assertTrue(numpy.allclose(read_gsyn, gsyn))
 
-    @unittest.skip("/p7_integration_tests/"
-                   "tests_for_param_vertex_retrieval_from_board_after_1_run/"
-                   "synfire_20n_20pc_delays_delay_extensions_all_recording.py")
-    def test_with_constarint(self):
-        synfire_run = TestRun()
-        synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
-                           placement_constraint=placement_constraint,
-                           run_times=[runtime],
-                           record=True, record_v=True, record_gsyn=True)
-        gsyn = synfire_run.get_output_pop_gsyn()
-        v = synfire_run.get_output_pop_voltage()
-        spikes = synfire_run.get_output_pop_spikes()
-
-        self.assertEquals(n_neurons*runtime, len(gsyn))
-        self.assertEquals(n_neurons*runtime, len(v))
-        self.assertEquals(expected_spikes, len(spikes))
-        spike_checker.synfire_spike_checker(spikes, n_neurons)
-
 
 if __name__ == '__main__':
     synfire_run = TestRun()
     synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
                        delay=delay, run_times=[runtime],
                        record=True, record_v=True, record_gsyn=True)
-    # placement_constraint BROKEN!
-    # synfire_run.do_run(n_neurons, neurons_per_core=neurons_per_core,
-    #                   placement_constraint=placement_constraint,
-    #                   run_times=[runtime],
-    #                   record=True, record_v=True, record_gsyn=True)
     gsyn = synfire_run.get_output_pop_gsyn()
     v = synfire_run.get_output_pop_voltage()
     spikes = synfire_run.get_output_pop_spikes()

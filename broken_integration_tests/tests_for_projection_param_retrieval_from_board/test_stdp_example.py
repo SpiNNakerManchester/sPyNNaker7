@@ -32,11 +32,10 @@ April 2013
 """
 
 import spynnaker7.pyNN as p
-import unittest
 import spynnaker.plot_utils as plot_utils
 from p7_integration_tests.base_test_case import BaseTestCase
 
-
+# chritsian plotter needs fixing
 def do_run():
     # SpiNNaker setup
     p.setup(timestep=1.0, min_delay=1.0, max_delay=10.0)
@@ -116,8 +115,8 @@ def do_run():
     # Test post pairing : only pre_pop is stimulated
     # (and should trigger activity in Post)
     for i in range(n_stim_test):
-        start = start_pairing + ISI * (n_stim_pairing) + \
-                start_test_post_pairing + ISI * (i),
+        start = start_pairing + ISI * n_stim_pairing + \
+                start_test_post_pairing + ISI * i
         IAddPre.append(p.Population(pop_size, p.SpikeSourcePoisson,
                                     {'rate': in_rate, 'start': start,
                                      'duration': dur_stim}))
@@ -152,8 +151,7 @@ def do_run():
         p.Projection(IAddPost[i], post_pop, ee_connector, target='excitatory')
 
     # Plastic Connections between pre_pop and post_pop
-    timing_dependence = p.SpikePairRule(tau_plus=20., tau_minus=50.0,
-                                        nearest=True)
+    timing_dependence = p.SpikePairRule(tau_plus=20., tau_minus=50.0)
     weight_dependence = p.AdditiveWeightDependence(w_min=0, w_max=0.9,
                                                    A_plus=0.02, A_minus=0.02)
     stdp_model = p.STDPMechanism(timing_dependence=timing_dependence,
@@ -192,8 +190,6 @@ def do_run():
 
 class stdp_example(BaseTestCase):
 
-    @unittest.skip("Skipping tests_for_projection_param_retrieval_from_board/"
-                   "test_stdp_example.py")
     def test_run(self):
         (weights, pre_spikes, post_spikes) = do_run()
         self.assertLess(140, len(pre_spikes))

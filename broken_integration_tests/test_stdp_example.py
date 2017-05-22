@@ -29,10 +29,7 @@ Authors : Catherine Wacongne < catherine.waco@gmail.com >
 
 April 2013
 """
-
-import unittest
-
-import spynnaker.pyNN as sim
+import spynnaker7.pyNN as sim
 import spynnaker.plot_utils as plot_utils
 
 from p7_integration_tests.base_test_case import BaseTestCase
@@ -114,8 +111,8 @@ def do_run():
     # Test post pairing : only pre_pop is stimulated
     # (and should trigger activity in Post)
     for i in range(n_stim_test):
-        start = start_pairing + ISI * (n_stim_pairing) + \
-                start_test_post_pairing + ISI * (i),
+        start = start_pairing + ISI * n_stim_pairing + \
+                start_test_post_pairing + ISI * i
         IAddPre.append(
                 sim.Population(pop_size,
                                sim.SpikeSourcePoisson,
@@ -161,8 +158,7 @@ def do_run():
 
     # Plastic Connections between pre_pop and post_pop
     stdp_model = sim.STDPMechanism(
-        timing_dependence=sim.SpikePairRule(tau_plus=20., tau_minus=50.0,
-                                            nearest=True),
+        timing_dependence=sim.SpikePairRule(tau_plus=20., tau_minus=50.0),
         weight_dependence=sim.AdditiveWeightDependence(w_min=0, w_max=0.9,
                                                        A_plus=0.02,
                                                        A_minus=0.02)
@@ -201,7 +197,9 @@ def do_run():
 
 class StdpExample(BaseTestCase):
 
-    @unittest.skip("Skipping bugged_tests/test_stdp_example.py")
+    # spinn_front_end_common.utilities.exceptions.ConfigurationException:
+    # The number of params does not equal with
+    # the number of atoms in the vertex
     def test_run(self):
         (pre_spikes, post_spikes) = do_run()
         self.assertLess(130, len(pre_spikes))
@@ -214,4 +212,4 @@ if __name__ == '__main__':
     (pre_spikes, post_spikes) = do_run()
     print len(pre_spikes)
     print len(post_spikes)
-    plot_utils.plot_spikes(pre_spikes, post_spikes)
+    plot_utils.plot_spikes([pre_spikes, post_spikes])

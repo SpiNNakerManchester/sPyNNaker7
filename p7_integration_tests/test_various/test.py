@@ -7,6 +7,8 @@ from p7_integration_tests.base_test_case import BaseTestCase
 import spynnaker7.pyNN as p
 import spynnaker.plot_utils as plot_utils
 
+import numpy as np
+
 
 def do_run(nNeurons):
     p.setup(timestep=1, min_delay=1, max_delay=15)
@@ -51,18 +53,21 @@ class ATest(BaseTestCase):
     def test_run(self):
         nNeurons = 200  # number of neurons in each population
         (v1, gsyn1, v2, gsyn2, spikes1, spikes2) = do_run(nNeurons)
-        self.assertLess(15, len(spikes1))
-        self.assertGreater(25, len(spikes1))
-        self.assertLess(15, len(spikes2))
-        self.assertGreater(25, len(spikes2))
+
+        self.assertEquals(20, len(spikes1))
+        self.assertEquals(20, len(spikes2))
+        self.assertTrue(np.array_equal(spikes1, spikes2))
 
 
 if __name__ == '__main__':
     nNeurons = 200  # number of neurons in each population
     (v1, gsyn1, v2, gsyn2, spikes1, spikes2) = do_run(nNeurons)
     print len(spikes1)
-    print len(spikes1)
-    plot_utils.plot_spikes(spikes1, spikes2)
+    print spikes1
+    print len(spikes2)
+    print spikes2
+    plot_utils.plot_spikes([spikes1, spikes2])
+    print np.array_equal(spikes1, spikes2)
     plot_utils.heat_plot(v1, title="v1")
     plot_utils.heat_plot(v2, title="v2")
     plot_utils.heat_plot(gsyn1, title="gysn1")

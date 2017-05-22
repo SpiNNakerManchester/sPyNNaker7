@@ -6,8 +6,15 @@ import os
 from p7_integration_tests.base_test_case import BaseTestCase
 from p7_integration_tests.scripts.synfire_run import TestRun
 import spynnaker.pyNN.utilities.utility_calls as utility_calls
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 synfire_run = TestRun()
+
+n_neurons = 20  # number of neurons in each population
+current_file_path = os.path.dirname(os.path.abspath(__file__))
+current_spike_file_path = os.path.join(current_file_path, "spikes.data")
+current_v_file_path = os.path.join(current_file_path, "v.data")
+current_gsyn_file_path = os.path.join(current_file_path, "gsyn.data")
 
 
 class TestMallocKeyAllocatorWithSynfire(BaseTestCase):
@@ -15,25 +22,26 @@ class TestMallocKeyAllocatorWithSynfire(BaseTestCase):
     tests the printing of print v given a simulation
     """
 
-    @unittest.skip("skipping test 0_1_time_steps/test_malloc_key_allocator/"
-                   "synfire_if_curr_exp_with_print_after_end.py")
+    def test_end_before_print(self):
+        with self.assertRaises(ConfigurationException):
+            synfire_run.do_run(n_neurons, max_delay=14, time_step=1,
+                               neurons_per_core=1, delay=1.7, run_times=[50],
+                               spike_path=current_spike_file_path,
+                               gsyn_path=current_gsyn_file_path,
+                               v_path=current_v_file_path,
+                               end_before_print=True)
+
     # This throws a WEIRD Exception.
     def test_script(self):
         """
         test that tests the printing of v from a pre determined recording
         :return:
         """
-        n_neurons = 20  # number of neurons in each population
-        current_file_path = os.path.dirname(os.path.abspath(__file__))
-        current_spike_file_path = os.path.join(current_file_path,
-                                               "spikes.data")
-        current_v_file_path = os.path.join(current_file_path, "v.data")
-        current_gsyn_file_path = os.path.join(current_file_path, "gsyn.data")
         synfire_run.do_run(n_neurons, max_delay=14, time_step=1,
                            neurons_per_core=1, delay=1.7, run_times=[50],
                            spike_path=current_spike_file_path,
                            gsyn_path=current_gsyn_file_path,
-                           v_path=current_v_file_path, end_before_print=True)
+                           v_path=current_v_file_path, end_before_print=False)
         gsyn = synfire_run.get_output_pop_gsyn()
         v = synfire_run.get_output_pop_voltage()
         spikes = synfire_run.get_output_pop_spikes()

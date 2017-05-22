@@ -8,6 +8,7 @@ from p7_integration_tests.scripts.fake_if_curr import FakeIFCurrExp
 from p7_integration_tests.base_test_case import BaseTestCase
 
 import os
+import unittest
 
 
 class ProvenanceWhenNotFinishedTest(BaseTestCase):
@@ -18,8 +19,8 @@ class ProvenanceWhenNotFinishedTest(BaseTestCase):
             # add to the path the location of the dodgy binary
             # (if_cur_exp with the c_main bodged to result in it
             # running for twice as long as expected)
-            SpiNNakerCommon._EXECUTABLE_FINDER.\
-                add_path(os.path.dirname(__file__))
+            ex_finder = SpiNNakerCommon._EXECUTABLE_FINDER
+            ex_finder.add_path(os.path.dirname(__file__))
             nNeurons = 200  # number of neurons in each population
             cell_params_lif = {'cm': 0.25,
                                'i_offset': 0.0,

@@ -1,13 +1,10 @@
-import unittest
 import spynnaker7.pyNN as sim
 from p7_integration_tests.base_test_case import BaseTestCase
 
 
-class SSANeuronClassNoEdgeTest(BaseTestCase):
+class SSANeuronClassNoEdgeTest(object):
 
-    @unittest.skip("p7_integration_tests/"
-                   "no_edge_tests/SSA_neuron_class_no_edge_test.py")
-    def test_tun(self):
+    def test_run(self):
         sim.setup()
 
         sim.Population(3, sim.SpikeSourceArray,
@@ -22,3 +19,10 @@ class SSANeuronClassNoEdgeTest(BaseTestCase):
         sim.run(100.0)
 
         sim.end()
+
+if __name__ == "__main__":
+    """
+    main entrance method
+    """
+    blah = SSANeuronClassNoEdgeTest()
+    blah.test_run()
