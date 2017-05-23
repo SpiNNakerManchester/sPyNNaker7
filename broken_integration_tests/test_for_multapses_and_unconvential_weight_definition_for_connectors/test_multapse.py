@@ -1,6 +1,6 @@
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
-
+#ROWLEY NEEDS TO VISIT THIS!
 
 def do_run():
     p.setup(timestep=1.0)

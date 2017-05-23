@@ -2,6 +2,8 @@
 """
 Synfirechain-like example
 """
+
+# christian plotter bust
 import numpy
 import os.path
 
@@ -14,7 +16,7 @@ n_neurons = 200  # number of neurons in each population
 delay = 17
 runtime = 5000
 neurons_per_core = n_neurons/2
-placement_constraint = (0, 0, 2)
+placement_constraint = (0, 0)
 expected_spikes = 263
 current_file_path = os.path.dirname(os.path.abspath(__file__))
 spike_file = os.path.join(current_file_path, "20_17_spikes.csv")
