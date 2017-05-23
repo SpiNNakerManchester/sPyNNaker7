@@ -1,6 +1,6 @@
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
-#ROWLEY NEEDS TO VISIT THIS!
+
 
 def do_run():
     p.setup(timestep=1.0)
@@ -38,16 +38,23 @@ def do_run():
         post_weights.append(connection.getWeights())
         post_delays.append(connection.getDelays())
 
-    for i in range(len(connections)):
-        print "Weights before:", pre_weights[i], "and after:", post_weights[i]
-        print "Delays before:", pre_delays[i], "and after:", post_delays[i]
+    p.end()
+
+    return (pre_weights, pre_delays, post_weights, post_delays)
 
 
-class TestGsyn(BaseTestCase):
+class TestMultapse(BaseTestCase):
 
-    def test_get_gsyn(self):
-        do_run()
-
+    def test_multapse(self):
+        (pre_weights, pre_delays, post_weights, post_delays) = do_run()
+        for pre_weight, post_weight, pre_delay, post_delay in zip(
+                pre_weights, post_weights, pre_delays, post_delays):
+            self.assertItemsEqual(pre_weight, post_weight)
+            self.assertItemsEqual(pre_delay, post_delay)
 
 if __name__ == '__main__':
-    do_run()
+    (pre_weights, pre_delays, post_weights, post_delays) = do_run()
+    for pre_weight, post_weight, pre_delay, post_delay in zip(
+            pre_weights, post_weights, pre_delays, post_delays):
+        print "Weights before:", pre_weight, "and after:", post_weight
+        print "Delays before:", pre_delay, "and after:", post_delay
