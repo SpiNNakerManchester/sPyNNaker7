@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import unittest
 import spynnaker7.pyNN as pyNN
-from pprint import pprint as pp
 
 cell_params_lif = {
     'cm': 0.25,

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import unittest
 import spynnaker7.pyNN as pyNN
-from pprint import pprint as pp
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 cell_params_lif = {'cm': 0.25,
@@ -35,6 +34,7 @@ class TestingFixedProbabilityConnector(unittest.TestCase):
             weight = 2
             delay = 1
             pyNN.FixedProbabilityConnector(-0.5, weight, delay)
+
 
 if __name__ == "__main__":
     unittest.main()
