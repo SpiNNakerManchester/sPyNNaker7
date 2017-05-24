@@ -10,8 +10,10 @@ from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
 from spinn_front_end_common.utilities import exceptions as \
     front_end_common_exceptions
+from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.notification_protocol. \
     socket_address import SocketAddress as __SockAddr
+
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
 from spynnaker.pyNN.models.neural_projections.projection_application_edge \
@@ -38,8 +40,8 @@ from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
-from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.utilities import utility_calls
+
 from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 from spynnaker7.pyNN.models.connectors. \

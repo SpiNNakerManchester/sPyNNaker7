@@ -1,7 +1,7 @@
 """
 Synfirechain-like example
 """
-from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
+from spynnaker.pyNN.abstract_spinnaker_common import SpiNNakerCommon
 import spynnaker7.pyNN as p
 from spinnman.exceptions import SpinnmanTimeoutException
 from p7_integration_tests.scripts.fake_if_curr import FakeIFCurrExp

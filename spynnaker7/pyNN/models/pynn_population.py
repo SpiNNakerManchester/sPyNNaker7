@@ -2,10 +2,9 @@ from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
 from spinn_front_end_common.utilities import globals_variables
+from spinn_front_end_common.utilities import exceptions
 
 from pyNN import descriptions
-
-from spinn_front_end_common.utilities import exceptions
 
 import numpy
 import logging

@@ -4,7 +4,7 @@ import logging
 from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
 from spinn_front_end_common.utilities import globals_variables
-from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
+from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
 from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 globals_variables.set_failed_state(Spynnaker7FailedState())
 
 
-class Spinnaker(SpiNNakerCommon):
+class Spinnaker(AbstractSpiNNakerCommon):
     """
     Spinnaker: the main entrance for the spynnaker front end
     """
@@ -34,7 +34,7 @@ class Spinnaker(SpiNNakerCommon):
         # and add this default to end of list of search paths
 
         # population holders
-        SpiNNakerCommon.__init__(
+        AbstractSpiNNakerCommon.__init__(
             self, database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
