@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import unittest
 import spynnaker7.pyNN as pyNN
-from spinn_front_end_common.utilities.exceptions import ConfigurationException
-from pprint import pprint as pp
 
 nNeurons = 10
 cell_params_lif = {'cm': 0.25,
