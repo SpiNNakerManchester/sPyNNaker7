@@ -41,19 +41,6 @@ class MultapseConnectorTest(unittest.TestCase):
         pyNN.Projection(first_pop, first_pop, pyNN.MultapseConnector(
             num_synapses=10, weights=weight, delays=delay))
 
-    @unittest.skip("broken; API changed")
-    def test_generate_synaptic_list(self):
-        number_of_neurons = 5
-        first_population = pyNN.Population(number_of_neurons, pyNN.IF_curr_exp,
-                                           cell_params_lif, label="One pop")
-        weight = 2
-        delay = 1
-        synapse_type = 0
-        connection = pyNN.MultapseConnector(1, weight, delay)
-        synaptic_list = connection.generate_synapse_list(
-            first_population, first_population, 1, 1.0, synapse_type)
-        pp(synaptic_list.get_rows())
-
 
 if __name__ == "__main__":
     unittest.main()
