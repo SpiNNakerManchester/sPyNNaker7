@@ -35,5 +35,6 @@ class TestingFixedProbabilityConnector(unittest.TestCase):
             delay = 1
             pyNN.FixedProbabilityConnector(-0.5, weight, delay)
 
+
 if __name__ == "__main__":
     unittest.main()
