@@ -24,63 +24,6 @@ class TestingOneToOneConnector(unittest.TestCase):
     def tearDown(self):
         pyNN.end()
 
-    @unittest.skip("broken; API changed")
-    def test_connect_two_different_populations(self):
-        number_of_neurons = 10
-        first_population = pyNN.Population(
-            number_of_neurons, pyNN.IF_curr_exp, cell_params_lif,
-            label="One pop")
-        second_population = pyNN.Population(
-            number_of_neurons, pyNN.IF_curr_exp, cell_params_lif,
-            label="Second pop")
-        weight = 2
-        delay = 1
-        synapse_type = 0
-        connection = pyNN.OneToOneConnector(weight, delay)
-        synaptic_list = connection.generate_synapse_list(
-            first_population, second_population, 1, 1.0, synapse_type)
-        self.assertEqual(synaptic_list.get_max_weight(), weight)
-        self.assertEqual(synaptic_list.get_min_weight(), weight)
-        pp(synaptic_list.get_rows())
-        self.assertEqual(synaptic_list.get_n_rows(), number_of_neurons)
-        self.assertEqual(synaptic_list.get_max_delay(), delay)
-        self.assertEqual(synaptic_list.get_min_delay(), delay)
-
-    @unittest.skip("broken; API changed")
-    def test_self_connect_population(self):
-        number_of_neurons = 10
-        first_population = pyNN.Population(
-            number_of_neurons, pyNN.IF_curr_exp, cell_params_lif,
-            label="One pop")
-        weight = 2
-        delay = 1
-        synapse_type = 0
-        connection = pyNN.OneToOneConnector(weight, delay)
-        synaptic_list = connection.generate_synapse_list(
-            first_population, first_population, 1, 1.0, synapse_type)
-        self.assertEqual(synaptic_list.get_max_weight(), weight)
-        self.assertEqual(synaptic_list.get_min_weight(), weight)
-        pp(synaptic_list.get_rows())
-        self.assertEqual(synaptic_list.get_n_rows(), number_of_neurons)
-        self.assertEqual(synaptic_list.get_max_delay(), delay)
-        self.assertEqual(synaptic_list.get_min_delay(), delay)
-
-    @unittest.skip("broken; API changed")
-    def test_synapse_list_generation_for_different_sized_populations(self):
-        number_of_neurons = 10
-        first_population = pyNN.Population(
-            number_of_neurons, pyNN.IF_curr_exp, cell_params_lif,
-            label="One pop")
-        second_population = pyNN.Population(
-            number_of_neurons + 5, pyNN.IF_curr_exp, cell_params_lif,
-            label="Second pop")
-        weight = 2
-        delay = 1
-        connection = pyNN.OneToOneConnector(weight, delay)
-        with self.assertRaises(ConfigurationException):
-            connection.generate_synapse_list(first_population,
-                                             second_population, 1, 1.0, 0)
-
     def test_connector_populations_of_different_sizes(self):
         weight = 2
         delay = 5
