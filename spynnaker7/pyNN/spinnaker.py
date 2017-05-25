@@ -81,8 +81,7 @@ class Spinnaker(AbstractSpiNNakerCommon):
             timescale_factor=self._time_scale_factor,
             user_max_delay=self.max_supported_delay)
 
-    @staticmethod
-    def get_distribution_to_stats():
+    def get_distribution_to_stats(self):
         return {
             'binomial': RandomStatsScipyImpl("binom"),
             'gamma': RandomStatsScipyImpl("gamma"),
@@ -101,8 +100,7 @@ class Spinnaker(AbstractSpiNNakerCommon):
         """
         return RandomDistribution
 
-    @staticmethod
-    def is_a_pynn_random(thing):
+    def is_a_pynn_random(self, thing):
         """
         Checks if the thing is a pynn random
 
@@ -115,8 +113,7 @@ class Spinnaker(AbstractSpiNNakerCommon):
         """
         return isinstance(thing, RandomDistribution)
 
-    @staticmethod
-    def get_pynn_NumpyRNG():
+    def get_pynn_NumpyRNG(self):
         """
         get specfic PyNN version of NumpyRNG
         :return: NumpyRNG
