@@ -2,7 +2,7 @@ import spynnaker7.pyNN as sim
 from p7_integration_tests.base_test_case import BaseTestCase
 
 
-class SSANeuronClassNoEdgeTest(object):
+class SSANeuronClassNoEdgeTest(BaseTestCase):
 
     def test_run(self):
         sim.setup()
@@ -19,6 +19,7 @@ class SSANeuronClassNoEdgeTest(object):
         sim.run(100.0)
 
         sim.end()
+
 
 if __name__ == "__main__":
     """

@@ -8,7 +8,6 @@ from p7_integration_tests.scripts.fake_if_curr import FakeIFCurrExp
 from p7_integration_tests.base_test_case import BaseTestCase
 
 import os
-import unittest
 
 
 class ProvenanceWhenNotFinishedTest(BaseTestCase):

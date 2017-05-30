@@ -52,6 +52,7 @@ class TestMultapse(BaseTestCase):
             self.assertItemsEqual(pre_weight, post_weight)
             self.assertItemsEqual(pre_delay, post_delay)
 
+
 if __name__ == '__main__':
     (pre_weights, pre_delays, post_weights, post_delays) = do_run()
     for pre_weight, post_weight, pre_delay, post_delay in zip(

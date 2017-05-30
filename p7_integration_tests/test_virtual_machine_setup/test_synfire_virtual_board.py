@@ -5,7 +5,6 @@ import unittest
 
 from p7_integration_tests.base_test_case import BaseTestCase
 from p7_integration_tests.scripts.synfire_run import TestRun
-import spynnaker.spike_checker as spike_checker
 from spinnman.exceptions import SpinnmanTimeoutException
 from unittest import SkipTest
 
