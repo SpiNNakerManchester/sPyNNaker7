@@ -327,14 +327,14 @@ def get_min_delay():
     """ The minimum allowed synaptic delay.
     :return:
     """
-    return globals_variables.get_simulator().min_supported_delay
+    return globals_variables.get_simulator().min_delay
 
 
 def get_max_delay():
     """ The maximum allowed synaptic delay.
     :return:
     """
-    return globals_variables.get_simulator().max_supported_delay
+    return globals_variables.get_simulator().max_delay
 
 
 def set(cells, param, val=None):  # @ReservedAssignment

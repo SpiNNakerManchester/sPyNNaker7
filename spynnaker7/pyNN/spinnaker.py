@@ -79,7 +79,7 @@ class Spinnaker(AbstractSpiNNakerCommon):
             synapse_dynamics=synapse_dynamics, spinnaker_control=self,
             machine_time_step=self._machine_time_step,
             timescale_factor=self._time_scale_factor,
-            user_max_delay=self.max_supported_delay)
+            user_max_delay=self.max_delay)
 
     def get_distribution_to_stats(self):
         return {
