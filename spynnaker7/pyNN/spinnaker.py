@@ -7,6 +7,8 @@ from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
+from spynnaker7.pyNN.spynnaker7_simulator_interface import \
+    Spynnaker7SimulatorInterface
 from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
     RandomStatsScipyImpl
 from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
@@ -21,7 +23,7 @@ logger = logging.getLogger(__name__)
 globals_variables.set_failed_state(Spynnaker7FailedState())
 
 
-class Spinnaker(AbstractSpiNNakerCommon):
+class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
     """
     Spinnaker: the main entrance for the spynnaker front end
     """
