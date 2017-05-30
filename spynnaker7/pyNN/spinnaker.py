@@ -3,21 +3,27 @@ import logging
 
 from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
-
-from spynnaker.pyNN.spinnaker_common import SpiNNakerCommon
+from spinn_front_end_common.utilities import globals_variables
+from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
-from spynnaker7.pyNN.utilities.conf import config
+from spynnaker7.pyNN.spynnaker7_simulator_interface import \
+    Spynnaker7SimulatorInterface
 from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
     RandomStatsScipyImpl
 from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
     RandomStatsUniformImpl
+from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
+    import Spynnaker7FailedState
 
 # global objects
 logger = logging.getLogger(__name__)
 
+# At import time change the default FailedState
+globals_variables.set_failed_state(Spynnaker7FailedState())
 
-class Spinnaker(SpiNNakerCommon):
+
+class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
     """
     Spinnaker: the main entrance for the spynnaker front end
     """
@@ -30,9 +36,8 @@ class Spinnaker(SpiNNakerCommon):
         # and add this default to end of list of search paths
 
         # population holders
-        SpiNNakerCommon.__init__(
-            self, config=config, config_default_name="spynnaker7.cfg",
-            database_socket_addresses=database_socket_addresses,
+        AbstractSpiNNakerCommon.__init__(
+            self, database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
             hostname=host_name, max_delay=max_delay, min_delay=min_delay)
@@ -76,10 +81,9 @@ class Spinnaker(SpiNNakerCommon):
             synapse_dynamics=synapse_dynamics, spinnaker_control=self,
             machine_time_step=self._machine_time_step,
             timescale_factor=self._time_scale_factor,
-            user_max_delay=self.max_supported_delay)
+            user_max_delay=self.max_delay)
 
-    @staticmethod
-    def get_distribution_to_stats():
+    def get_distribution_to_stats(self):
         return {
             'binomial': RandomStatsScipyImpl("binom"),
             'gamma': RandomStatsScipyImpl("gamma"),
@@ -98,8 +102,7 @@ class Spinnaker(SpiNNakerCommon):
         """
         return RandomDistribution
 
-    @staticmethod
-    def is_a_pynn_random(thing):
+    def is_a_pynn_random(self, thing):
         """
         Checks if the thing is a pynn random
 
@@ -112,33 +115,10 @@ class Spinnaker(SpiNNakerCommon):
         """
         return isinstance(thing, RandomDistribution)
 
-    @staticmethod
-    def get_pynn_NumpyRNG():
+    def get_pynn_NumpyRNG(self):
         """
         get specfic PyNN version of NumpyRNG
         :return: NumpyRNG
         :rtype: NumpyRNG
         """
         return NumpyRNG()
-
-    @staticmethod
-    def _set_config(new_config):
-        """
-        Backdoor method to change the config.
-
-        This method is only required until a proper global config exists.
-
-        Not recommend for use outside of testing!
-
-        Changes the static config used by the Spinnaker module
-        but will have an undettermined effect on other modules
-
-        Unless called again the new config will apply to all future instances.
-        :param new_config: Config to replace the static config
-        :type new_config: RawConfigParser
-        :rtype: None:
-        """
-        global config
-        config = new_config
-        logger.warn("Backdoor set_config called. "
-                    "This config will apply to all instance of Spinnaker")

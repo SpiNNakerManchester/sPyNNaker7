@@ -10,8 +10,10 @@ from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
 from spinn_front_end_common.utilities import exceptions as \
     front_end_common_exceptions
+from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.notification_protocol. \
     socket_address import SocketAddress as __SockAddr
+
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
 from spynnaker.pyNN.models.neural_projections.projection_application_edge \
@@ -38,9 +40,8 @@ from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
-from spynnaker.pyNN.utilities import globals_variables
 from spynnaker.pyNN.utilities import utility_calls
-from spynnaker.pyNN.utilities.failed_state import FailedState
+
 from spynnaker7.pyNN.models.connectors.all_to_all_connector \
     import AllToAllConnector
 from spynnaker7.pyNN.models.connectors. \
@@ -191,12 +192,12 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     if len(extra_params) > 0:
         logger.warn("Extra params {} have been applied to the setup "
                     "command which we do not consider".format(extra_params))
-    spinnaker_control = __Spinnaker(
+    __Spinnaker(
         host_name=machine, timestep=timestep, min_delay=min_delay,
         max_delay=max_delay,
         database_socket_addresses=database_socket_addresses,
         n_chips_required=n_chips_required)
-    globals_variables.set_simulator(spinnaker_control)
+
     # the PyNN API expects the MPI rank to be returned
     return rank()
 
@@ -229,7 +230,7 @@ def register_database_notification_request(hostname, notify_port, ack_port):
     :param ack_port: the port for sending back the ack
     :rtype: None
     """
-    globals_variables.get_simulator()._add_socket_address(__SockAddr(
+    globals_variables.get_simulator().add_socket_address(__SockAddr(
         hostname, notify_port, ack_port))
 
 
@@ -326,14 +327,14 @@ def get_min_delay():
     """ The minimum allowed synaptic delay.
     :return:
     """
-    return globals_variables.get_simulator().min_supported_delay
+    return globals_variables.get_simulator().min_delay
 
 
 def get_max_delay():
     """ The maximum allowed synaptic delay.
     :return:
     """
-    return globals_variables.get_simulator().max_supported_delay
+    return globals_variables.get_simulator().max_delay
 
 
 def set(cells, param, val=None):  # @ReservedAssignment
@@ -371,7 +372,7 @@ def record_gsyn(source, filename):
 def get_machine():
     """ Get the spinnaker machine in use
     """
-    if isinstance(globals_variables.get_simulator(), FailedState):
+    if globals_variables.has_simulator():
         raise front_end_common_exceptions.ConfigurationException(
             "You currently have not ran setup, please do so before calling "
             "get_machine")

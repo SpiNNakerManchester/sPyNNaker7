@@ -33,6 +33,7 @@ import spynnaker7.pyNN as sim
 import spynnaker.plot_utils as plot_utils
 
 from p7_integration_tests.base_test_case import BaseTestCase
+from unittest import SkipTest
 
 
 def do_run():
@@ -184,7 +185,7 @@ def do_run():
     # Run simulation
     sim.run(simtime)
 
-    print("Weights:", plastic_projection.getWeights())
+    weights = plastic_projection.getWeights()
 
     pre_spikes = pre_pop.getSpikes(compatible_output=True)
     post_spikes = post_pop.getSpikes(compatible_output=True)
@@ -192,7 +193,7 @@ def do_run():
     # End simulation on SpiNNaker
     sim.end()
 
-    return (pre_spikes, post_spikes)
+    return (pre_spikes, post_spikes, weights)
 
 
 class StdpExample(BaseTestCase):
@@ -201,15 +202,23 @@ class StdpExample(BaseTestCase):
     # The number of params does not equal with
     # the number of atoms in the vertex
     def test_run(self):
-        (pre_spikes, post_spikes) = do_run()
-        self.assertLess(130, len(pre_spikes))
-        self.assertGreater(220, len(pre_spikes))
-        self.assertLess(70, len(post_spikes))
-        self.assertGreater(110, len(post_spikes))
+        (pre_spikes, post_spikes, weights) = do_run()
+        try:
+            self.assertLess(130, len(pre_spikes))
+            self.assertGreater(220, len(pre_spikes))
+            self.assertLess(70, len(post_spikes))
+            self.assertGreater(110, len(post_spikes))
+            self.assertLess(750, len(weights))
+            self.assertGreater(900, len(weights))
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
 
 
 if __name__ == '__main__':
-    (pre_spikes, post_spikes) = do_run()
+    (pre_spikes, post_spikes, weights) = do_run()
     print len(pre_spikes)
     print len(post_spikes)
     plot_utils.plot_spikes([pre_spikes, post_spikes])
+    print len(weights)
+    print("Weights:", weights)
