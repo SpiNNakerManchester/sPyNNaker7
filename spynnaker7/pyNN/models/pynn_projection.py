@@ -1,3 +1,6 @@
+from spynnaker.pyNN.models.neuron.synapse_dynamics import AbstractStaticSynapseDynamics
+from spynnaker.pyNN.models.neuron.synapse_dynamics.abstract_synapse_dynamics_structural import \
+    AbstractSynapseDynamicsStructural
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_static \
     import SynapseDynamicsStatic
 from spynnaker.pyNN.models.neuron.abstract_population_vertex \
@@ -27,7 +30,8 @@ class Projection(PyNNProjectionCommon):
             synapse_dynamics=None, rng=None):
 
         synapse_dynamics_stdp = None
-        if synapse_dynamics is None:
+        if synapse_dynamics is None or (isinstance(synapse_dynamics, AbstractSynapseDynamicsStructural) and \
+                isinstance(synapse_dynamics.super, AbstractStaticSynapseDynamics)):
             synapse_dynamics_stdp = SynapseDynamicsStatic()
         else:
             synapse_dynamics_stdp = synapse_dynamics.slow
