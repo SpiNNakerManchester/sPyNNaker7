@@ -1,12 +1,14 @@
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 from unittest import SkipTest
+import unittest
 
 
-def do_run():
+def do_run(split_spike_source_poisson):
     p.setup(1.0)
 
-    # p.set_number_of_neurons_per_core(p.SpikeSourcePoisson, 27)
+    if split_spike_source_poisson:
+        p.set_number_of_neurons_per_core(p.SpikeSourcePoisson, 27)
     # p.set_number_of_neurons_per_core(p.IF_curr_exp, 22)
 
     inp = p.Population(100, p.SpikeSourcePoisson, {"rate": 100}, label="input")
@@ -59,7 +61,22 @@ def plot_spikes(pop_spikes, inp_spikes):
 class TestChangeParameter(BaseTestCase):
 
     def test_run(self):
-        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(False)
+        try:
+            self.assertLess(1100, len(pop_spikes1))
+            self.assertGreater(1300, len(pop_spikes1))
+            self.assertLess(1100, len(inp_spikes1))
+            self.assertGreater(1300, len(inp_spikes1))
+            self.assertLess(450, len(pop_spikes2))
+            self.assertGreater(600, len(pop_spikes2))
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
+        self.assertEqual(0, len(inp_spikes2))
+
+    @unittest.skip("BROKEN {}".format(__file__))
+    def test_run_split(self):
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(True)
         try:
             self.assertLess(1100, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
@@ -74,6 +91,6 @@ class TestChangeParameter(BaseTestCase):
 
 
 if __name__ == '__main__':
-    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run()
+    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(True)
     plot_spikes([pop_spikes1, inp_spikes1])
     plot_spikes([pop_spikes2, inp_spikes2])
