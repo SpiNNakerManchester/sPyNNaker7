@@ -1,15 +1,19 @@
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 from unittest import SkipTest
-import unittest
+import os
 
 
-def do_run(split_spike_source_poisson):
+def do_run(split_spike_source_poisson=False, change_spike_rate=True,
+           split_if_curr_exp=False, change_if_curr=True):
     p.setup(1.0)
 
     if split_spike_source_poisson:
+        print "split SpikeSourcePoisson", split_spike_source_poisson
         p.set_number_of_neurons_per_core(p.SpikeSourcePoisson, 27)
-    # p.set_number_of_neurons_per_core(p.IF_curr_exp, 22)
+    if split_if_curr_exp:
+        print "split IF_curr_exp"
+        p.set_number_of_neurons_per_core(p.IF_curr_exp, 22)
 
     inp = p.Population(100, p.SpikeSourcePoisson, {"rate": 100}, label="input")
     pop = p.Population(100, p.IF_curr_exp, {}, label="pop")
@@ -21,9 +25,11 @@ def do_run(split_spike_source_poisson):
 
     p.run(100)
 
-    inp.set("rate", 10)
-    # pop.set("cm", 0.25)
-    pop.set("tau_syn_E", 1)
+    if change_spike_rate:
+        inp.set("rate", 10)
+    if change_if_curr:
+        # pop.set("cm", 0.25)
+        pop.set("tau_syn_E", 1)
 
     p.run(100)
 
@@ -35,7 +41,6 @@ def do_run(split_spike_source_poisson):
     inp.set("rate", 0)
     pop.set("i_offset", 1.0)
     pop.initialize("v", p.RandomDistribution("uniform", [-65.0, -55.0]))
-
     p.run(100)
 
     pop_spikes2 = pop.getSpikes()
@@ -60,8 +65,9 @@ def plot_spikes(pop_spikes, inp_spikes):
 
 class TestChangeParameter(BaseTestCase):
 
-    def test_run(self):
-        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(False)
+    def test_run_no_change(self):
+        results = do_run()
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
             self.assertLess(1100, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
@@ -74,9 +80,62 @@ class TestChangeParameter(BaseTestCase):
             raise SkipTest(ex)
         self.assertEqual(0, len(inp_spikes2))
 
-    @unittest.skip("BROKEN {}".format(__file__))
-    def test_run_split(self):
-        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(True)
+    def test_run_split_spike(self):
+        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
+            raise SkipTest("BROKEN {}".format(__file__))
+        results = do_run(split_spike_source_poisson=True)
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
+        try:
+            self.assertLess(1100, len(pop_spikes1))
+            self.assertGreater(1300, len(pop_spikes1))
+            self.assertLess(1100, len(inp_spikes1))
+            self.assertGreater(1300, len(inp_spikes1))
+            self.assertLess(450, len(pop_spikes2))
+            self.assertGreater(600, len(pop_spikes2))
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
+        self.assertEqual(0, len(inp_spikes2))
+
+    def test_run_split_spike_no_if_curr_change(self):
+        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
+            raise SkipTest("BROKEN {}".format(__file__))
+        results = do_run(split_spike_source_poisson=True,
+                         change_if_curr=False)
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
+        try:
+            self.assertLess(1100, len(pop_spikes1))
+            self.assertGreater(1300, len(pop_spikes1))
+            self.assertLess(1100, len(inp_spikes1))
+            self.assertGreater(1300, len(inp_spikes1))
+            self.assertLess(450, len(pop_spikes2))
+            self.assertGreater(600, len(pop_spikes2))
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
+        self.assertEqual(0, len(inp_spikes2))
+
+    def test_run_split_spike_no_rate_change(self):
+        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
+            raise SkipTest("BROKEN {}".format(__file__))
+        results = do_run(split_spike_source_poisson=True,
+                         change_spike_rate=False)
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
+        try:
+            self.assertLess(1100, len(pop_spikes1))
+            self.assertGreater(1300, len(pop_spikes1))
+            self.assertLess(1900, len(inp_spikes1))
+            self.assertGreater(2200, len(inp_spikes1))
+            self.assertLess(450, len(pop_spikes2))
+            self.assertGreater(600, len(pop_spikes2))
+        except Exception as ex:
+            # Just in case the range failed
+            raise SkipTest(ex)
+        self.assertEqual(0, len(inp_spikes2))
+
+    def test_run_split_if_curr(self):
+        results = do_run(split_if_curr_exp=False)
+        (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
             self.assertLess(1100, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
