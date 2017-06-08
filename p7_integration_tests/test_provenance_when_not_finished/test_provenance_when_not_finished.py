@@ -1,7 +1,7 @@
 """
 Synfirechain-like example
 """
-from spynnaker.pyNN.abstract_spinnaker_common import SpiNNakerCommon
+from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 import spynnaker7.pyNN as p
 from spinnman.exceptions import SpinnmanTimeoutException
 from p7_integration_tests.scripts.fake_if_curr import FakeIFCurrExp
@@ -18,7 +18,7 @@ class ProvenanceWhenNotFinishedTest(BaseTestCase):
             # add to the path the location of the dodgy binary
             # (if_cur_exp with the c_main bodged to result in it
             # running for twice as long as expected)
-            ex_finder = SpiNNakerCommon._EXECUTABLE_FINDER
+            ex_finder = AbstractSpiNNakerCommon._EXECUTABLE_FINDER
             ex_finder.add_path(os.path.dirname(__file__))
             nNeurons = 200  # number of neurons in each population
             cell_params_lif = {'cm': 0.25,
