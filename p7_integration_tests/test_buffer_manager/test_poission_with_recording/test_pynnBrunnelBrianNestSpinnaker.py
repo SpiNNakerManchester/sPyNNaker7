@@ -4,6 +4,7 @@ import p7_integration_tests.test_buffer_manager.test_poission_with_recording.\
 from p7_integration_tests.base_test_case import BaseTestCase
 import p7_integration_tests.scripts.pynnBrunnelBrianNestSpinnaker as script
 
+import os
 from unittest import SkipTest
 
 Neurons = 3000  # number of neurons in each population
@@ -29,6 +30,8 @@ def plot(esp, sim_time, N_E):
 class PynnBrunnelBrianNestSpinnaker(BaseTestCase):
 
     def test_run(self):
+        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
+            raise SkipTest("SKIPPED AS TAKES TOO LONG {}".format(__file__))
         (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
         try:
             self.assertLess(200, len(esp))
