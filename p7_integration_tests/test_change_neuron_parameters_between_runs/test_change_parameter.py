@@ -65,13 +65,13 @@ def plot_spikes(pop_spikes, inp_spikes):
 
 class TestChangeParameter(BaseTestCase):
 
-    def test_run_no_change(self):
+    def test_run_change(self):
         results = do_run()
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
-            self.assertLess(1100, len(pop_spikes1))
+            self.assertLess(1000, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
-            self.assertLess(1100, len(inp_spikes1))
+            self.assertLess(1000, len(inp_spikes1))
             self.assertGreater(1300, len(inp_spikes1))
             self.assertLess(450, len(pop_spikes2))
             self.assertGreater(600, len(pop_spikes2))
@@ -86,9 +86,9 @@ class TestChangeParameter(BaseTestCase):
         results = do_run(split_spike_source_poisson=True)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
-            self.assertLess(1100, len(pop_spikes1))
+            self.assertLess(1000, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
-            self.assertLess(1100, len(inp_spikes1))
+            self.assertLess(1000, len(inp_spikes1))
             self.assertGreater(1300, len(inp_spikes1))
             self.assertLess(450, len(pop_spikes2))
             self.assertGreater(600, len(pop_spikes2))
@@ -104,12 +104,12 @@ class TestChangeParameter(BaseTestCase):
                          change_if_curr=False)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
-            self.assertLess(1100, len(pop_spikes1))
+            self.assertLess(1000, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
             self.assertLess(1100, len(inp_spikes1))
             self.assertGreater(1300, len(inp_spikes1))
-            self.assertLess(450, len(pop_spikes2))
-            self.assertGreater(600, len(pop_spikes2))
+            self.assertLess(250, len(pop_spikes2))
+            self.assertGreater(450, len(pop_spikes2))
         except Exception as ex:
             # Just in case the range failed
             raise SkipTest(ex)
@@ -122,10 +122,10 @@ class TestChangeParameter(BaseTestCase):
                          change_spike_rate=False)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
-            self.assertLess(1100, len(pop_spikes1))
-            self.assertGreater(1300, len(pop_spikes1))
+            self.assertLess(1900, len(pop_spikes1))
+            self.assertGreater(2100, len(pop_spikes1))
             self.assertLess(1900, len(inp_spikes1))
-            self.assertGreater(2200, len(inp_spikes1))
+            self.assertGreater(2100, len(inp_spikes1))
             self.assertLess(450, len(pop_spikes2))
             self.assertGreater(600, len(pop_spikes2))
         except Exception as ex:
@@ -134,12 +134,12 @@ class TestChangeParameter(BaseTestCase):
         self.assertEqual(0, len(inp_spikes2))
 
     def test_run_split_if_curr(self):
-        results = do_run(split_if_curr_exp=False)
+        results = do_run(split_if_curr_exp=True)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
-            self.assertLess(1100, len(pop_spikes1))
+            self.assertLess(1000, len(pop_spikes1))
             self.assertGreater(1300, len(pop_spikes1))
-            self.assertLess(1100, len(inp_spikes1))
+            self.assertLess(1000, len(inp_spikes1))
             self.assertGreater(1300, len(inp_spikes1))
             self.assertLess(450, len(pop_spikes2))
             self.assertGreater(600, len(pop_spikes2))
@@ -150,6 +150,11 @@ class TestChangeParameter(BaseTestCase):
 
 
 if __name__ == '__main__':
-    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = do_run(True)
-    plot_spikes([pop_spikes1, inp_spikes1])
-    plot_spikes([pop_spikes2, inp_spikes2])
+    results = do_run(split_spike_source_poisson=True)
+    (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
+    print len(pop_spikes1)
+    print len(inp_spikes1)
+    print len(pop_spikes2)
+    print len(inp_spikes2)
+    # plot_spikes([pop_spikes1, inp_spikes1])
+    # plot_spikes([pop_spikes2, inp_spikes2])
