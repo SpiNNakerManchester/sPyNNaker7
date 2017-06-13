@@ -2,6 +2,9 @@ import unittest
 import spynnaker.pyNN.utilities.utility_calls as utility_calls
 import os
 import shutil
+from spinn_front_end_common.utilities import globals_variables
+from spynnaker7.pyNN.spinnaker import Spinnaker
+from pyNN.random import RandomDistribution
 
 
 class TestUtilityCalls(unittest.TestCase):
@@ -47,9 +50,16 @@ class TestUtilityCalls(unittest.TestCase):
     def test_get_ring_buffer_to_input_left_shift(self):
         self.assertEqual(True, False, "Test not implemented yet")
 
-    @unittest.skip("Not implemented")
     def test_convert_param_to_numpy_random_distribution(self):
-        self.assertEqual(True, False, "Test not implemented yet")
+        globals_variables.set_simulator(Spinnaker(timestep=1.0))
+        random = RandomDistribution("uniform", [0, 1])
+        single_value = utility_calls.convert_param_to_numpy(random, 1)
+        multi_value = utility_calls.convert_param_to_numpy(random, 10)
+
+        self.assertTrue(hasattr(single_value, "__iter__"))
+        self.assertEqual(len(single_value), 1)
+        self.assertTrue(hasattr(multi_value, "__iter__"))
+        self.assertEqual(len(multi_value), 10)
 
     @unittest.skip("Not implemented")
     def test_convert_param_to_numpy_iterable(self):
