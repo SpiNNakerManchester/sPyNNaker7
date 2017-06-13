@@ -81,8 +81,6 @@ class TestChangeParameter(BaseTestCase):
         self.assertEqual(0, len(inp_spikes2))
 
     def test_run_split_spike(self):
-        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
-            raise SkipTest("BROKEN {}".format(__file__))
         results = do_run(split_spike_source_poisson=True)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
         try:
@@ -98,8 +96,6 @@ class TestChangeParameter(BaseTestCase):
         self.assertEqual(0, len(inp_spikes2))
 
     def test_run_split_spike_no_if_curr_change(self):
-        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
-            raise SkipTest("BROKEN {}".format(__file__))
         results = do_run(split_spike_source_poisson=True,
                          change_if_curr=False)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
@@ -116,8 +112,6 @@ class TestChangeParameter(BaseTestCase):
         self.assertEqual(0, len(inp_spikes2))
 
     def test_run_split_spike_no_rate_change(self):
-        if os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True':
-            raise SkipTest("BROKEN {}".format(__file__))
         results = do_run(split_spike_source_poisson=True,
                          change_spike_rate=False)
         (pop_spikes1, inp_spikes1, pop_spikes2, inp_spikes2) = results
