@@ -1,8 +1,9 @@
 import unittest
 import spynnaker7.pyNN as p
+from p7_integration_tests.base_test_case import BaseTestCase
 
 
-class MyTestCase(unittest.TestCase):
+class MyTestCase(BaseTestCase):
 
     def test_recording_poisson_spikes(self):
         p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
