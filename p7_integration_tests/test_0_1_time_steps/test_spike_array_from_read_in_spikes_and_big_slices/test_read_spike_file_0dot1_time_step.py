@@ -64,7 +64,6 @@ def do_run():
     spikes_file = os.path.join(current_file_path, 'test.spikes')
 
     spikes = read_spikefile(spikes_file, n_neurons)
-    print spikes
     spike_array = {'spike_times': spikes}
 
     populations.append(p.Population(
