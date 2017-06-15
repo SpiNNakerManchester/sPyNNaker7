@@ -1,7 +1,6 @@
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 from unittest import SkipTest
-import os
 
 
 def do_run(split_spike_source_poisson=False, change_spike_rate=True,
