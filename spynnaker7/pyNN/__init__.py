@@ -8,11 +8,10 @@ import spynnaker7
 from pyNN.random import NumpyRNG, RandomDistribution
 from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
-from spinn_front_end_common.utilities import exceptions as \
-    front_end_common_exceptions
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol. \
-    socket_address import SocketAddress as __SockAddr
+from spinn_front_end_common.utilities.notification_protocol \
+    import SocketAddress as __SockAddr
 
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
@@ -373,7 +372,7 @@ def get_machine():
     """ Get the spinnaker machine in use
     """
     if not globals_variables.has_simulator():
-        raise front_end_common_exceptions.ConfigurationException(
+        raise ConfigurationException(
             "You currently have not ran setup, please do so before calling "
             "get_machine")
     return globals_variables.get_simulator().machine
