@@ -1,3 +1,4 @@
+from spynnaker.pyNN.models.abstract_models import AbstractAcceptsIncomingSynapses
 from spynnaker.pyNN.models.neuron.synapse_dynamics import AbstractStaticSynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.abstract_synapse_dynamics_structural import \
     AbstractSynapseDynamicsStructural
@@ -46,7 +47,7 @@ class Projection(PyNNProjectionCommon):
             time_scale_factor=spinnaker_control.time_scale_factor)
 
         if not isinstance(postsynaptic_population._get_vertex,
-                          AbstractPopulationVertex):
+                          AbstractAcceptsIncomingSynapses):
             raise exceptions.ConfigurationException(
                 "postsynaptic population is not designed to receive"
                 " synaptic projections")
