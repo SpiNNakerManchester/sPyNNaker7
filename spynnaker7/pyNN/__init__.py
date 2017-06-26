@@ -374,9 +374,8 @@ def record_gsyn(source, filename):
 def get_machine():
     """ Get the spinnaker machine in use
     """
-    if globals_variables.has_simulator():
+    if not globals_variables.has_simulator():
         raise front_end_common_exceptions.ConfigurationException(
             "You currently have not ran setup, please do so before calling "
             "get_machine")
-    else:
-        return globals_variables.get_simulator().machine
+    return globals_variables.get_simulator().machine

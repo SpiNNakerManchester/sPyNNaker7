@@ -1,10 +1,11 @@
-import unittest
 import spynnaker7.pyNN as p
+from p7_integration_tests.base_test_case import BaseTestCase
 import numpy
 import random
+import unittest
 
 
-class MyTestCase(unittest.TestCase):
+class MyTestCase(BaseTestCase):
     __name__ = "bOB"
 
     def test_recording_1_element(self):
