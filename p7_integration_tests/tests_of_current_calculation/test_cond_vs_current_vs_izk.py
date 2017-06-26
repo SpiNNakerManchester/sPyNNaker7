@@ -124,9 +124,9 @@ def do_run(nNeurons):
     curr_spikes = populations[1].getSpikes(compatible_output=True)
 
     # get izk
-    izk_v = populations[1].get_v(compatible_output=True)
-    izk_gsyn = populations[1].get_gsyn(compatible_output=True)
-    izk_spikes = populations[1].getSpikes(compatible_output=True)
+    izk_v = populations[2].get_v(compatible_output=True)
+    izk_gsyn = populations[2].get_gsyn(compatible_output=True)
+    izk_spikes = populations[2].getSpikes(compatible_output=True)
 
     p.end()
 
