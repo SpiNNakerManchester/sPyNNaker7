@@ -81,8 +81,7 @@ def do_run(nNeurons, neurons_per_core):
 
 
 class MwhPopulationSynfire(BaseTestCase):
-    @unittest.skip("Broken p7_integration_tests/test_various/"
-                   "test_mwh_population_synfire.py")
+
     def test_run_heavy(self):
         try:
             nNeurons = 200  # number of neurons in each population
