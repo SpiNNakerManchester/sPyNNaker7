@@ -29,12 +29,10 @@ def do_run(nNeurons):
 
 class Bug(BaseTestCase):
 
-    @unittest.skip("Broken p7_integration_tests/test_various/"
-                   "spike_record_bug.py")
     def test_run_(self):
         nNeurons = 10  # number of neurons in each population
         spikes = do_run(nNeurons)
-        print len(spikes)
+        self.assertEquals(20,  len(spikes))
 
 
 if __name__ == '__main__':
