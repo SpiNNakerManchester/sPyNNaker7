@@ -16,7 +16,6 @@ def do_run(nNeurons, _neurons_per_core):
 
     p.set_number_of_neurons_per_core("SpikeSourceArray", _neurons_per_core)
 
-
     pop = p.Population(nNeurons, p.SpikeSourceArray, spike_list, label='input')
 
     pop.record()
@@ -51,8 +50,9 @@ class BigManySpikes(BaseTestCase):
             # Just in case the range failed
             raise SkipTest(ex)
 
+
 if __name__ == '__main__':
     nNeurons = 600  # number of neurons in each population
-    spikes = do_run(nNeurons)
+    spikes = do_run(nNeurons, 69)
     plot_utils.plot_spikes(spikes)
     print spikes
