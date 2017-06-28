@@ -14,6 +14,7 @@ August 2006
 
 $Id:VAbenchmarks.py 5 2007-04-16 15:01:24Z davison $
 """
+import os
 import socket
 import unittest
 from p7_integration_tests.base_test_case import BaseTestCase
@@ -160,23 +161,22 @@ class TestVABenchmarkSpikes(BaseTestCase):
             exc_spikes = exc_cells.getSpikes()
             print len(exc_spikes)
 
+            current_file_path = os.path.dirname(os.path.abspath(__file__))
+            current_file_path = os.path.join(current_file_path, "spikes.data")
+            exc_cells.printSpikes(current_file_path)
+            pre_recorded_spikes = p.utility_calls.read_spikes_from_file(
+                current_file_path, 0, n_exc, 0, tstop)
+
+            for spike_element, read_element in zip(exc_spikes,
+                                                   pre_recorded_spikes):
+                self.assertEqual(round(spike_element[0], 1),
+                                 round(read_element[0], 1))
+                self.assertEqual(round(spike_element[1], 1),
+                                 round(read_element[1], 1))
+
             p.end()
 
-            # current_file_path = os.path.dirname(os.path.abspath(__file__))
-            # current_file_path = os.path.join(current_file_path,
-            #                                  "spikes.data")
-            # exc_cells.printSpikes(current_file_path)
-            # pre_recorded_spikes = p.utility_calls.read_spikes_from_file(
-            #    current_file_path, 0, n_exc, 0, tstop)
-
-            print "Skipping spike read back as broken"
-            # for spike_element, read_element in zip(exc_spikes,
-            #                                        pre_recorded_spikes):
-            #        self.assertEqual(round(spike_element[0], 1),
-            #                         round(read_element[0], 1))
-            #        self.assertEqual(round(spike_element[1], 1),
-            #                         round(read_element[1], 1))
-        # System intentional overload so may error
+# System intentional overload so may error
         except SpinnmanTimeoutException as ex:
             raise SkipTest(ex)
 
