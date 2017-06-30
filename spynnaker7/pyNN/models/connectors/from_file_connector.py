@@ -1,6 +1,6 @@
 from pyNN.recording import files
-from spynnaker.pyNN.models.neural_projections.connectors.from_file_connector \
-    import FromFileConnector as CommonFromFileConnector
+from spynnaker.pyNN.models.neural_projections.connectors.\
+    common_from_file_connector import CommonFromFileConnector
 
 
 class FromFileConnector(CommonFromFileConnector):

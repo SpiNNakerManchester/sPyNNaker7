@@ -1,8 +1,7 @@
 from pyNN.space import Space
 
 from spynnaker.pyNN.models.neural_projections.connectors. \
-    fixed_probability_connector import FixedProbabilityConnector as \
-    CommonFixedProbabilityConnector
+    common_fixed_probability_connector import CommonFixedProbabilityConnector
 from pyNN.connectors import FixedProbabilityConnector as \
     PyNNFixedProbabilityConnector
 
