@@ -31,8 +31,10 @@ class TestGetSpikesAt0_1msTimeStep(BaseTestCase):
                                neurons_per_core=neurons_per_core,
                                run_times=[runtime])
             spikes = synfire_run.get_output_pop_spikes()
+            print spikes
             if len(spikes) != 0:
-                raise Exception("Test fail")
+                raise Exception("Test {} failed as virtual machine is "
+                                "producing data".format(__file__))
         # System intentional overload so may error
         except SpinnmanTimeoutException as ex:
             raise SkipTest(ex)
