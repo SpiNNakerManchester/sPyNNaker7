@@ -3,7 +3,7 @@ import unittest
 import spynnaker7.pyNN as pyNN
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from pacman.model.constraints.placer_constraints \
-    import PlacerChipAndCoreConstraint
+    import ChipAndCoreConstraint
 
 populations = list()
 cell_params_lif = {'cm': 0.25,
@@ -83,7 +83,7 @@ class TestPyNNPopulation(unittest.TestCase):
     def test_set_constraint_to_population(self):
         pop = pyNN.Population(10, pyNN.IF_curr_exp, cell_params_lif,
                               label="Constrained population")
-        placer_constraint = PlacerChipAndCoreConstraint(x=1, y=0)
+        placer_constraint = ChipAndCoreConstraint(x=1, y=0)
         pop.set_constraint(placer_constraint)
         constraints = pop._get_vertex.constraints
         self.assertIn(placer_constraint, constraints)
