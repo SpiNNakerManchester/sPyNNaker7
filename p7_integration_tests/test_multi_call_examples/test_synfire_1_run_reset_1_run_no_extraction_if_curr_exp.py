@@ -17,6 +17,7 @@ synfire_run = TestRun()
 
 
 class Synfire1RunReset1RunNo_extraction_if_curr_exp(BaseTestCase):
+
     @unittest.skip("https://github.com/SpiNNakerManchester/sPyNNaker/"
                    "issues/347")
     def test_run(self):

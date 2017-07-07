@@ -5,6 +5,7 @@ from p7_integration_tests.base_test_case import BaseTestCase
 from p7_integration_tests.scripts.synfire_run import TestRun
 import spynnaker.plot_utils as plot_utils
 import spynnaker.spike_checker as spike_checker
+import unittest
 
 nNeurons = 200  # number of neurons in each population
 run_times = [1000, 500]
@@ -13,6 +14,10 @@ synfire_run = TestRun()
 
 
 class Synfire1RunReset1RunSmallerRuntimeNoExtraction(BaseTestCase):
+
+
+    @unittest.skip("https://github.com/SpiNNakerManchester/sPyNNaker/"
+                   "issues/347")
     def test_run(self):
         synfire_run.do_run(nNeurons, run_times=run_times, reset=reset)
         spikes = synfire_run.get_output_pop_spikes()
