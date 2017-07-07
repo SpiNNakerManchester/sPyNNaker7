@@ -15,7 +15,6 @@ synfire_run = TestRun()
 
 class Synfire1RunReset1RunSmallerRuntimeNoExtraction(BaseTestCase):
 
-
     @unittest.skip("https://github.com/SpiNNakerManchester/sPyNNaker/"
                    "issues/347")
     def test_run(self):
