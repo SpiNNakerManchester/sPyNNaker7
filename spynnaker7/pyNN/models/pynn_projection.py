@@ -4,7 +4,7 @@ from spynnaker.pyNN.models.neuron.abstract_population_vertex \
     import AbstractPopulationVertex
 from spynnaker.pyNN.models.pynn_projection_common import PyNNProjectionCommon
 
-from spinn_front_end_common.utilities import exceptions
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 import logging
 
@@ -43,7 +43,7 @@ class Projection(PyNNProjectionCommon):
 
         if not isinstance(postsynaptic_population._get_vertex,
                           AbstractPopulationVertex):
-            raise exceptions.ConfigurationException(
+            raise ConfigurationException(
                 "postsynaptic population is not designed to receive"
                 " synaptic projections")
 

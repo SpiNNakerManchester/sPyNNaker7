@@ -1,8 +1,5 @@
 import unittest
-
-from spinn_front_end_common.utilities.utility_objs.report_states import \
-    ReportState
-
+from spinn_front_end_common.utilities.utility_objs import ReportState
 from spynnaker7.pyNN.utilities.conf import config
 
 

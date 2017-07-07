@@ -9,10 +9,8 @@ from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
 from spynnaker7.pyNN.spynnaker7_simulator_interface import \
     Spynnaker7SimulatorInterface
-from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
-    RandomStatsScipyImpl
-from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
-    RandomStatsUniformImpl
+from spynnaker7.pyNN.utilities.random_stats import \
+    RandomStatsScipyImpl, RandomStatsUniformImpl
 from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
     import Spynnaker7FailedState
 

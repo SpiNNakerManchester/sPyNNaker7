@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import unittest
-import spinn_front_end_common.utilities.exceptions as exc
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 import spynnaker7.pyNN as pyNN
 from spynnaker7.pyNN.models.pynn_projection import Projection
 
@@ -102,7 +102,7 @@ class TestProjection(unittest.TestCase):
         global projections
         weight_to_spike = 2
         delay = 5
-        with self.assertRaises(exc.ConfigurationException):
+        with self.assertRaises(ConfigurationException):
             for i in range(4, 6):
                 projections.append(pyNN.Projection(
                     populations[0], populations[i],
