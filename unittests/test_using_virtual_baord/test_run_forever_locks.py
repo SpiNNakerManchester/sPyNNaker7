@@ -35,17 +35,17 @@ class Test_run_forever(BaseTestCase):
     def test_forever_run(self):
         setup(None)
         with self.assertRaises(ConfigurationException):
-           p.run(10)
+            p.run(10)
 
     def test_forever_reset(self):
         setup(None)
         with self.assertRaises(ConfigurationException):
-           p.reset()
+            p.reset()
 
     def test_forever_population(self):
         setup(None)
         with self.assertRaises(ConfigurationException):
-            pop_2 = p.Population(1, p.IF_curr_exp, {}, label="pop_2")
+            p.Population(1, p.IF_curr_exp, {}, label="pop_2")
 
     def test_forever_projection(self):
         (pop_1, input, input_proj) = setup(None)
@@ -84,6 +84,6 @@ class Test_run_forever(BaseTestCase):
         with self.assertRaises(ConfigurationException):
             pop_1.record_v()
 
+
 if __name__ == '__main__':
     pass
-
