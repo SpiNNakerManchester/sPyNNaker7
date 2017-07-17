@@ -145,7 +145,7 @@ def rank():
 def reset():
     """ Reset the time to zero, and start the clock.
     """
-    globals_variables.get_simulator().reset()
+    globals_variables.get_not_running_simulator().reset()
 
 
 def run(run_time=None):
@@ -217,7 +217,7 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
         else:
             raise Exception("Unknown Vertex Type {}".format(neuron_type))
 
-    simulator = globals_variables.get_simulator()
+    simulator = globals_variables.get_not_running_simulator()
     simulator.set_number_of_neurons_per_core(neuron_type, max_permitted)
 
 
@@ -244,7 +244,9 @@ def Population(size, cellclass, cellparams, structure=None, label=None):
     :param label: the human readable label
     :return: a new population object
     """
-    return globals_variables.get_simulator().create_population(
+
+    globals_variables.get_simulator().verify_not_running()
+    return globals_variables.get_not_running_simulator().create_population(
         size, cellclass, cellparams, structure, label)
 
 
@@ -264,8 +266,8 @@ def Projection(presynaptic_population, postsynaptic_population,
     :param rng: random number generator if needed
     :return: a new Projection object
     """
-
-    return globals_variables.get_simulator().create_projection(
+    globals_variables.get_simulator().verify_not_running()
+    return globals_variables.get_not_running_simulator().create_projection(
         presynaptic_population, postsynaptic_population, connector, source,
         target, synapse_dynamics, label, rng)
 
