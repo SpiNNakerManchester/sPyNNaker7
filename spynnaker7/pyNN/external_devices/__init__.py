@@ -103,8 +103,6 @@ activate_live_output_for = \
 
 logger = logging.getLogger(__name__)
 
-AbstractSpiNNakerCommon.register_binary_search_path(
-    os.path.dirname(model_binaries.__file__))
 spynnaker_external_devices = SpynnakerExternalDevicePluginManager()
 
 
