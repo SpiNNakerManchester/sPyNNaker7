@@ -70,7 +70,7 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
 
-import spynnaker7.pyNN.external_devices as external_devices
+from spynnaker7.pyNN import external_devices
 
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
 from spynnaker7._version import __version__  # NOQA
