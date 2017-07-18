@@ -1,6 +1,5 @@
 # general imports
 import logging
-import os
 
 # fec imports
 from spinn_front_end_common.abstract_models \
@@ -12,9 +11,8 @@ from spinn_front_end_common.utility_models import LivePacketGather
 
 # spinnman imports
 from spinnman.messages.eieio.eieio_type import EIEIOType
+
 # main
-from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
-from spynnaker.pyNN import model_binaries
 from spynnaker.pyNN.connections \
     import EthernetCommandConnection
 from spynnaker.pyNN.connections \

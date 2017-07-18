@@ -25,7 +25,7 @@ __all__ = [
     'IFCurrDelta', 'IFCurrExpCa2Adaptive', 'IFCondExpStoc',
 
     # spynnaker 7 plastic stuff
-    'WeightDependenceAdditiveTriplet',
+    'AdditiveTripletWeightDependence',
     'PfisterSpikeTriplet',
     'SpikeNearestPair',
     'RecurrentRule', 'Vogels2011Rule']
