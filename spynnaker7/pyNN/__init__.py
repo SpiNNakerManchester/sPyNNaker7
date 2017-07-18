@@ -69,6 +69,9 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
+
+import spynnaker7.pyNN.external_devices as external_devices
+
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
 from spynnaker7._version import __version__  # NOQA
 from spynnaker7._version import __version_name__  # NOQA
@@ -99,6 +102,8 @@ __all__ = [
     # Stuff from pyNN.space
     'distance', 'Space', 'Line', 'Grid2D', 'Grid3D', 'Cuboid', 'Sphere',
     'RandomStructure',
+    # External devices
+    'external_devices',
     # Stuff that we define
     'end', 'setup', 'run', 'get_spynnaker',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
