@@ -18,8 +18,6 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_additive_triplet \
     import WeightDependenceAdditiveTriplet as AdditiveTripletWeightDependence
 
-import os
-
 __all__ = [
     # spynnaker 7 models
     'IFCurrDelta', 'IFCurrExpCa2Adaptive', 'IFCondExpStoc',
