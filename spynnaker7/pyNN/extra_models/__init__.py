@@ -2,6 +2,10 @@
 from spynnaker.pyNN.models.neuron.builds import IFCondExpStoc
 from spynnaker.pyNN.models.neuron.builds import IFCurrDelta
 from spynnaker.pyNN.models.neuron.builds import IFCurrExpCa2Adaptive
+from spynnaker.pyNN.models.neuron.builds import IzkCondExpBase as IZK_cond_exp
+from spynnaker.pyNN.models.neuron.builds import IzkCurrExpBase as IZK_curr_exp
+from spynnaker.pyNN.models.neuron.builds\
+    import IFCurrDualExpBase as IF_curr_dual_exp
 
 # plastic timing spynnaker 7
 from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
@@ -21,6 +25,7 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
 __all__ = [
     # spynnaker 7 models
     'IFCurrDelta', 'IFCurrExpCa2Adaptive', 'IFCondExpStoc',
+    'IZK_curr_exp', 'IZK_cond_exp', 'IF_curr_dual_exp',
 
     # spynnaker 7 plastic stuff
     'AdditiveTripletWeightDependence',
