@@ -75,15 +75,16 @@ class TestProjection(unittest.TestCase):
         populations.append(
             pyNN.Population(no_neurons, pyNN.IF_curr_exp, cell_params_lif,
                             label="LIF Pop"))
-        populations.append(pyNN.Population(no_neurons, pyNN.IF_curr_dual_exp,
+        populations.append(pyNN.Population(no_neurons,
+                                           pyNN.extra_models.IF_curr_dual_exp,
                                            cell_params_lif2exp,
                                            label="IF_curr_dual_exp Pop"))
         populations.append(
             pyNN.Population(no_neurons, pyNN.IF_cond_exp, cell_params_lifexp,
                             label="IF_cond_exp Pop"))
         populations.append(
-            pyNN.Population(no_neurons, pyNN.IZK_curr_exp, cell_params_izk,
-                            label="IZK_curr_exp Pop"))
+            pyNN.Population(no_neurons, pyNN.extra_models.IZK_curr_exp,
+                            cell_params_izk, label="IZK_curr_exp Pop"))
         populations.append(
             pyNN.Population(no_neurons, pyNN.SpikeSourceArray, spike_array,
                             label="SpikeSourceArray Pop"))
@@ -129,13 +130,13 @@ class TestProjection(unittest.TestCase):
             pyNN.Population(no_neurons, pyNN.IF_curr_exp, cell_params_lif,
                             label="LIF Pop"))
         populations.append(pyNN.Population(
-            no_neurons, pyNN.IF_curr_dual_exp, cell_params_lif2exp,
-            label="IF_curr_dual_exp Pop"))
+            no_neurons, pyNN.extra_models.IF_curr_dual_exp,
+            cell_params_lif2exp, label="IF_curr_dual_exp Pop"))
         populations.append(pyNN.Population(
             no_neurons, pyNN.IF_cond_exp, cell_params_lifexp,
             label="IF_cond_exp Pop"))
         populations.append(pyNN.Population(
-            no_neurons, pyNN.IZK_curr_exp, cell_params_izk,
+            no_neurons, pyNN.extra_models.IZK_curr_exp, cell_params_izk,
             label="IZK_curr_exp Pop"))
 
         for i in range(4):
