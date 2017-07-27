@@ -71,9 +71,13 @@ class Projection(PyNNProjectionCommon):
         """ Get parameters of the dynamic synapses for all connections in this\
             Projection.
         :param parameter_name:
-        :param list_format:
+        :param format:
         :param gather:
         """
+
+        if not gather:
+            logger.warn("Spynnaker always gathers from every core.")
+
         fixed_value = self._synapse_information.synapse_dynamics.get_value(
             parameter_name)
         return self._get_synaptic_data(
