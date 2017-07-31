@@ -1,25 +1,31 @@
+from p7_integration_tests.base_test_case import BaseTestCase
+from testfixtures import LogCapture
+import spynnaker7.pyNN as p
 
-class Test(object):
 
-    def test(self):
-        import spynnaker7.pyNN as p
-        p.setup()
-        p1 = p.Population(1, p.IF_curr_exp, {})
-        p2 = p.Population(1, p.IF_curr_exp, {})
+class TestGetWeightsAfterRuns(BaseTestCase):
 
-        proj = p.Projection(p1, p2, p.AllToAllConnector())
+    def test_run(self):
+        with LogCapture() as l:
+            p.setup()
+            p1 = p.Population(1, p.IF_curr_exp, {})
+            p2 = p.Population(1, p.IF_curr_exp, {})
 
-        p.run(500)
+            proj = p.Projection(p1, p2, p.AllToAllConnector())
 
-        proj.getWeights()
+            p.run(500)
 
-        p.run(500)
+            proj.getWeights()
 
-        proj.getWeights()
+            p.run(500)
 
-        p.end()
+            proj.getWeights()
+
+            p.end()
+            self.assert_logs_messages(
+                l.records, "Getting weights", 'INFO', 2)
 
 
 if __name__ == '__main__':
-    x = Test()
-    x.test()
+    x = TestGetWeightsAfterRuns()
+    x.test_run()
