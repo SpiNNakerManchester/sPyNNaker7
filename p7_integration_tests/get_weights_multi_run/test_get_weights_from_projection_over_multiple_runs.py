@@ -11,14 +11,13 @@ class Test(object):
 
         p.run(500)
 
-        x = proj.getWeights()
+        proj.getWeights()
 
         p.run(500)
 
-        y = proj.getWeights()
+        proj.getWeights()
 
         p.end()
-
 
 
 if __name__ == '__main__':
