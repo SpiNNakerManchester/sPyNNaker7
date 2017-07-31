@@ -19,6 +19,7 @@ synfire_run = TestRun()
 
 
 class Synfire2RunResetFileWriteIssue(BaseTestCase):
+
     @unittest.skip("https://github.com/SpiNNakerManchester/"
                    "SpiNNFrontEndCommon/issues/150")
     def test_run(self):

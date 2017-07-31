@@ -2,8 +2,8 @@
 import unittest
 import spynnaker7.pyNN as pyNN
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
-from pacman.model.constraints.placer_constraints.\
-    placer_chip_and_core_constraint import PlacerChipAndCoreConstraint
+from pacman.model.constraints.placer_constraints \
+    import ChipAndCoreConstraint
 
 populations = list()
 cell_params_lif = {'cm': 0.25,
@@ -42,11 +42,11 @@ class TestPyNNPopulation(unittest.TestCase):
         pyNN.Population(1, pyNN.IF_cond_exp, {}, label="One population")
 
     def test_create_izk_curr_exp_population(self):
-        pyNN.Population(1, pyNN.IZK_curr_exp,
+        pyNN.Population(1, pyNN.extra_models.IZK_curr_exp,
                         cell_params_izk, label="One population")
 
     def test_create_if_curr_dual_exp_population(self):
-        pyNN.Population(1, pyNN.IF_curr_dual_exp, cell_params_lif,
+        pyNN.Population(1, pyNN.extra_models.IF_curr_dual_exp, cell_params_lif,
                         label="One population")
 
     def test_create_if_curr_exp_population_zero(self):
@@ -60,13 +60,13 @@ class TestPyNNPopulation(unittest.TestCase):
 
     def test_create_izk_curr_exp_population_zero(self):
         with self.assertRaises(ConfigurationException):
-            pyNN.Population(0, pyNN.IZK_curr_exp,
+            pyNN.Population(0, pyNN.extra_models.IZK_curr_exp,
                             cell_params_izk, label="One population")
 
     def test_create_if_curr_dual_exp_population_zero(self):
         with self.assertRaises(ConfigurationException):
-            pyNN.Population(0, pyNN.IF_curr_dual_exp, cell_params_lif,
-                            label="One population")
+            pyNN.Population(0, pyNN.extra_models.IF_curr_dual_exp,
+                            cell_params_lif, label="One population")
 
     def test_population_size(self):
         pop0 = pyNN.Population(
@@ -83,7 +83,7 @@ class TestPyNNPopulation(unittest.TestCase):
     def test_set_constraint_to_population(self):
         pop = pyNN.Population(10, pyNN.IF_curr_exp, cell_params_lif,
                               label="Constrained population")
-        placer_constraint = PlacerChipAndCoreConstraint(x=1, y=0)
+        placer_constraint = ChipAndCoreConstraint(x=1, y=0)
         pop.set_constraint(placer_constraint)
         constraints = pop._get_vertex.constraints
         self.assertIn(placer_constraint, constraints)

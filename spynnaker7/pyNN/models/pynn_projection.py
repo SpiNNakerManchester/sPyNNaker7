@@ -4,7 +4,7 @@ from spynnaker.pyNN.models.neuron.abstract_population_vertex \
     import AbstractPopulationVertex
 from spynnaker.pyNN.models.pynn_projection_common import PyNNProjectionCommon
 
-from spinn_front_end_common.utilities import exceptions
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 import logging
 
@@ -43,7 +43,7 @@ class Projection(PyNNProjectionCommon):
 
         if not isinstance(postsynaptic_population._get_vertex,
                           AbstractPopulationVertex):
-            raise exceptions.ConfigurationException(
+            raise ConfigurationException(
                 "postsynaptic population is not designed to receive"
                 " synaptic projections")
 
@@ -65,18 +65,28 @@ class Projection(PyNNProjectionCommon):
         raise NotImplementedError
 
     # noinspection PyPep8Naming
-    def getSynapseDynamics(self, parameter_name, list_format='list',
-                           gather=True):
+    def getSynapseDynamics(
+            self, parameter_name, format='list',  # @ReservedAssignment
+            gather=True):  # @UnusedVariable
         """ Get parameters of the dynamic synapses for all connections in this\
             Projection.
         :param parameter_name:
-        :param list_format:
+        :param format:
         :param gather:
         """
-        return self.get(parameter_name, list_format, gather)
+
+        if not gather:
+            logger.warn("Spynnaker always gathers from every core.")
+
+        fixed_value = self._synapse_information.synapse_dynamics.get_value(
+            parameter_name)
+        return self._get_synaptic_data(
+            format == "list", None, [(parameter_name, fixed_value)])
 
     # noinspection PyPep8Naming
-    def getWeights(self, format='list', gather=True):  # @ReservedAssignment
+    def getWeights(
+            self, format='list',  # @ReservedAssignment
+            gather=True):  # @UnusedVariable
         """
         Get synaptic weights for all connections in this Projection.
 
@@ -89,7 +99,7 @@ class Projection(PyNNProjectionCommon):
         :param gather: gather the weights from stuff. currently has no meaning\
                 in spinnaker when set to false. Therefore is always true
         """
-        return self.get("weight", format, gather)
+        return self._get_synaptic_data(format == "list", ["weight"])
 
     # noinspection PyPep8Naming
     def getDelays(self, format='list', gather=True):  # @ReservedAssignment
@@ -100,7 +110,7 @@ class Projection(PyNNProjectionCommon):
         connections in the projection, a 2D delay array (with NaN for
         non-existent connections).
         """
-        return self.get("delay", format, gather)
+        return self._get_synaptic_data(format == "list", ["weight"])
 
     def __len__(self):
         """ Return the total number of local connections.
