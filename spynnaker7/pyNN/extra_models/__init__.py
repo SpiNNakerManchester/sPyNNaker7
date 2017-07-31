@@ -22,6 +22,11 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_additive_triplet \
     import WeightDependenceAdditiveTriplet as AdditiveTripletWeightDependence
 
+
+# custom plasticity models
+# from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence.
+#    import 
+
 __all__ = [
     # spynnaker 7 models
     'IFCurrDelta', 'IFCurrExpCa2Adaptive', 'IFCondExpStoc',
