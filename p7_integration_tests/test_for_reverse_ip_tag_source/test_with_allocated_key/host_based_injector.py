@@ -1,4 +1,6 @@
+""" BROKEN!
 import math
+import os
 import sqlite3 as sqlite
 import threading
 from spinnman.messages.eieio.eieio_type import EIEIOType
@@ -8,27 +10,32 @@ from time import sleep
 from spinnman.messages.eieio.command_messages import DatabaseConfirmation
 from spinnman.messages.eieio.data_messages import EIEIODataMessage
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
+import spynnaker.pyNN.abstract_spinnaker_common as abstract_spinnaker_common
 from spinn_utilities import conf_loader
-import spynnaker.pyNN
+from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 
-config = conf_loader.load_config(
-    spynnaker.pyNN, AbstractSpiNNakerCommon.CONFIG_FILE_NAME)
+default_config_path = os.path.join(
+    os.path.dirname(abstract_spinnaker_common.__file__),
+    AbstractSpiNNakerCommon.CONFIG_FILE)
+
+config = AbstractSpiNNakerCommon.CONFIG_FILE,
+                                 [default_config_path])
 
 
 class HostBasedInjector(object):
-    """ class that does handshaking with tool chain reads the database
+"""    """ class that does handshaking with tool chain reads the database
     generated, and injects a number of spikes with given spike ids / keys
 
     """
-
+"""
     def _receive_hand_shake(self, packet):
-        """ method to process the DatabaseConfirmation command message
+"""        """ method to process the DatabaseConfirmation command message
 
         :param packet: the DatabaseConfirmation message received
         :type packet: spinnman.messages.eieio.command_messages.
             database_confirmation
         :rtype: None
-        """
+"""        """
         self._received_hand_shake_condition.acquire()
         if not isinstance(packet, DatabaseConfirmation):
             raise Exception("not received correct type of command message")
@@ -111,3 +118,4 @@ class HostBasedInjector(object):
 if __name__ == "__main__":
     injector = HostBasedInjector(5, "spike_injector_1")
     injector.run()
+"""
