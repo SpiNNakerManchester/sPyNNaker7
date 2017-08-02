@@ -1,5 +1,4 @@
 import spynnaker7.pyNN as p
-from spynnaker_extra_pynn_models.neuron.builds.if_curr_comb_exp_7E7I import IFCurrCombExp7E7I
 import python.plot_utils as plot_utils
 p.setup(0.1)
 
