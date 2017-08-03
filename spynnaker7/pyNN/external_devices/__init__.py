@@ -140,6 +140,7 @@ __all__ = [
 
 ]
 
+
 def register_database_notification_request(hostname, notify_port, ack_port):
     """ Adds a socket system which is registered with the notification protocol
 
