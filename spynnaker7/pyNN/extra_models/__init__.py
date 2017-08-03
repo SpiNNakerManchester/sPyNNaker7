@@ -16,6 +16,8 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_5E5I \
     import IFCurrCombExp5E5I as IF_curr_comb_exp_5E5I
 from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I \
     import IFCurrCombExp7E7I as IF_curr_comb_exp_7E7I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I_no_init \
+    import IFCurrCombExp7E7I_no_init as IF_curr_comb_exp_7E7I_no_init
 
 # plastic timing spynnaker 7
 from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
@@ -38,7 +40,11 @@ __all__ = [
     'IZK_curr_exp', 'IZK_cond_exp', 'IF_curr_dual_exp',
 
     # additional synapses
-    'IF_curr_comb_exp', 'IF_curr_comb_exp_2E2I', 'IF_curr_comb_exp_5E5I', 'IF_curr_comb_exp_7E7I',
+    'IF_curr_comb_exp',
+    'IF_curr_comb_exp_2E2I',
+    'IF_curr_comb_exp_5E5I',
+    'IF_curr_comb_exp_7E7I',
+    'IF_curr_comb_exp_7E7I_no_init',
 
     # spynnaker 7 plastic stuff
     'AdditiveTripletWeightDependence',
