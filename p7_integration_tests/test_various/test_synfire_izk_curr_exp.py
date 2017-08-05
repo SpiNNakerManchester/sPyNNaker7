@@ -4,6 +4,7 @@ Synfirechain-like example
 """
 from p7_integration_tests.base_test_case import BaseTestCase
 import spynnaker7.pyNN as p
+from spynnaker7.pyNN.extra_models import IZK_curr_exp
 import spynnaker.plot_utils as plot_utils
 import spynnaker.spike_checker as spike_checker
 from unittest import SkipTest
@@ -11,7 +12,7 @@ from unittest import SkipTest
 
 def do_run(nNeurons):
     p.setup(timestep=1.0, min_delay=1.0, max_delay=32.0)
-    p.set_number_of_neurons_per_core("IZK_curr_exp", 100)
+    p.set_number_of_neurons_per_core(IZK_curr_exp, 100)
 
     cell_params_izk = {
         'a': 0.02,
@@ -38,7 +39,7 @@ def do_run(nNeurons):
 
     injectionConnection = [(0, 0, weight_to_spike, delay)]
     spikeArray = {'spike_times': [[50]]}
-    populations.append(p.Population(nNeurons, p.IZK_curr_exp, cell_params_izk,
+    populations.append(p.Population(nNeurons, IZK_curr_exp, cell_params_izk,
                                     label='pop_1'))
     populations.append(p.Population(1, p.SpikeSourceArray, spikeArray,
                                     label='inputSpikes_1'))

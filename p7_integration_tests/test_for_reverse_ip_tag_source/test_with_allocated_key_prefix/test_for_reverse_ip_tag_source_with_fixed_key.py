@@ -1,3 +1,4 @@
+""" Not a unittest and empty graph so not working!
 import pylab
 import spynnaker7.pyNN as frontend
 
@@ -76,3 +77,4 @@ else:
     print "No spikes received"
 
 frontend.end()
+"""

@@ -1,3 +1,5 @@
+""" !Not a unittest
+
 import pylab
 import spynnaker7.pyNN as FrontEnd
 from spinn_utilities.socket_address import SocketAddress
@@ -71,3 +73,4 @@ else:
     print "No spikes received"
 
 FrontEnd.end()
+"""
