@@ -42,11 +42,11 @@ class TestPyNNPopulation(unittest.TestCase):
         pyNN.Population(1, pyNN.IF_cond_exp, {}, label="One population")
 
     def test_create_izk_curr_exp_population(self):
-        pyNN.Population(1, pyNN.IZK_curr_exp,
+        pyNN.Population(1, pyNN.extra_models.IZK_curr_exp,
                         cell_params_izk, label="One population")
 
     def test_create_if_curr_dual_exp_population(self):
-        pyNN.Population(1, pyNN.IF_curr_dual_exp, cell_params_lif,
+        pyNN.Population(1, pyNN.extra_models.IF_curr_dual_exp, cell_params_lif,
                         label="One population")
 
     def test_create_if_curr_exp_population_zero(self):
@@ -60,13 +60,13 @@ class TestPyNNPopulation(unittest.TestCase):
 
     def test_create_izk_curr_exp_population_zero(self):
         with self.assertRaises(ConfigurationException):
-            pyNN.Population(0, pyNN.IZK_curr_exp,
+            pyNN.Population(0, pyNN.extra_models.IZK_curr_exp,
                             cell_params_izk, label="One population")
 
     def test_create_if_curr_dual_exp_population_zero(self):
         with self.assertRaises(ConfigurationException):
-            pyNN.Population(0, pyNN.IF_curr_dual_exp, cell_params_lif,
-                            label="One population")
+            pyNN.Population(0, pyNN.extra_models.IF_curr_dual_exp,
+                            cell_params_lif, label="One population")
 
     def test_population_size(self):
         pop0 = pyNN.Population(

@@ -3,6 +3,7 @@ import random
 import sys
 import unittest
 from unittest import SkipTest
+from spinn_front_end_common.utilities import globals_variables
 
 p7_integration_factor = float(os.environ.get('P7_INTEGRATION_FACTOR', "1"))
 random.seed(os.environ.get('P7_INTEGRATION_SEED', None))
@@ -17,15 +18,20 @@ class BaseTestCase(unittest.TestCase):
                   "P7_INTEGRATION_FACTOR {}" \
                   "".format(factor, p7_integration_factor)
             raise SkipTest(msg)
+        globals_variables.unset_simulator()
         class_file = sys.modules[self.__module__].__file__
         path = os.path.dirname(os.path.abspath(class_file))
         os.chdir(path)
 
-    def assert_logs_error(self, log_records, sub_message):
+    def assert_logs_messages(
+            self, log_records, sub_message, log_level='ERROR', count=1):
+        seen = 0
         for record in log_records:
-            print record
-            if record.levelname == 'ERROR':
+            if record.levelname == log_level:
                 if sub_message in record.msg:
-                    return
-        msg = "\"{}\" not found in any ERROR logs".format(sub_message)
+                    seen += 1
+        if seen == count:
+            return
+        msg = "\"{}\" not found in any {} logs {} times, was found {} " \
+              "times".format(sub_message, log_level, count, seen)
         raise self.failureException(msg)
