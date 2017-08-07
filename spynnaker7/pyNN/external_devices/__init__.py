@@ -8,6 +8,8 @@ from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.notification_protocol \
     import SocketAddress
 from spinn_front_end_common.utility_models import LivePacketGather
+from spinn_front_end_common.utilities.notification_protocol \
+    import SocketAddress as __SockAddr
 
 # spinnman imports
 from spinnman.messages.eieio.eieio_type import EIEIOType
@@ -133,9 +135,22 @@ __all__ = [
     # Provided functions
     "activate_live_output_for",
     "activate_live_output_to",
-    "SpikeInjector"
+    "SpikeInjector",
+    "register_database_notification_request"
 
 ]
+
+
+def register_database_notification_request(hostname, notify_port, ack_port):
+    """ Adds a socket system which is registered with the notification protocol
+
+    :param hostname: ip address of host
+    :param notify_port: port for listeing for when database is set up
+    :param ack_port: the port for sending back the ack
+    :rtype: None
+    """
+    spynnaker_external_devices.add_socket_address(__SockAddr(
+        hostname, notify_port, ack_port))
 
 
 def EthernetControl(
