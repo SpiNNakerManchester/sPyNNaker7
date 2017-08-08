@@ -14,11 +14,12 @@ class OneToOneConnector(CommonOneToOneConnector):
 
     def __init__(
             self, weights=0.0, delays=1, space=Space(), safe=True,
-            verbose=False):
+            verbose=False, generate_on_machine=False):
         """
         """
         CommonOneToOneConnector.__init__(
             self, safe=safe, verbose=verbose,
-            random_number_class=RandomDistribution)
+            random_number_class=RandomDistribution,
+            generate_on_machine=generate_on_machine)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)

@@ -54,6 +54,8 @@ from spynnaker7.pyNN.models.connectors.multapse_connector \
     import MultapseConnector
 from spynnaker7.pyNN.models.connectors.one_to_one_connector \
     import OneToOneConnector
+from spynnaker7.pyNN.models.connectors.kernel_connector \
+    import KernelConnector
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule

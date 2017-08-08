@@ -15,7 +15,7 @@ class AllToAllConnector(CommonAllToAllConnector):
 
     def __init__(
             self, weights=0.0, delays=1, allow_self_connections=True,
-            space=Space(), safe=True, verbose=None):
+            space=Space(), safe=True, verbose=None, generate_on_machine=False):
         """
 
         :param allow_self_connections:
@@ -32,6 +32,6 @@ class AllToAllConnector(CommonAllToAllConnector):
     """
         CommonAllToAllConnector.__init__(
             self, allow_self_connections=allow_self_connections, safe=safe,
-            verbose=verbose)
+            verbose=verbose, generate_on_machine=generate_on_machine)
         self.set_space(space)
         self.set_weights_and_delays(weights, delays)
