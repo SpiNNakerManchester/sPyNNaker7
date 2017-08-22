@@ -20,7 +20,7 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
 # plastic weight spynnaker 7
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_additive_triplet \
-    import WeightDependenceAdditiveTriplet
+    import WeightDependenceAdditiveTriplet as WeightDependenceAdditiveTriplet
 
 __all__ = [
     # spynnaker 7 models
@@ -28,7 +28,7 @@ __all__ = [
     'IZK_curr_exp', 'IZK_cond_exp', 'IF_curr_dual_exp',
 
     # spynnaker 7 plastic stuff
-    'AdditiveTripletWeightDependence',
+    'WeightDependenceAdditiveTriplet',
     'PfisterSpikeTriplet',
     'SpikeNearestPair',
     'RecurrentRule', 'Vogels2011Rule']
