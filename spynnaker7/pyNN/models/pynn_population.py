@@ -321,10 +321,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
         self._print_headers(file_handle, "gsyn", gsyn_exc.shape[0])
-        for ((neuronId, time, value_e), (_, _, value_i)) in zip(
+        for ((neuronId, _, value_e), (_, _, value_i)) in zip(
                 gsyn_exc, gsyn_inh):
-            file_handle.write("{}\t{}\t{}\t{}\n".format(
-                time, neuronId, value_e, value_i))
+            file_handle.write("{}\t{}\t{}\n".format(
+                value_e, value_i, neuronId))
         file_handle.close()
 
     def print_v(self, filename, gather=True):
@@ -339,8 +339,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
         self._print_headers(file_handle, "v", v.shape[0])
-        for (neuronId, time, value) in v:
-            file_handle.write("{}\t{}\t{}\n".format(time, neuronId, value))
+        for (neuronId, _, value) in v:
+            file_handle.write("{}\t{}\n".format(value, neuronId))
         file_handle.close()
 
     def rset(self, parametername, rand_distr):
