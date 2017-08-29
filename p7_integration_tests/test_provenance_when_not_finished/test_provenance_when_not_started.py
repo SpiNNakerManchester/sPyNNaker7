@@ -5,7 +5,7 @@ from p7_integration_tests.base_test_case import BaseTestCase
 
 def do_run():
     # this test ensures there is too much dtcm used up, thus crashes during
-    # initisation
+    # initialisation
     p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
 
     input = p.Population(1024, p.SpikeSourcePoisson, {'rate': 10}, "input")
@@ -31,7 +31,7 @@ class ProvenanceWhenNotStartedTest(BaseTestCase):
                 do_run()
                 self.assertTrue(False)
             except:
-                self.assert_logs_messages(l.records, "Out of DTCM")
+                self.assert_logs_messages(l.records, "Out of DTCM", count=4)
 
 
 if __name__ == '__main__':
