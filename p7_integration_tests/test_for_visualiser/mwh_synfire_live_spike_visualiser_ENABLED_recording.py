@@ -56,8 +56,8 @@ projections.append(p.Projection(populations[1], populations[0],
 
 populations[0].record()
 p.external_devices.activate_live_output_for(populations[0])
-populations[0].set_constraint(p.ChipAndCoreConstraint(0, 0, 2))
-populations[1].set_constraint(p.ChipAndCoreConstraint(0, 0, 3))
+populations[0].add_placement_constraint(0,0,2)  #set_constraint(p.ChipAndCoreConstraint(0, 0, 2))
+populations[1].add_placement_constraint(0,0,3)  #set_constraint(p.ChipAndCoreConstraint(0, 0, 3))
 
 run_time = 1000
 print "Running for {} ms".format(run_time)
@@ -74,8 +74,8 @@ if spikes is not None:
     pylab.plot([i[1] for i in spikes], [i[0] for i in spikes], ".")
     pylab.ylabel('neuron id')
     pylab.xlabel('Time/ms')
-    pylab.yticks([0, 2, 4, 6, 8, 10])
-    pylab.xticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
+    pylab.yticks([0, 20, 40, 60, 80, 100])
+    pylab.xticks([0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000])
     pylab.title('spikes')
     pylab.show()
 else:
