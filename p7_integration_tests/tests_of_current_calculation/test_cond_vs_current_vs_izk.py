@@ -36,7 +36,7 @@ def do_run(nNeurons):
                         'e_rev_I': -80.
                         }
 
-    p.set_number_of_neurons_per_core("IZK_curr_exp", 100)
+    p.set_number_of_neurons_per_core(p.extra_models.IZK_curr_exp, 100)
 
     cell_params_izk = {'a': 0.02,
                        'b': 0.2,
@@ -72,8 +72,8 @@ def do_run(nNeurons):
     populations.append(p.Population(nNeurons, p.IF_curr_exp, cell_params_lif,
                                     label='pop_curr'))
     # izk setup
-    populations.append(p.Population(nNeurons, p.IZK_curr_exp, cell_params_izk,
-                                    label='izk pop'))
+    populations.append(p.Population(nNeurons, p.extra_models.IZK_curr_exp,
+                                    cell_params_izk, label='izk pop'))
 
     # sink pop for spikes to go to (otherwise they are not recorded as firing)
     populations.append(p.Population(nNeurons, p.IF_curr_exp, cell_params_lif,
