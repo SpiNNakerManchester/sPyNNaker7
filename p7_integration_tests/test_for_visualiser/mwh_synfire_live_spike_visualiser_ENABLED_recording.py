@@ -56,8 +56,8 @@ projections.append(p.Projection(populations[1], populations[0],
 
 populations[0].record()
 p.external_devices.activate_live_output_for(populations[0])
-populations[0].add_placement_constraint(0,0,2)
-populations[1].add_placement_constraint(0,0,3)
+populations[0].add_placement_constraint(0, 0, 2)
+populations[1].add_placement_constraint(0, 0, 3)
 
 run_time = 1000
 print "Running for {} ms".format(run_time)
