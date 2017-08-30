@@ -11,7 +11,7 @@ def do_run(plot):
     nNeurons = 10  # 100
 
     rng = p.NumpyRNG(seed=28374)
-    rng1 = p.NumpyRNG(seed=12345)
+    # rng1 = p.NumpyRNG(seed=12345)
 
     # delay_distr = p.RandomDistribution('uniform', [5, 10], rng)
     # weight_distr = p.RandomDistribution('uniform', [0, 2], rng1)

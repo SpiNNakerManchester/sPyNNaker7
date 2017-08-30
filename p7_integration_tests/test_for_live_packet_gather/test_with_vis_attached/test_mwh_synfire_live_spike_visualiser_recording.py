@@ -140,4 +140,3 @@ if __name__ == '__main__':
                     [i[2] for i in gsyn_for_neuron])
         pylab.show()
     """
-
