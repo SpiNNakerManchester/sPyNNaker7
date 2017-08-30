@@ -35,7 +35,7 @@ def do_run():
     return V
 
 
-class TestSynapesExcitVsInhib(BaseTestCase):
+class TestSynapsesExcitVsInhib(BaseTestCase):
     def test_run(self):
         do_run()
 
