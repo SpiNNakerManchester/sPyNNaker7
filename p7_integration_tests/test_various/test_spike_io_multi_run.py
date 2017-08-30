@@ -53,9 +53,8 @@ def do_run():
     # initial call to set up the front end (pynn requirement)
     Frontend.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
 
-
-    # neurons per population and the length of runtime in ms for the simulation,
-    # as well as the expected weight each spike will contain
+    # neurons per population and the length of runtime in ms for the
+    # simulation, as well as the expected weight each spike will contain
     n_neurons = 100
     run_time = 8000
     weight_to_spike = 2.0
@@ -89,7 +88,6 @@ def do_run():
         # machine
         'port': 12345,
     }
-
 
     ##################################
     # Parameters for the injector population.  Note that each injector needs to
@@ -131,7 +129,7 @@ def do_run():
     Frontend.Projection(injector_backward, pop_backward,
                         Frontend.OneToOneConnector(weights=weight_to_spike))
 
-    # Synfire chain connections where each neuron is connected to its next neuron
+    # Synfire chain connection where each neuron is connected to next neuron
     # NOTE: there is no recurrent connection so that each chain stops once it
     # reaches the end
     loop_forward = list()
@@ -144,8 +142,8 @@ def do_run():
     Frontend.Projection(pop_backward, pop_backward,
                         Frontend.FromListConnector(loop_backward))
 
-    # record spikes from the synfire chains so that we can read off valid results
-    # in a safe way afterwards, and verify the behavior
+    # record spikes from the synfire chains so that we can read off valid
+    # results in a safe way afterwards, and verify the behaviour
     pop_forward.record()
     pop_backward.record()
 
@@ -156,7 +154,6 @@ def do_run():
     Frontend.external_devices.activate_live_output_for(
         pop_backward, database_notify_host="localhost",
         database_notify_port_num=19996)
-
 
     # Set up the live connection for sending spikes
     live_spikes_connection_send = \
@@ -193,7 +190,6 @@ def do_run():
         live_spikes_connection_receive.add_receive_callback(
             "pop_backward", receive_spikes)
 
-
     # Run the simulation on spiNNaker
     Frontend.run(run_time)
     Frontend.run(run_time)
@@ -202,8 +198,8 @@ def do_run():
     spikes_forward = pop_forward.getSpikes()
     spikes_backward = pop_backward.getSpikes()
 
-    # Clear data structures on spiNNaker to leave the machine in a clean state for
-    # future executions
+    # Clear data structures on spiNNaker to leave the machine in a clean state
+    # for future executions
     Frontend.end()
 
     return (spikes_forward, spikes_backward)
@@ -239,4 +235,3 @@ if __name__ == '__main__':
         pylab.show()
     else:
         print "No spikes received"
-

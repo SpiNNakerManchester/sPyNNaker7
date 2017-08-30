@@ -15,7 +15,7 @@ nNeurons = 10
 def do_run():
     # p.setup(timestep=1.0, min_delay = 1.0, max_delay = 32.0)
     p.setup(timestep=1.0, min_delay=1.0, max_delay=144.0)
-    max_delay = 50
+    # max_delay = 50
     # p.set_number_of_neurons_per_core("IF_curr_exp", nNeurons / 2)
     # p.set_number_of_neurons_per_core("DelayExtension", nNeurons / 2)
 
@@ -77,8 +77,8 @@ def do_run():
     populations[0].record()
     p.run(run_time)
 
-    v = None
-    gsyn = None
+    # v = None
+    # gsyn = None
     spikes = None
     spikes = populations[0].getSpikes(compatible_output=True)
     # print(projections[0].getWeights())
@@ -96,6 +96,7 @@ class SynfireChainBB2pop_BStest(BaseTestCase):
         spikes = do_run()
         self.assertEqual(20, len(spikes))
         spike_checker.synfire_spike_checker(spikes, nNeurons)
+
 
 if __name__ == '__main__':
     import pylab

@@ -7,14 +7,14 @@ from p7_integration_tests.base_test_case import BaseTestCase
 def do_run(plot):
     p.setup(timestep=1.0)
 
-    n_pop = 2  # 60
+    # n_pop = 2  # 60
     nNeurons = 10  # 100
 
     rng = p.NumpyRNG(seed=28374)
     rng1 = p.NumpyRNG(seed=12345)
 
-    delay_distr = p.RandomDistribution('uniform', [5, 10], rng)
-    weight_distr = p.RandomDistribution('uniform', [0, 2], rng1)
+    # delay_distr = p.RandomDistribution('uniform', [5, 10], rng)
+    # weight_distr = p.RandomDistribution('uniform', [0, 2], rng1)
 
     v_distr = p.RandomDistribution('uniform', [-55, -95], rng)
 
@@ -47,7 +47,6 @@ def do_run(plot):
 
     cell_params_ext_dev = {'port': 34567}
 
-
     populations = list()
     projections = list()
 
@@ -70,7 +69,8 @@ def do_run(plot):
         label='Babel_Dummy')
 
     populations.append(
-        p.Population(nNeurons, p.IF_curr_exp, cell_params_lif, label='pop_%d' % 1))
+        p.Population(nNeurons, p.IF_curr_exp, cell_params_lif,
+                     label='pop_%d' % 1))
 
     projections.append(
         p.Projection(pop_external, populations[1], p.OneToOneConnector(
@@ -117,6 +117,7 @@ class SynfireChainBB2pop_BStest(BaseTestCase):
         shapes = do_run(plot=False)
         self.assertEqual((1493, 2), shapes[0])
         self.assertEqual((0, 2), shapes[1])
+
 
 if __name__ == '__main__':
     do_run(plot=True)
