@@ -168,9 +168,9 @@ def do_run():
         "spike_injector_backward", init_pop)
 
     # Set up callbacks to occur at the start of simulation
-    live_spikes_connection_send.add_start_callback(
+    live_spikes_connection_send.add_start_resume_callback(
         "spike_injector_forward", send_input_forward)
-    live_spikes_connection_send.add_start_callback(
+    live_spikes_connection_send.add_start_resume_callback(
         "spike_injector_backward", send_input_backward)
 
     live_spikes_connection_receive = None
