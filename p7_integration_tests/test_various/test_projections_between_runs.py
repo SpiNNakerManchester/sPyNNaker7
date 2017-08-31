@@ -1,6 +1,5 @@
 import spynnaker7.pyNN as sim
 from p7_integration_tests.base_test_case import BaseTestCase
-# import neo_convertor
 
 
 def do_run():
