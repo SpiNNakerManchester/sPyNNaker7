@@ -40,7 +40,7 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
             hostname=host_name, max_delay=max_delay, min_delay=min_delay,
-            front_end_name="SpyNNaker7 version {}".format(version))
+            front_end_name="sPyNNaker7 version {}".format(version))
 
     def create_population(self, size, cellclass, cellparams, structure, label):
         """ creates a pynn 0.75 population
