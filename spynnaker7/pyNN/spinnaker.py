@@ -13,6 +13,7 @@ from spynnaker7.pyNN.utilities.random_stats import \
     RandomStatsScipyImpl, RandomStatsUniformImpl
 from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
     import Spynnaker7FailedState
+from _version import __version__ as version
 
 # global objects
 logger = logging.getLogger(__name__)
@@ -38,7 +39,8 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
             self, database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
-            hostname=host_name, max_delay=max_delay, min_delay=min_delay)
+            hostname=host_name, max_delay=max_delay, min_delay=min_delay,
+            front_end_name="SpyNNaker7 version {}".format(version))
 
     def create_population(self, size, cellclass, cellparams, structure, label):
         """ creates a pynn 0.75 population
