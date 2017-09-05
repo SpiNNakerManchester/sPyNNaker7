@@ -5,6 +5,7 @@ intermediate population
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 
+
 def do_run():
     # Setup
     p.setup(timestep=1.0)
