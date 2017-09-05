@@ -6,23 +6,25 @@ import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 from pacman.exceptions import PacmanConfigurationException
 
+
 def do_run():
     # Setup
     p.setup(timestep=1.0)
 
     # FPGA Retina
+    retina_device = p.external_devices.ExternalFPGARetinaDevice
     p.Population(
-        2000, p.external_devices.ExternalFPGARetinaDevice,
+        2000, retina_device,
         {'spinnaker_link_id': 0, 'retina_key': 0x5,
-         'mode': p.external_devices.ExternalFPGARetinaDevice.MODE_128,
-         'polarity': p.external_devices.ExternalFPGARetinaDevice.DOWN_POLARITY},
+         'mode': retina_device.MODE_128,
+         'polarity': retina_device.DOWN_POLARITY},
         label='External sata thing')
 
     p.Population(
-        2000, p.external_devices.ExternalFPGARetinaDevice,
+        2000, retina_device,
         {'spinnaker_link_id': 1, 'retina_key': 0x5,
-         'mode': p.external_devices.ExternalFPGARetinaDevice.MODE_128,
-         'polarity': p.external_devices.ExternalFPGARetinaDevice.DOWN_POLARITY},
+         'mode': retina_device.MODE_128,
+         'polarity': retina_device.DOWN_POLARITY},
         label='External sata thing')
 
     p.run(1000)

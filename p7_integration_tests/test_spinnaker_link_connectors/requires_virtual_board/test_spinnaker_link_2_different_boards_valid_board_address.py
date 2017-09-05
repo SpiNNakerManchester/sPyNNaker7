@@ -11,18 +11,22 @@ def do_run():
     p.setup(timestep=1.0)
 
     # FPGA Retina
+    retina_device = p.external_devices.ExternalFPGARetinaDevice
+
     p.Population(
-        2000, p.external_devices.ExternalFPGARetinaDevice,
-        {'spinnaker_link_id': 0, 'board_address': "127.0.0.1", 'retina_key': 0x5,
-         'mode': p.external_devices.ExternalFPGARetinaDevice.MODE_128,
-         'polarity': p.external_devices.ExternalFPGARetinaDevice.DOWN_POLARITY},
+        2000, retina_device,
+        {'spinnaker_link_id': 0, 'board_address': "127.0.0.1",
+         'retina_key': 0x5,
+         'mode': retina_device.MODE_128,
+         'polarity': retina_device.DOWN_POLARITY},
         label='External spinnaker link')
 
     p.Population(
-        2000, p.external_devices.ExternalFPGARetinaDevice,
-        {'spinnaker_link_id': 0, 'board_address': "127.0.0.2", 'retina_key': 0x5,
-         'mode': p.external_devices.ExternalFPGARetinaDevice.MODE_128,
-         'polarity': p.external_devices.ExternalFPGARetinaDevice.DOWN_POLARITY},
+        2000, retina_device,
+        {'spinnaker_link_id': 0, 'board_address': "127.0.0.2",
+         'retina_key': 0x5,
+         'mode': retina_device.MODE_128,
+         'polarity': retina_device.DOWN_POLARITY},
         label='External spinnaker link 2')
 
     p.run(1000)
