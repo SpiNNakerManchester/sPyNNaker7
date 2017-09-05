@@ -92,7 +92,7 @@ def do_run():
 
 class SynfireChainBB2pop_BStest(BaseTestCase):
 
-    def test_synfire_chain_BB_2pop_ABS_test(self):
+    def test_synfire_chain_BB_2pop_ABS(self):
         spikes = do_run()
         self.assertEqual(20, len(spikes))
         spike_checker.synfire_spike_checker(spikes, nNeurons)
