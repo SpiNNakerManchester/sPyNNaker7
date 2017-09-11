@@ -32,6 +32,7 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
 # plastic weight spynnaker 7
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_additive_triplet \
+<<<<<<< HEAD
     import WeightDependenceAdditiveTriplet as AdditiveTripletWeightDependence
 from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence \
     .weight_dependence_recurrent import WeightDependenceRecurrent
@@ -39,6 +40,9 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence \
 # custom plasticity models
 # from spynnaker.pyNN.models.neuron.plasticity.stdp.weight_dependence.
 #    import 
+=======
+    import WeightDependenceAdditiveTriplet as WeightDependenceAdditiveTriplet
+>>>>>>> refs/remotes/origin/additional_synaptic_shaping
 
 __all__ = [
     # spynnaker 7 models
@@ -53,7 +57,7 @@ __all__ = [
     'IF_curr_comb_exp_7E7I_no_init',
 
     # spynnaker 7 plastic stuff
-    'AdditiveTripletWeightDependence',
+    'WeightDependenceAdditiveTriplet',
     'PfisterSpikeTriplet',
     'SpikeNearestPair',
     'RecurrentRule', 'Vogels2011Rule', 'WeightDependenceRecurrent']
