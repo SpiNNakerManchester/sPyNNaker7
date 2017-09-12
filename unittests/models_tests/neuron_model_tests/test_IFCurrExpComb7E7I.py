@@ -2,11 +2,11 @@ import spynnaker7.pyNN as p
 import python.plot_utils as plot_utils
 p.setup(0.1)
 
-pop_src_exc = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src_exc")
-pop_src_inh = p.Population(1, p.SpikeSourceArray, {'spike_times': [[100]]}, label="src_inh")
+pop_src_exc = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0.0]]}, label="src_exc")
+pop_src_inh = p.Population(1, p.SpikeSourceArray, {'spike_times': [[140.0]]}, label="src_inh")
 
 
-pop_ex = p.Population(2, p.extra_models.IF_curr_comb_exp_7E7I, {}, label="test")
+pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp_7E7I, {}, label="test")
 
 d = 10
 
