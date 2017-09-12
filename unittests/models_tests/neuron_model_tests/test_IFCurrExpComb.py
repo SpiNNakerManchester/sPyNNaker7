@@ -4,6 +4,15 @@ p.setup(0.1)
 
 pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp, {}, label="test")
 pop_src1 = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src1")
+# 1.235
+# 1.3585
+
+# pop_ex.set('exc_a_tau', 37045.5 )
+# pop_ex.set('exc_b_tau',  40750.1)
+pop_ex.set('exc_a_tau', 1.235)
+pop_ex.set('exc_b_tau', 1.3585)
+pop_ex.set('inh_a_tau', 1.235)
+pop_ex.set('inh_b_tau', 1.3585)
 
 # define the projections
 exc_proj = p.Projection(pop_src1, pop_ex,
