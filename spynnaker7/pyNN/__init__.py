@@ -10,8 +10,6 @@ from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol \
-    import SocketAddress as __SockAddr
 
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
@@ -21,6 +19,12 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
+from spynnaker.pyNN.models.neuron.builds.izk_cond_exp_base \
+    import IzkCondExpBase as IZK_cond_exp
+from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
+    import IzkCurrExpBase as IZK_curr_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_supervision \
+     import IFCurrExpSupervision as IF_curr_exp_supervision
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -106,7 +110,7 @@ __all__ = [
     # Stuff that we define
     'end', 'setup', 'run', 'get_spynnaker',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
-    'register_database_notification_request', 'Population', 'Projection',
+    'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
@@ -223,18 +227,6 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
 
     simulator = globals_variables.get_not_running_simulator()
     simulator.set_number_of_neurons_per_core(neuron_type, max_permitted)
-
-
-def register_database_notification_request(hostname, notify_port, ack_port):
-    """ Adds a socket system which is registered with the notification protocol
-
-    :param hostname: ip address of host
-    :param notify_port: port for listeing for when database is set up
-    :param ack_port: the port for sending back the ack
-    :rtype: None
-    """
-    globals_variables.get_simulator().add_socket_address(__SockAddr(
-        hostname, notify_port, ack_port))
 
 
 # noinspection PyPep8Naming

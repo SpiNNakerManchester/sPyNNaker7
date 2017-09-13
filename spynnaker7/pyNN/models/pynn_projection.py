@@ -100,6 +100,7 @@ class Projection(PyNNProjectionCommon):
         :param gather: gather the weights from stuff. currently has no meaning\
                 in spinnaker when set to false. Therefore is always true
         """
+        logger.info("Getting weights from Projection {}".format(self._label))
         return self._get_synaptic_data(format == "list", ["weight"])
 
     # noinspection PyPep8Naming
