@@ -26,3 +26,19 @@ class RandomStatsUniformImpl(AbstractRandomStats):
 
     def var(self, dist):
         return uniform.var(*self._get_params(dist))
+
+    def high(self, dist):
+        """ Return the variance of the distribution
+        """
+        if dist.boundaries is None:
+            return None
+        else:
+            return max(dist.boundaries)
+
+    def low(self, dist):
+        """ Return the variance of the distribution
+        """
+        if dist.boundaries is None:
+            return None
+        else:
+            return min(dist.boundaries)
