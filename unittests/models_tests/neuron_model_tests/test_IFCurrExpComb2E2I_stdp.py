@@ -51,14 +51,14 @@ syn_plas = p.STDPMechanism(
 proj = p.Projection(
     pop_src, #_plastic,
     pop_ex,
-    p.AllToAllConnector(weights=2.5, delays=1),
+    p.OneToOneConnector(weights=2.5, delays=1),
     synapse_dynamics=p.SynapseDynamics(slow=syn_plas),
     target="excitatory")
 
 inh_proj = p.Projection(
     pop_src, #_plastic,
     pop_ex,
-    p.AllToAllConnector(weights=1.75, delays=5),
+    p.OneToOneConnector(weights=1.75, delays=5),
     synapse_dynamics=p.SynapseDynamics(slow=syn_plas),
     target="inhibitory2")
 
