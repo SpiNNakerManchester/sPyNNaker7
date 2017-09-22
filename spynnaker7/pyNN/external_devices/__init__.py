@@ -87,6 +87,7 @@ from spynnaker.pyNN.protocols \
     import MunichIoSpiNNakerLinkProtocol
 from spynnaker.pyNN.spynnaker_external_device_plugin_manager \
     import SpynnakerExternalDevicePluginManager
+from spynnaker.pyNN.external_devices_models import ExternalDeviceLifControl
 
 # injector
 from spynnaker.pyNN.models.utility_models \
@@ -113,6 +114,7 @@ __all__ = [
     "ExternalCochleaDevice", "ExternalFPGARetinaDevice",
     "MunichRetinaDevice", "MunichMotorDevice",
     "ArbitraryFPGADevice", "PushBotRetinaViewer",
+    "ExternalDeviceLifControl"
 
     # Pushbot Parameters
     "MunichIoSpiNNakerLinkProtocol",
