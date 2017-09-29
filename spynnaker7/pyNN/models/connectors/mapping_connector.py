@@ -14,8 +14,8 @@ class MappingConnector(CommonMappingConnector):
 
     def __init__(
             self, width, height, channel, row_bits, channel_bits=1,
-            weights=0.0, delays=1, space=Space(), safe=True,
-            verbose=False, generate_on_machine=False):
+            event_bits=0, weights=1.0, delays=1., space=Space(),
+            safe=True, verbose=False, generate_on_machine=False):
         """
         """
         CommonMappingConnector.__init__(
