@@ -19,8 +19,8 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
-from spynnaker.pyNN.models.neuron.builds.if_curr_exp_alpha \
-    import IFCurrExpAlpha as IF_curr_exp_alpha
+from spynnaker.pyNN.models.neuron.builds.if_curr_alpha \
+    import IFCurrAlpha as IF_curr_alpha
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -83,7 +83,7 @@ __all__ = [
     # Ugly, but tests expect it
     'utility_calls',
     # Implementations of the neuroscience models
-    'IF_cond_exp', 'IF_curr_exp', "IF_curr_exp_alpha"
+    'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha",
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
