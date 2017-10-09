@@ -1,11 +1,11 @@
 import spynnaker7.pyNN as p
-import python.plot_utils
+import python.plot_utils as plot_utils
 p.setup(0.1)
 
 pop_src1 = p.Population(1, p.SpikeSourceArray, {'spike_times': [[5, 15, 20, 30]]}, label="src1")
 
 
-pop_ex = p.Population(1, p.IF_curr_exp_alpha, {}, label="test")
+pop_ex = p.Population(1, p.IF_curr_alpha, {}, label="test")
 pop_ex.set("exc_tau", 2)
 # define the projection
 exc_proj = p.Projection(pop_src1, pop_ex,
