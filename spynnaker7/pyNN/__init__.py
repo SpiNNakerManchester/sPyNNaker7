@@ -83,7 +83,7 @@ __all__ = [
     # Ugly, but tests expect it
     'utility_calls',
     # Implementations of the neuroscience models
-    'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha"
+    'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha",
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
