@@ -1,5 +1,5 @@
 import spynnaker7.pyNN as p
-import plot_utils
+import python.plot_utils
 p.setup(0.1)
 
 pop_src1 = p.Population(1, p.SpikeSourceArray, {'spike_times': [[5, 15, 20, 30]]}, label="src1")
@@ -10,6 +10,8 @@ pop_ex.set("exc_tau", 2)
 # define the projection
 exc_proj = p.Projection(pop_src1, pop_ex,
         p.OneToOneConnector(weights=1, delays=1), target="excitatory")
+inh_proj = p.Projection(pop_src1, pop_ex,
+        p.OneToOneConnector(weights=1, delays=100), target="inhibitory")
 
 pop_ex.record()
 pop_ex.record_gsyn()
