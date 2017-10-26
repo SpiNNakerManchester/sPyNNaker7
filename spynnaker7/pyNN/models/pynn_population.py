@@ -32,6 +32,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
                  structure=None):
 
+        size = self._roundsize(size, label)
+
         internal_cellparams = dict(cellparams)
 
         # set spinnaker targeted parameters
