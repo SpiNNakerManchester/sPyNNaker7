@@ -93,7 +93,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         Return a 2-column numpy array containing cell ids and spike times for\
         recorded cells.
         """
-
         self._compatible_output_and_gather_warnings(compatible_output, gather)
         return self._get_recorded_variable("spikes")
 
@@ -101,12 +100,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Return the number of spikes for each neuron.
         """
         spikes = self.getSpikes(True, gather)
-        n_spikes = {}
-        counts = numpy.bincount(spikes[:, 0].astype(dtype=numpy.int32),
-                                minlength=self._vertex.n_atoms)
-        for i in range(self._vertex.n_atoms):
-            n_spikes[i] = counts[i]
-        return n_spikes
+        return PyNNPopulationCommon.get_spike_counts(self, spikes, gather)
 
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=True):
