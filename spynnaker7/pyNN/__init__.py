@@ -19,6 +19,10 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
+from spynnaker.pyNN.models.neuron.builds. \
+     if_curr_exp_izhikevich_neuromodulation\
+     import IFCurrExpIzhikevichNeuromodulation \
+     as IF_curr_exp_izhikevich_neuromodulation
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -55,6 +59,10 @@ from spynnaker7.pyNN.models.connectors.one_to_one_connector \
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
+from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
+    .timing_dependence_izhikevich_neuromodulation \
+    import TimingDependenceIzhikevichNeuromodulation \
+    as IzhikevichNeuromodulation
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
     weight_dependence_additive \
     import WeightDependenceAdditive as AdditiveWeightDependence
@@ -82,6 +90,7 @@ __all__ = [
     'utility_calls',
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_exp',
+    'IF_curr_exp_izhikevich_neuromodulation',
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
@@ -89,6 +98,7 @@ __all__ = [
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
     'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
+    'IzhikevichNeuromodulation',
     'MultiplicativeWeightDependence',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
