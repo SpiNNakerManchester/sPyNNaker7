@@ -34,11 +34,11 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
 
         self.assertEquals(n_neurons*runtime, len(gsyn))
         read_gsyn = numpy.loadtxt(gysn_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_gsyn, gsyn))
+        self.assertTrue(numpy.allclose(read_gsyn, gsyn, rtol=1e-04))
 
         self.assertEquals(n_neurons*runtime, len(v))
         read_v = numpy.loadtxt(v_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_v, v))
+        self.assertTrue(numpy.allclose(read_v, v, rtol=1e-04))
 
         self.assertEquals(expected_spikes, len(spikes))
         spike_checker.synfire_spike_checker(spikes, n_neurons)
@@ -66,7 +66,7 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
 
         self.assertEquals(n_neurons*runtime, len(v))
         read_v = numpy.loadtxt(v_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_v, v))
+        self.assertTrue(numpy.allclose(read_v, v, rtol=1e-04))
 
     def test_gsyn_no_constarint(self):
         synfire_run = TestRun()
@@ -77,7 +77,7 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
 
         self.assertEquals(n_neurons*runtime, len(gsyn))
         read_gsyn = numpy.loadtxt(gysn_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_gsyn, gsyn))
+        self.assertTrue(numpy.allclose(read_gsyn, gsyn, rtol=1e-04))
 
     def test_with_constarint(self):
         synfire_run = TestRun()
@@ -91,11 +91,11 @@ class Synfire20n20pcDelaysDelayExtensionsAllRecording(BaseTestCase):
 
         self.assertEquals(n_neurons*runtime, len(gsyn))
         read_gsyn = numpy.loadtxt(gysn_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_gsyn, gsyn))
+        self.assertTrue(numpy.allclose(read_gsyn, gsyn, rtol=1e-04))
 
         self.assertEquals(n_neurons*runtime, len(v))
         read_v = numpy.loadtxt(v_file, delimiter=',')
-        self.assertTrue(numpy.allclose(read_v, v))
+        self.assertTrue(numpy.allclose(read_v, v, rtol=1e-04))
 
         self.assertEquals(expected_spikes, len(spikes))
         spike_checker.synfire_spike_checker(spikes, n_neurons)
