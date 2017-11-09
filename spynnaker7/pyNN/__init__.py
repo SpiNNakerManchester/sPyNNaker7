@@ -29,6 +29,8 @@ from spynnaker.pyNN.models.spike_source.spike_source_from_file \
     import SpikeSourceFromFile
 from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
+from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
+    import SpikeSourcePoissonVariable
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
 from spynnaker.pyNN.utilities import utility_calls
@@ -84,6 +86,7 @@ __all__ = [
     'IF_cond_exp', 'IF_curr_exp',
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
+    'SpikeSourcePoissonVariable',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
