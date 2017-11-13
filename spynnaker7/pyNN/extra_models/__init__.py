@@ -20,6 +20,8 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I \
     import IFCurrCombExp7E7I as IF_curr_comb_exp_7E7I
 from spynnaker.pyNN.models.neuron.builds.izk_curr_comb_exp_4E4I \
     import IzkCurrCombExp4E4I as IZK_curr_comb_exp_4E4I
+from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
+    import SpikeSourcePoissonVariable
 
 # plastic timing spynnaker 7
 from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
@@ -48,6 +50,7 @@ __all__ = [
     'IF_curr_comb_exp_4E4I',
     'IF_curr_comb_exp_7E7I',
     'IZK_curr_comb_exp_4E4I',
+    'SpikeSourcePoissonVariable',
 
     # spynnaker 7 plastic stuff
     'WeightDependenceAdditiveTriplet',
