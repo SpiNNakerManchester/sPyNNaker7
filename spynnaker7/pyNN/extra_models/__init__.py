@@ -14,6 +14,8 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_2E2I \
     import IFCurrCombExp2E2I as IF_curr_comb_exp_2E2I
 from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_5E5I \
     import IFCurrCombExp5E5I as IF_curr_comb_exp_5E5I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_3E3I \
+    import IFCurrCombExp3E3I as IF_curr_comb_exp_3E3I
 from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_4E4I \
     import IFCurrCombExp4E4I as IF_curr_comb_exp_4E4I
 from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I \
@@ -44,8 +46,9 @@ __all__ = [
     # additional synapses
     'IF_curr_comb_exp',
     'IF_curr_comb_exp_2E2I',
-    'IF_curr_comb_exp_5E5I',
+    'IF_curr_comb_exp_3E3I',
     'IF_curr_comb_exp_4E4I',
+    'IF_curr_comb_exp_5E5I',
     'IF_curr_comb_exp_7E7I',
     'IZK_curr_comb_exp_4E4I',
 
