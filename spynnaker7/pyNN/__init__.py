@@ -19,6 +19,7 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
+
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -61,6 +62,8 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_2E2I \
+    import IFCurrCombExp2E2I as IF_curr_comb_exp_2E2I
 
 from spynnaker7.pyNN import external_devices
 from spynnaker7.pyNN import extra_models
@@ -82,6 +85,7 @@ __all__ = [
     'utility_calls',
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_exp',
+    'IF_curr_comb_exp_2E2I',
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
