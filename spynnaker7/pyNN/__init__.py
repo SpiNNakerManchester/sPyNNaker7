@@ -19,6 +19,20 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
+
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp \
+    import IFCurrCombExp as IF_curr_comb_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_2E2I \
+    import IFCurrCombExp2E2I as IF_curr_comb_exp_2E2I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_3E3I \
+    import IFCurrCombExp3E3I as IF_curr_comb_exp_3E3I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_4E4I \
+    import IFCurrCombExp4E4I as IF_curr_comb_exp_4E4I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_5E5I \
+    import IFCurrCombExp5E5I as IF_curr_comb_exp_5E5I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I \
+    import IFCurrCombExp7E7I as IF_curr_comb_exp_7E7I
+
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -82,6 +96,12 @@ __all__ = [
     'utility_calls',
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_exp',
+    'IF_curr_comb_exp',
+    'IF_curr_comb_exp_2E2I',
+    'IF_curr_comb_exp_3E3I',
+    'IF_curr_comb_exp_4E4I',
+    'IF_curr_comb_exp_5E5I',
+    'IF_curr_comb_exp_7E7I',
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
