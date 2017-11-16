@@ -5,8 +5,8 @@ p.setup(0.1)
 pop_src_exc = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src_exc")
 pop_src_inh = p.Population(1, p.SpikeSourceArray, {'spike_times': [[100]]}, label="src_inh")
 
-
 pop_ex = p.Population(2, p.extra_models.IF_curr_comb_exp_7E7I, {}, label="test")
+p.set_number_of_neurons_per_core("IF_curr_comb_exp_7E7I", 28)
 
 d = 10
 

@@ -6,7 +6,7 @@ pop_src = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src
 
 
 pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp_3E3I, {}, label="test")
-
+p.set_number_of_neurons_per_core("IF_curr_comb_exp_3E3I", 24)
 d = 12
 
 # #for i in range(5)

@@ -6,42 +6,42 @@ pop_src = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src
 
 
 pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp_5E5I, {}, label="test")
-
+p.set_number_of_neurons_per_core("IF_curr_comb_exp_5E5I", 23)
 d = 12
 
 # #for i in range(5)
 # pop_ex.set('exc_a_tau', 1.7)
 # pop_ex.set('exc_b_tau', 0.2)
-# 
+#
 # pop_ex.set('exc2_a_tau', 3.7)
 # pop_ex.set('exc2_b_tau', 0.7)
-# 
+#
 # pop_ex.set('exc3_a_tau', 4.7)
 # pop_ex.set('exc3_b_tau', 0.7)
-# 
+#
 # print pop_ex.get('exc3_a_A')
 # print pop_ex.get('exc3_b_B')
 # print pop_ex.get('exc3_a_tau')
 # print pop_ex.get('exc3_b_tau')
-# 
+#
 # pop_ex.set('exc4_a_tau', 1.2)
 # pop_ex.set('exc4_b_tau', 0.3)
-# 
+#
 # pop_ex.set('exc5_a_tau', 4.9)
 # pop_ex.set('exc5_b_tau', 0.9)
-# 
+#
 # pop_ex.set('inh_a_tau', 5.1)
 # pop_ex.set('inh_b_tau', 0.1)
-# 
+#
 # pop_ex.set('inh2_a_tau', 3.7)
 # pop_ex.set('inh2_b_tau', 0.7)
-# 
+#
 # pop_ex.set('inh3_a_tau', 2.4)
 # pop_ex.set('inh3_b_tau', 1)
-# 
+#
 # pop_ex.set('inh4_a_tau', 6.9)
 # pop_ex.set('inh4_b_tau', 1.9)
-# 
+#
 # pop_ex.set('inh5_a_tau', 1.7)
 # pop_ex.set('inh5_b_tau', 0.7)
 

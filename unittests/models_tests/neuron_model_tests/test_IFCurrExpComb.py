@@ -4,6 +4,8 @@ p.setup(0.1)
 
 pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp, {}, label="test")
 pop_src1 = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src1")
+p.set_number_of_neurons_per_core("IF_curr_comb_exp", 27)
+
 # 1.235
 # 1.3585
 
