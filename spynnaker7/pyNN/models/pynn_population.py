@@ -1,6 +1,8 @@
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
+from spynnaker.pyNN.utilities.constants import \
+    SPIKES, MEMBRANE_POTENTIAL, GSYN_INHIB, GSYN_EXCIT
 from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
@@ -31,6 +33,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
                  structure=None):
+
+        size = self._roundsize(size, label)
 
         internal_cellparams = dict(cellparams)
 
@@ -135,7 +139,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :type compatible_output: bool
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable("v")
+        return self._get_recorded_variable(MEMBRANE_POTENTIAL)
 
     @staticmethod
     def _compatible_output_and_gather_warnings(compatible_output, gather):
@@ -216,7 +220,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: file to write the spike data to
         """
 
-        self._record('spikes', self._all_ids, 1, to_file)
+        self._record(SPIKES, self._all_ids, 1, to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
@@ -229,9 +233,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record('gsyn_exc', self._all_ids, 1, to_file)
+        self._record(GSYN_EXCIT, self._all_ids, 1, to_file)
         self.file = to_file
-        self._record('gsyn_inh', self._all_ids, 1, to_file)
+        self._record(GSYN_INHIB, self._all_ids, 1, to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -297,7 +301,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
             spike_file = open(filename, "w")
-            self._print_headers(spike_file, "spikes", spikes.shape[0])
+            self._print_headers(spike_file, SPIKES, spikes.shape[0])
             for (neuronId, time) in spikes:
                 spike_file.write("{}\t{}\n".format(time, neuronId))
             spike_file.close()
@@ -309,8 +313,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                     printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        gsyn_exc = self._get_recorded_variable('gsyn_exc')
-        gsyn_inh = self._get_recorded_variable('gsyn_inh')
+        gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
+        gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
 
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
@@ -329,10 +333,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                      be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        v = self._get_recorded_variable("v")
+        v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
-        self._print_headers(file_handle, "v", v.shape[0])
+        self._print_headers(file_handle, MEMBRANE_POTENTIAL, v.shape[0])
         for (neuronId, _, value) in v:
             file_handle.write("{}\t{}\n".format(value, neuronId))
         file_handle.close()
