@@ -5,8 +5,8 @@ p.setup(0.1)
 pop_src = p.Population(1, p.SpikeSourceArray, {'spike_times': [[0]]}, label="src")
 
 
-pop_ex = p.Population(1, p.extra_models.IF_curr_comb_exp_5E5I, {}, label="test")
-p.set_number_of_neurons_per_core("IF_curr_comb_exp_5E5I", 23)
+pop_ex = p.Population(1, p.extra_models.IZK_curr_comb_exp_4E4I, {}, label="test")
+
 d = 12
 
 # #for i in range(5)
@@ -55,8 +55,6 @@ exc_proj3 = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=5*d), target="excitatory3")
 exc_proj4 = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=7*d), target="excitatory4")
-exc_proj5 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=9*d), target="excitatory5")
 
 inh_proj = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=2*d), target="inhibitory")
@@ -66,8 +64,6 @@ inh_proj3 = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=6*d), target="inhibitory3")
 inh_proj4 = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=8*d), target="inhibitory4")
-inh_proj5 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=10*d), target="inhibitory5")
 
 
 pop_ex.record()

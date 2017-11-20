@@ -20,6 +20,19 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
 
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp \
+    import IFCurrCombExp as IF_curr_comb_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_2E2I \
+    import IFCurrCombExp2E2I as IF_curr_comb_exp_2E2I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_3E3I \
+    import IFCurrCombExp3E3I as IF_curr_comb_exp_3E3I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_4E4I \
+    import IFCurrCombExp4E4I as IF_curr_comb_exp_4E4I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_5E5I \
+    import IFCurrCombExp5E5I as IF_curr_comb_exp_5E5I
+from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_7E7I \
+    import IFCurrCombExp7E7I as IF_curr_comb_exp_7E7I
+
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -62,8 +75,6 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
-from spynnaker.pyNN.models.neuron.builds.if_curr_comb_exp_2E2I \
-    import IFCurrCombExp2E2I as IF_curr_comb_exp_2E2I
 
 from spynnaker7.pyNN import external_devices
 from spynnaker7.pyNN import extra_models
@@ -85,7 +96,12 @@ __all__ = [
     'utility_calls',
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_exp',
+    'IF_curr_comb_exp',
     'IF_curr_comb_exp_2E2I',
+    'IF_curr_comb_exp_3E3I',
+    'IF_curr_comb_exp_4E4I',
+    'IF_curr_comb_exp_5E5I',
+    'IF_curr_comb_exp_7E7I',
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
@@ -102,12 +118,17 @@ __all__ = [
     # External devices and extra models
     'external_devices', 'extra_models',
     # Stuff that we define
-    'end', 'setup', 'run', 'get_spynnaker',
+    'end', 'setup', 'run', 'get_spynnaker', 'get_projections_data',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
     'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
+
+
+def get_projections_data(projection_data):
+    return globals_variables.get_simulator().get_projections_data(
+        projection_data)
 
 
 def end():
