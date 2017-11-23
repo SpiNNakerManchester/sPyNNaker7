@@ -2,8 +2,22 @@
 import unittest
 import spynnaker7.pyNN as pyNN
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
+from spinn_front_end_common.utilities.globals_variables import get_simulator
+import re
+import numpy
+from pacman.model.graphs.machine.simple_machine_vertex \
+    import SimpleMachineVertex
+from pacman.model.graphs.common.graph_mapper import GraphMapper
+from pacman.model.graphs.common.slice import Slice
+from pacman.model.placements.placements import Placements
+from pacman.model.placements.placement import Placement
 from pacman.model.constraints.placer_constraints \
     import ChipAndCoreConstraint
+from spinn_storage_handlers.buffered_bytearray_data_storage \
+    import BufferedBytearrayDataStorage
+import tempfile
+import os
+import struct
 
 populations = list()
 cell_params_lif = {'cm': 0.25,
@@ -25,6 +39,18 @@ cell_params_izk = {
     'v_init': -70.0,
     'tau_syn_E': 5.0,
     'tau_syn_I': 5.0}
+
+
+class MockBufferManager(object):
+
+    def __init__(self, data_to_return):
+        self._data_to_return = data_to_return
+
+    def get_data_for_vertex(self, placement, recording_region_id):
+        return self._data_to_return[(placement, recording_region_id)]
+
+    def stop(self):
+        pass
 
 
 class TestPyNNPopulation(unittest.TestCase):
@@ -156,6 +182,127 @@ class TestPyNNPopulation(unittest.TestCase):
             label="Constrained population")
         ring_buffer_sigma = pop._get_vertex.ring_buffer_sigma
         self.assertEqual(ring_buffer_sigma, 5.0)
+
+    def test_print(self):
+        pop = pyNN.Population(
+            2, pyNN.IF_curr_exp, cell_params_lif, label="Test")
+        pop.record()
+        pop.record_v()
+        pop.record_gsyn()
+        machine_vertex = SimpleMachineVertex(resources=None)
+        graph_mapper = GraphMapper()
+        graph_mapper.add_vertex_mapping(
+            machine_vertex, Slice(0, 1), pop._vertex)
+        placements = Placements()
+        placement = Placement(machine_vertex, 0, 0, 0)
+        placements.add_placement(placement)
+
+        spike_data = BufferedBytearrayDataStorage()
+        spike_data.write(bytearray(struct.pack("<II", 0, 0x3)))
+        spike_data.write(bytearray(struct.pack("<II", 1, 0x1)))
+        spike_data.write(bytearray(struct.pack("<II", 2, 0x2)))
+
+        v_data = BufferedBytearrayDataStorage()
+        sixteen = 16 * 32768
+        thirtytwo = 32 * 32768
+        v_data.write(bytearray(struct.pack("<III", 0, sixteen, sixteen)))
+        v_data.write(bytearray(struct.pack("<III", 1, thirtytwo, sixteen)))
+        v_data.write(bytearray(struct.pack("<III", 2, sixteen, thirtytwo)))
+
+        gsyn_ex_data = BufferedBytearrayDataStorage()
+        gsyn_ex_data.write(bytearray(struct.pack(
+            "<III", 0, sixteen, sixteen)))
+        gsyn_ex_data.write(bytearray(struct.pack(
+            "<III", 1, thirtytwo, sixteen)))
+        gsyn_ex_data.write(bytearray(struct.pack(
+            "<III", 2, sixteen, thirtytwo)))
+        gsyn_in_data = BufferedBytearrayDataStorage()
+        gsyn_in_data.write(bytearray(struct.pack("<III", 0, 0, 0)))
+        gsyn_in_data.write(bytearray(struct.pack("<III", 1, 0, 0)))
+        gsyn_in_data.write(bytearray(struct.pack("<III", 2, 0, 0)))
+
+        recorded_data = {
+            (placement, 0): (spike_data, False),
+            (placement, 1): (v_data, False),
+            (placement, 2): (gsyn_ex_data, False),
+            (placement, 3): (gsyn_in_data, False)
+        }
+        sim = get_simulator()
+        sim._has_ran = True
+        sim._buffer_manager = MockBufferManager(recorded_data)
+        sim._graph_mapper = graph_mapper
+        sim._placements = placements
+
+        temp_spikes_file_name = tempfile.mktemp(".dat")
+        temp_v_file_name = tempfile.mktemp(".dat")
+        temp_gsyn_file_name = tempfile.mktemp(".dat")
+        pop.printSpikes(temp_spikes_file_name)
+        pop.print_v(temp_v_file_name)
+        pop.print_gsyn(temp_gsyn_file_name)
+
+        spikes_metadata = dict()
+        with open(temp_spikes_file_name, "r") as spikes_file:
+            for line in spikes_file:
+                match = re.match("# (.*) = (.*)", line)
+                if match:
+                    spikes_metadata[match.group(1)] = match.group(2)
+        spike_data = numpy.loadtxt(temp_spikes_file_name)
+        assert spikes_metadata["variable"] == "spikes"
+        assert int(spikes_metadata["first_id"]) == 0
+        assert int(spikes_metadata["last_id"]) == 1
+        assert int(spikes_metadata["first_index"]) == 0
+        assert int(spikes_metadata["last_index"]) == 2
+        assert int(spikes_metadata["n"]) == len(spike_data)
+        assert int(spikes_metadata["size"]) == 2
+        assert float(spikes_metadata["dt"]) == 1.0
+        assert len(spike_data) == 4
+        assert all([len(spike_data[i]) == 2 for i in range(len(spike_data))])
+        assert numpy.array_equal(spike_data, [[0, 0], [1, 0], [0, 1], [2, 1]])
+
+        v_metadata = dict()
+        with open(temp_v_file_name, "r") as v_file:
+            for line in v_file:
+                match = re.match("# (.*) = (.*)", line)
+                if match:
+                    v_metadata[match.group(1)] = match.group(2)
+        v_data = numpy.loadtxt(temp_v_file_name)
+        assert v_metadata["variable"] == "v"
+        assert int(v_metadata["first_id"]) == 0
+        assert int(v_metadata["last_id"]) == 1
+        assert int(v_metadata["first_index"]) == 0
+        assert int(v_metadata["last_index"]) == 2
+        assert int(v_metadata["n"]) == len(v_data)
+        assert int(v_metadata["size"]) == 2
+        assert float(v_metadata["dt"]) == 1.0
+        assert len(v_data) == 6
+        assert all([len(v_data[i]) == 2 for i in range(len(v_data))])
+        assert numpy.array_equal(
+            v_data, [[16, 0], [32, 0], [16, 0], [16, 1], [16, 1], [32, 1]])
+
+        gsyn_metadata = dict()
+        with open(temp_gsyn_file_name, "r") as gsyn_file:
+            for line in gsyn_file:
+                match = re.match("# (.*) = (.*)", line)
+                if match:
+                    gsyn_metadata[match.group(1)] = match.group(2)
+        gsyn_data = numpy.loadtxt(temp_gsyn_file_name)
+        assert gsyn_metadata["variable"] == "gsyn"
+        assert int(gsyn_metadata["first_id"]) == 0
+        assert int(gsyn_metadata["last_id"]) == 1
+        assert int(gsyn_metadata["first_index"]) == 0
+        assert int(gsyn_metadata["last_index"]) == 2
+        assert int(gsyn_metadata["n"]) == len(gsyn_data)
+        assert int(gsyn_metadata["size"]) == 2
+        assert float(gsyn_metadata["dt"]) == 1.0
+        assert len(gsyn_data) == 6
+        assert all([len(gsyn_data[i]) == 3 for i in range(len(gsyn_data))])
+        assert numpy.array_equal(
+            gsyn_data, [[16, 0, 0], [32, 0, 0], [16, 0, 0],
+                        [16, 0, 1], [16, 0, 1], [32, 0, 1]])
+
+        os.unlink(temp_spikes_file_name)
+        os.unlink(temp_v_file_name)
+        os.unlink(temp_gsyn_file_name)
 
 
 if __name__ == "__main__":

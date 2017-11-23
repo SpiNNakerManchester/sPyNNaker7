@@ -6,7 +6,7 @@ import spynnaker7.pyNN as p
 class TestGetWeightsAfterRuns(BaseTestCase):
 
     def test_run(self):
-        with LogCapture() as l:
+        with LogCapture() as lc:
             p.setup()
             p1 = p.Population(1, p.IF_curr_exp, {})
             p2 = p.Population(1, p.IF_curr_exp, {})
@@ -23,7 +23,7 @@ class TestGetWeightsAfterRuns(BaseTestCase):
 
             p.end()
             self.assert_logs_messages(
-                l.records, "Getting weights", 'INFO', 2)
+                lc.records, "Getting weights", 'INFO', 2)
 
 
 if __name__ == '__main__':

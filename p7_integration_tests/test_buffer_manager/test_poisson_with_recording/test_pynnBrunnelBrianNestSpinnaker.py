@@ -1,5 +1,4 @@
-import p7_integration_tests.test_buffer_manager.test_poission_with_recording.\
-    pynnBrunnelPlot as pblt
+import p7_integration_tests.scripts.pynnBrunnelPlot as pblt
 
 from p7_integration_tests.base_test_case import BaseTestCase
 import p7_integration_tests.scripts.pynnBrunnelBrianNestSpinnaker as script
@@ -30,8 +29,8 @@ def plot(esp, sim_time, N_E):
 
 class PynnBrunnelBrianNestSpinnaker(BaseTestCase):
 
-    @unittest.skipIf(os.environ.get('CONTINUOUS_INTEGRATION', None) == 'True',
-                     reason="Too big")
+    @unittest.skipIf(os.environ.get(
+        'CONTINUOUS_INTEGRATION', "false").lower() == 'true', reason="Too big")
     def test_run(self):
         (esp, s, N_E) = script.do_run(Neurons, sim_time, record=True)
         try:

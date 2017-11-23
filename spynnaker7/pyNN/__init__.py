@@ -100,12 +100,17 @@ __all__ = [
     # External devices and extra models
     'external_devices', 'extra_models',
     # Stuff that we define
-    'end', 'setup', 'run', 'get_spynnaker',
+    'end', 'setup', 'run', 'get_spynnaker', 'get_projections_data',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
     'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
+
+
+def get_projections_data(projection_data):
+    return globals_variables.get_simulator().get_projections_data(
+        projection_data)
 
 
 def end():

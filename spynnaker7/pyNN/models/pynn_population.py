@@ -1,6 +1,8 @@
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
+from spynnaker.pyNN.utilities.constants import \
+    SPIKES, MEMBRANE_POTENTIAL, GSYN_INHIB, GSYN_EXCIT
 from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
@@ -31,6 +33,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
                  structure=None):
+
+        size = self._roundsize(size, label)
 
         internal_cellparams = dict(cellparams)
 
@@ -75,8 +79,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             "structure": None,
             "size": self.size,
             "size_local": self.size,
-            "first_id": None,
-            "last_id": None,
+            "first_id": self._first_id,
+            "last_id": self._last_id,
         }
         if self.size > 0:
             context.update({
@@ -93,7 +97,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         Return a 2-column numpy array containing cell ids and spike times for\
         recorded cells.
         """
-
         self._compatible_output_and_gather_warnings(compatible_output, gather)
         return self._get_recorded_variable("spikes")
 
@@ -101,12 +104,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Return the number of spikes for each neuron.
         """
         spikes = self.getSpikes(True, gather)
-        n_spikes = {}
-        counts = numpy.bincount(spikes[:, 0].astype(dtype=numpy.int32),
-                                minlength=self._vertex.n_atoms)
-        for i in range(self._vertex.n_atoms):
-            n_spikes[i] = counts[i]
-        return n_spikes
+        return PyNNPopulationCommon.get_spike_counts(self, spikes, gather)
 
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=True):
@@ -141,7 +139,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :type compatible_output: bool
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable("v")
+        return self._get_recorded_variable(MEMBRANE_POTENTIAL)
 
     @staticmethod
     def _compatible_output_and_gather_warnings(compatible_output, gather):
@@ -222,7 +220,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: file to write the spike data to
         """
 
-        self._record('spikes', self._create_full_filter_list(1), 1, to_file)
+        self._record(SPIKES, self._all_ids, 1, to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
@@ -235,9 +233,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record('gsyn_exc', self._create_full_filter_list(1), 1, to_file)
+        self._record(GSYN_EXCIT, self._all_ids, 1, to_file)
         self.file = to_file
-        self._record('gsyn_inh', self._create_full_filter_list(1), 1, to_file)
+        self._record(GSYN_INHIB, self._all_ids, 1, to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -249,7 +247,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param to_file: the file to write the recorded v to.
         """
 
-        self._record('v', self._create_full_filter_list(1), 1, to_file)
+        self._record('v', self._all_ids, 1, to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -276,6 +274,18 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
+    def _print_headers(self, file_to_write, variable, n_data_points):
+        time_step = (
+                self._spinnaker_control.machine_time_step * 1.0) / 1000.0
+        file_to_write.write("# variable = {}\n".format(variable))
+        file_to_write.write("# first_index = 0\n")
+        file_to_write.write("# last_index = {}\n".format(self._vertex.n_atoms))
+        file_to_write.write("# first_id = {}\n".format(self._first_id))
+        file_to_write.write("# last_id = {}\n".format(self._last_id))
+        file_to_write.write("# n = {}\n".format(n_data_points))
+        file_to_write.write("# size = {}\n".format(self._vertex.n_atoms))
+        file_to_write.write("# dt = {}\n".format(time_step))
+
     # noinspection PyPep8Naming
     def printSpikes(self, filename, gather=True):
         """ Write spike time information from the population to a given file.
@@ -289,16 +299,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                         " as if gather was true anyhow")
         spikes = self._get_recorded_variable('spikes')
         if spikes is not None:
-            first_id = 0
-            num_neurons = self._vertex.n_atoms
-            dimensions = self._vertex.n_atoms
-            last_id = self._vertex.n_atoms - 1
             utility_calls.check_directory_exists_and_create_if_not(filename)
             spike_file = open(filename, "w")
-            spike_file.write("# first_id = {}\n".format(first_id))
-            spike_file.write("# n = {}\n".format(num_neurons))
-            spike_file.write("# dimensions = [{}]\n".format(dimensions))
-            spike_file.write("# last_id = {}\n".format(last_id))
+            self._print_headers(spike_file, SPIKES, spikes.shape[0])
             for (neuronId, time) in spikes:
                 spike_file.write("{}\t{}\n".format(time, neuronId))
             spike_file.close()
@@ -310,26 +313,16 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                     printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        time_step = (self._spinnaker_control.machine_time_step * 1.0) / 1000.0
-        gsyn_exc = self._get_recorded_variable('gsyn_exc')
-        gsyn_inh = self._get_recorded_variable('gsyn_inh')
+        gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
+        gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
 
-        first_id = 0
-        num_neurons = self._vertex.n_atoms
-        dimensions = self._vertex.n_atoms
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
-        file_handle.write("# first_id = {}\n".format(first_id))
-        file_handle.write("# n = {}\n".format(num_neurons))
-        file_handle.write("# dt = {}\n".format(time_step))
-        file_handle.write("# dimensions = [{}]\n".format(dimensions))
-        file_handle.write("# last_id = {{}}\n".format(num_neurons - 1))
-        file_handle = open(filename, "w")
-        # TODO will need adjusting when filters and views assemblies work
-        for ((neuronId, time, value_e), (_, _, value_i)) in zip(
+        self._print_headers(file_handle, "gsyn", gsyn_exc.shape[0])
+        for ((neuronId, _, value_e), (_, _, value_i)) in zip(
                 gsyn_exc, gsyn_inh):
-            file_handle.write("{}\t{}\t{}\t{}\n".format(
-                time, neuronId, value_e, value_i))
+            file_handle.write("{}\t{}\t{}\n".format(
+                value_e, value_i, neuronId))
         file_handle.close()
 
     def print_v(self, filename, gather=True):
@@ -340,20 +333,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                      be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        time_step = (self._spinnaker_control.machine_time_step * 1.0) / 1000.0
-        v = self._get_recorded_variable("v")
+        v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
-        first_id = 0
-        num_neurons = self._vertex.n_atoms
-        dimensions = self._vertex.n_atoms
-        file_handle.write("# first_id = {}\n".format(first_id))
-        file_handle.write("# n = {}\n".format(num_neurons))
-        file_handle.write("# dt = {}\n".format(time_step))
-        file_handle.write("# dimensions = [{}]\n".format(dimensions))
-        file_handle.write("# last_id = {}\n".format(num_neurons - 1))
-        for (neuronId, time, value) in v:
-            file_handle.write("{}\t{}\t{}\n".format(time, neuronId, value))
+        self._print_headers(file_handle, MEMBRANE_POTENTIAL, v.shape[0])
+        for (neuronId, _, value) in v:
+            file_handle.write("{}\t{}\n".format(value, neuronId))
         file_handle.close()
 
     def rset(self, parametername, rand_distr):
