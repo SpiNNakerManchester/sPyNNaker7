@@ -1,7 +1,8 @@
 import spynnaker7.pyNN as p
+from p7_integration_tests.base_test_case import BaseTestCase
 
 
-def test_alpha():
+def do_run():
     p.setup(0.1)
 
     pop_src1 = p.Population(1, p.SpikeSourceArray,
@@ -25,3 +26,13 @@ def test_alpha():
     p.run(50)
 
     p.end()
+
+
+class ParamsSetAsList(BaseTestCase):
+
+    def test_run(self):
+        do_run()
+
+
+if __name__ == '__main__':
+    do_run()
