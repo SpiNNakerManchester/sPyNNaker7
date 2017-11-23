@@ -28,7 +28,7 @@ install:
 
 before_script:
   - echo '[Machine]' > ~/.spynnaker.cfg
-  - echo "machineName = $SPINNAKER_BOARD_ADDRESS" >> ~/.spynnaker.cfg
+  - echo "machine_name = $SPINNAKER_BOARD_ADDRESS" >> ~/.spynnaker.cfg
   - echo "version = ${SPINNAKER_BOARD_VERSION:-5}" >> ~/.spynnaker.cfg
   - echo '[Database]' >> ~/.spynnaker.cfg
   - echo '[Simulation]' >> ~/.spynnaker.cfg
