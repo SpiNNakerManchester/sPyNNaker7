@@ -28,7 +28,7 @@ def do_run():
     p.end()
 
 
-class ParamsSetAsList(BaseTestCase):
+class TestAlpha(BaseTestCase):
 
     def test_run(self):
         do_run()
