@@ -46,3 +46,6 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
             allow_self_connections=allow_self_connections, verbose=verbose)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
+
+    def get_rng_parameters(self, n_pre_neurons):
+        return [0, n_pre_neurons]
