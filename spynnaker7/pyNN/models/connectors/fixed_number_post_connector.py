@@ -42,8 +42,12 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
                 "RandomDistribution is not supported for n in the"
                 " implementation of FixedNumberPostConnector on this platform")
 
+        self.with_replacement = False  # by default, does not exist in 0.7 API
         CommonFixedNumberPostConnector.__init__(
             self, n=n, safe=safe, verbose=verbose,
             allow_self_connections=allow_self_connections)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
+
+    def get_rng_parameters(self, n_post_neurons):
+        return [0, n_post_neurons]

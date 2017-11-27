@@ -40,6 +40,7 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
                 "RandomDistribution is not supported for n in the"
                 " implementation of FixedNumberPreConnector on this platform")
 
+        self.with_replacement = False  # default does not exist in pyNN 0.7 API
         CommonFixedNumberPreConnector.__init__(
             self, n=n, safe=safe,
             allow_self_connections=allow_self_connections, verbose=verbose)
