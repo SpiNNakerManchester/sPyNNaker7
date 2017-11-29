@@ -51,8 +51,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         PyNNPopulationCommon.__init__(
             self, spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(
-            self, self, globals_variables.get_simulator().machine_time_step)
+        RecordingCommon.__init__(self, self)
 
     @property
     def default_parameters(self):
