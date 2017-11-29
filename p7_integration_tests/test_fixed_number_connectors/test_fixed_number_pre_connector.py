@@ -110,17 +110,17 @@ def do_run(plot):
     p.Projection(exc_pops[1], exc_pops[1],
                  p.FixedNumberPreConnector(60, allow_self_connections=False,
                                            weights=weight_exc, delays=10.),
-                 target='excitatory', rng = rng)
+                 target='excitatory', rng=rng)
 
     # Connect the Stimulus to the first group
     print "Connecting Stimulus to first group"
     p.Projection(pop_stim, inh_pops[0],
                  p.FixedNumberPreConnector(15, weights=weight_exc, delays=20.),
-                 target='excitatory' ,rng=rng)
+                 target='excitatory', rng=rng)
     p.Projection(pop_stim, exc_pops[0],
                  p.FixedNumberPreConnector(60, allow_self_connections=False,
                                            weights=weight_exc, delays=20.),
-                 target='excitatory' ,rng=rng)
+                 target='excitatory', rng=rng)
 
     # Recording spikes
     pop_stim.record()
