@@ -32,7 +32,7 @@ from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
     import SynapseDynamicsSTDP as STDPMechanism
-from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_structural\
+from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_structural \
     import SynapseDynamicsStructural as StructuralMechanism
 from spynnaker.pyNN.models.spike_source.spike_source_array \
     import SpikeSourceArray
@@ -40,6 +40,8 @@ from spynnaker.pyNN.models.spike_source.spike_source_from_file \
     import SpikeSourceFromFile
 from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
+from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
+    import SpikeSourcePoissonVariable
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
 from spynnaker.pyNN.utilities import utility_calls
@@ -66,7 +68,7 @@ from spynnaker7.pyNN.models.connectors.one_to_one_connector \
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
-from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence. \
     weight_dependence_additive \
     import WeightDependenceAdditive as AdditiveWeightDependence
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
@@ -90,8 +92,10 @@ __all__ = [
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_dual_exp', 'IF_curr_exp', 'IZK_curr_exp',
     'IZK_cond_exp', 'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
-    'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
-    'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
+    'ProjectionApplicationEdge', 'SpikeSourcePoisson',
+    'SpikeSourcePoissonVariable',
+    'SpikeSourceArray', 'SpikeSourceFromFile', 'AllToAllConnector',
+    'FixedNumberPreConnector',
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',

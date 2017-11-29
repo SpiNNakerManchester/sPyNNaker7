@@ -1,5 +1,4 @@
 import spynnaker7.pyNN as p
-import python.plot_utils as plot_utils
 import random
 import numpy as np
 
@@ -66,7 +65,7 @@ for i in range(number_of_rates):
 # stim_dur = total_runtime/len(rate)   # (ms) duration of random stimulation
 
 ext_stim = p.Population(
-            num_sources, p.extra_models.SpikeSourcePoissonVariable,
+            num_sources, p.SpikeSourcePoissonVariable,
             {'rate_interval_duration': interval, 'rate': rates},
             label="expoisson")
 
@@ -99,6 +98,21 @@ p.run(total_runtime)
 if recording:
     source_spikes = ext_stim.getSpikes()
 
-    plot_utils.plot_spikes(source_spikes)
+    import pylab as plt
+    def plot_spikes(spikes, title):
+        if spikes is not None and len(spikes) > 0:
+            f, ax1 = plt.subplots(1, 1, figsize=(16, 8))
+            ax1.set_xlim((0, total_runtime))
+            ax1.scatter([i[1] for i in spikes], [i[0] for i in spikes], s=.2)
+            ax1.set_xlabel('Time/ms')
+            ax1.set_ylabel('spikes')
+            ax1.set_title(title)
+            plt.show()
+
+        else:
+            print "No spikes received"
+
+
+    plot_spikes(source_spikes, "SPIIIIKES!")
 # plot_utils.plotAll(v, spikes)
 p.end()
