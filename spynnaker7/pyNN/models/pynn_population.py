@@ -3,7 +3,6 @@ from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
 from spynnaker.pyNN.utilities.constants import \
     SPIKES, MEMBRANE_POTENTIAL, GSYN_INHIB, GSYN_EXCIT
-from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 from pyNN import descriptions
@@ -51,8 +50,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         PyNNPopulationCommon.__init__(
             self, spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(
-            self, self, globals_variables.get_simulator().machine_time_step)
+        RecordingCommon.__init__(self, self)
 
     @property
     def default_parameters(self):
