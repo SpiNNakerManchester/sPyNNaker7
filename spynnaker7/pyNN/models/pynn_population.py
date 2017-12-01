@@ -401,3 +401,5 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             self.print_v(self._record_v_file)
         if self._record_gsyn_file is not None:
             self.print_gsyn(self._record_gsyn_file)
+
+    def _get_recorded_variable(self, variable):
