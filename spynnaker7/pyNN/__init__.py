@@ -97,17 +97,13 @@ __all__ = [
     # Ugly, but tests expect it
     'utility_calls',
     # Implementations of the neuroscience models
-<<<<<<< HEAD
-    'IF_cond_exp', 'IF_curr_exp',
+    'IF_cond_exp', 'IF_curr_exp', 'IF_curr_alpha',
     'IF_curr_comb_exp',
     'IF_curr_comb_exp_2E2I',
     'IF_curr_comb_exp_3E3I',
     'IF_curr_comb_exp_4E4I',
     'IF_curr_comb_exp_5E5I',
     'IF_curr_comb_exp_7E7I',
-=======
-    'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha",
->>>>>>> origin/master
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
