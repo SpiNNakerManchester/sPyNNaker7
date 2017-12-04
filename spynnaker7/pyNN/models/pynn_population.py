@@ -297,7 +297,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         if not gather:
             logger.warn("Spynnaker only supports gather = true, will execute"
                         " as if gather was true anyhow")
-        spikes = self._get_recorded_variable('spikes')
+        spikes = self._get_spikes()
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
             spike_file = open(filename, "w")
@@ -313,14 +313,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                     printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
-        gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
+        gsyn = self.get_gsyn()
 
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
-        self._print_headers(file_handle, "gsyn", gsyn_exc.shape[0])
-        for ((neuronId, _, value_e), (_, _, value_i)) in zip(
-                gsyn_exc, gsyn_inh):
+        self._print_headers(file_handle, "gsyn", gsyn.shape[0])
+        for (neuronId, _, value_e, value_i) in gsyn:
             file_handle.write("{}\t{}\t{}\n".format(
                 value_e, value_i, neuronId))
         file_handle.close()
@@ -333,7 +331,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                      be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
+        v = self._get_recorded_pynn7(MEMBRANE_POTENTIAL)
         utility_calls.check_directory_exists_and_create_if_not(filename)
         file_handle = open(filename, "w")
         self._print_headers(file_handle, MEMBRANE_POTENTIAL, v.shape[0])
