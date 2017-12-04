@@ -96,7 +96,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         recorded cells.
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable("spikes")
+        return self._get_spikes()
 
     def get_spike_counts(self, gather=True):
         """ Return the number of spikes for each neuron.
@@ -117,13 +117,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
 
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        excit = self._get_recorded_variable("gsyn_exc")
-        inhib = self._get_recorded_variable("gsyn_inh")
-        # TODO this needs fixing for seperate recordings of cells on views
-        # and assembliers
-        # merge two arrays into one
-        merged = numpy.hstack((excit, inhib))
-        return numpy.delete(merged, [3, 4], 1)
+        excit = self._get_recorded_pynn7("gsyn_exc")
+        inhib = self._get_recorded_pynn7("gsyn_inh")
+        (exc_data, exc_ids, exc_sampling_interval) = \
+            self._get_recorded_matrix("gsyn_exc")
+        (inh_data, inh_ids, inh_sampling_interval) = \
+            self._get_recorded_matrix("gsyn_inh")
+        # TODO this needs fixing for to check ids and interval are the same
+        return self.pynn7_format(
+            exc_data, exc_ids, exc_sampling_interval, inh_data)
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=True):
@@ -137,7 +139,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :type compatible_output: bool
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable(MEMBRANE_POTENTIAL)
+        return self._get_recorded_pynn7(MEMBRANE_POTENTIAL)
 
     @staticmethod
     def _compatible_output_and_gather_warnings(compatible_output, gather):
@@ -399,5 +401,3 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             self.print_v(self._record_v_file)
         if self._record_gsyn_file is not None:
             self.print_gsyn(self._record_gsyn_file)
-
-    def _get_recorded_variable(self, variable):
