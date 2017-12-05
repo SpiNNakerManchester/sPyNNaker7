@@ -7,7 +7,6 @@ from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 from pyNN import descriptions
 
-import numpy
 import logging
 
 logger = logging.getLogger(__name__)
@@ -117,8 +116,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
 
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        excit = self._get_recorded_pynn7("gsyn_exc")
-        inhib = self._get_recorded_pynn7("gsyn_inh")
         (exc_data, exc_ids, exc_sampling_interval) = \
             self._get_recorded_matrix("gsyn_exc")
         (inh_data, inh_ids, inh_sampling_interval) = \
