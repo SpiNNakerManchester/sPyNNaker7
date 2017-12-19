@@ -1,4 +1,5 @@
 import unittest
+from data_specification.enums.data_type import DataType
 from spynnaker.pyNN.models.neural_properties.neural_parameter \
     import NeuronParameter
 

@@ -30,8 +30,8 @@ d = 12
 # pop_ex.set('exc5_a_tau', 4.9)
 # pop_ex.set('exc5_b_tau', 0.9)
 #
-# pop_ex.set('inh_a_tau', 5.1)
-# pop_ex.set('inh_b_tau', 0.1)
+pop_ex.set('inh_a_tau', 0.625)
+pop_ex.set('inh_b_tau', 0.6875)
 #
 # pop_ex.set('inh2_a_tau', 3.7)
 # pop_ex.set('inh2_b_tau', 0.7)
@@ -47,27 +47,27 @@ d = 12
 
 
 
-exc_proj = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=1*d), target="excitatory", label="projTemp")
-exc_proj2 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=3*d), target="excitatory2")
-exc_proj3 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=5*d), target="excitatory3")
-exc_proj4 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=7*d), target="excitatory4")
-exc_proj5 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=9*d), target="excitatory5")
+# exc_proj = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=1*d), target="excitatory", label="projTemp")
+# exc_proj2 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=3*d), target="excitatory2")
+# exc_proj3 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=5*d), target="excitatory3")
+# exc_proj4 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=7*d), target="excitatory4")
+# exc_proj5 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=9*d), target="excitatory5")
 
 inh_proj = p.Projection(pop_src, pop_ex,
         p.OneToOneConnector(weights=1, delays=2*d), target="inhibitory")
-inh_proj2 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=4*d), target="inhibitory2")
-inh_proj3 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=6*d), target="inhibitory3")
-inh_proj4 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=8*d), target="inhibitory4")
-inh_proj5 = p.Projection(pop_src, pop_ex,
-        p.OneToOneConnector(weights=1, delays=10*d), target="inhibitory5")
+# inh_proj2 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=4*d), target="inhibitory2")
+# inh_proj3 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=6*d), target="inhibitory3")
+# inh_proj4 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=8*d), target="inhibitory4")
+# inh_proj5 = p.Projection(pop_src, pop_ex,
+#         p.OneToOneConnector(weights=1, delays=10*d), target="inhibitory5")
 
 
 pop_ex.record()
