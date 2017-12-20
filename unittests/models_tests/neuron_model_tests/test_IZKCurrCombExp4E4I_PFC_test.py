@@ -10,6 +10,7 @@ pop_ex = p.Population(1, p.extra_models.IZK_curr_comb_exp_4E4I, params_dict, lab
 
 d = 1
 w = 1
+
 # AMPA
 # pop_ex.set('exc_a_tau', 0.5)
 # pop_ex.set('exc_b_tau', 2.4)
@@ -35,10 +36,10 @@ w = 1
 # t_run = 250
 
 # # 5-HT-1A
-pop_ex.set('exc_a_tau', 210)
-pop_ex.set('exc_b_tau', 231)
-w = 0.0275
-t_run = 2600
+# pop_ex.set('exc_a_tau', 210)
+# pop_ex.set('exc_b_tau', 231)
+# w = 0.0275
+# t_run = 2600
 
 # 5-HT-2A
 # pop_ex.set('exc_a_tau', 3.25)
@@ -47,10 +48,10 @@ t_run = 2600
 # t_run = 300
 
 # 5-HT-3A
-# pop_ex.set('exc_a_tau', 0.175)
-# pop_ex.set('exc_b_tau', 0.1925)
-# w = 0.310
-# t_run = 15
+pop_ex.set('exc_a_tau', 0.175)
+pop_ex.set('exc_b_tau', 0.1925)
+w = 0.310
+t_run = 15
 
 
 
