@@ -187,6 +187,3 @@ class FixedNumberPreConnectorTest(BaseTestCase):
 
 if __name__ == '__main__':
     stim_spikes, spklist_exc, spklist_inh = do_run(plot=True)
-    print len(stim_spikes)
-    print len(spklist_exc)
-    print len(spklist_inh)
