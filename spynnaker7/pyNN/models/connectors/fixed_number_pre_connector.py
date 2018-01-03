@@ -43,5 +43,6 @@ class FixedNumberPreConnector(CommonFixedNumberPreConnector):
         CommonFixedNumberPreConnector.__init__(
             self, n=n, safe=safe,
             allow_self_connections=allow_self_connections, verbose=verbose)
+
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
