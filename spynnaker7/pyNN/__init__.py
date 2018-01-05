@@ -19,6 +19,8 @@ from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
+from spynnaker.pyNN.models.neuron.builds.if_curr_alpha \
+    import IFCurrAlpha as IF_curr_alpha
 
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
@@ -84,8 +86,12 @@ __all__ = [
     # Ugly, but tests expect it
     'utility_calls',
     # Implementations of the neuroscience models
+<<<<<<< HEAD
     'IF_cond_exp', 'IF_curr_exp',
     'IF_curr_comb_exp_2E2I',
+=======
+    'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha",
+>>>>>>> origin/master
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
@@ -102,12 +108,17 @@ __all__ = [
     # External devices and extra models
     'external_devices', 'extra_models',
     # Stuff that we define
-    'end', 'setup', 'run', 'get_spynnaker',
+    'end', 'setup', 'run', 'get_spynnaker', 'get_projections_data',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
     'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
+
+
+def get_projections_data(projection_data):
+    return globals_variables.get_simulator().get_projections_data(
+        projection_data)
 
 
 def end():

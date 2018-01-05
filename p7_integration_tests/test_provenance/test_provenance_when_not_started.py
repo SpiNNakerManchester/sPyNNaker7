@@ -26,12 +26,12 @@ def do_run():
 
 class ProvenanceWhenNotStartedTest(BaseTestCase):
     def test_error(self):
-        with LogCapture() as l:
+        with LogCapture() as lc:
             try:
                 do_run()
                 self.assertTrue(False)
-            except:
-                self.assert_logs_messages(l.records, "Out of DTCM", count=4)
+            except Exception:
+                self.assert_logs_messages(lc.records, "Out of DTCM", count=4)
 
 
 if __name__ == '__main__':
