@@ -2,14 +2,14 @@ import spynnaker7.pyNN as p
 import plot_utils
 
 p.setup(0.1)
-runtime = 750
+runtime = 2000
 populations = []
 
 pop_src1 = p.Population(1, p.SpikeSourceArray,
-                        {'spike_times': [105, 110, 115, 120, 125]#, 485]
+                        {'spike_times': [105, 110, 115, 120, 125, 1450]#, 485]
                                          }, label="src1")
 pop_src2 = p.Population(1, p.SpikeSourceArray,
-                        {'spike_times': [460]#, 465, 470, 475, 480]
+                        {'spike_times': [460, 465, 470, 475, 480]# 750,755,760,765, 766, 767, 768]
                          }, label="src2")
 
 cell_params = { # L_V_Py
@@ -26,14 +26,14 @@ pop_ex = p.Population(1, p.extra_models.IZK_curr_comb_exp_4E4I, cell_params,  la
 
 # define projections
 exc_proj0 = p.Projection(pop_src1, pop_ex,
-        p.OneToOneConnector(weights=1, delays=1), target="excitatory3")
+        p.OneToOneConnector(weights=0.1, delays=1), target="inhibitory3")
 
 exc_proj1 = p.Projection(pop_src1, pop_ex,
-        p.OneToOneConnector(weights=2, delays=100), target="excitatory2")
+        p.OneToOneConnector(weights=0.2, delays=100), target="inhibitory2")
 
-# NMDA synapse
+# # NMDA synapse
 exc_proj2 = p.Projection(pop_src2, pop_ex,
-        p.OneToOneConnector(weights=2, delays=1), target="excitatory4")
+        p.OneToOneConnector(weights=0.2, delays=1), target="excitatory4")
 
 pop_ex.record()
 pop_ex.record_gsyn()
