@@ -22,9 +22,13 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
             space=Space(), safe=True, verbose=False):
         """
 
-        :param n: number of random post-synaptic neurons connected to output
-        :type n: int
-        :param allow_self_connections: ??????
+        :param n:
+            number of random post-synaptic neurons connected to output
+        :param allow_self_connections:
+            if the connector is used to connect a
+            Population to itself, this flag determines whether a neuron is
+            allowed to connect to itself, or only to other neurons in the
+            Population.
         :param space: a Space object, needed if you wish to specify distance-
             dependent weights or delays
         :param safe: if True, check that weights and delays have valid values.
@@ -45,5 +49,6 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
         CommonFixedNumberPostConnector.__init__(
             self, n=n, safe=safe, verbose=verbose,
             allow_self_connections=allow_self_connections)
+
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)
