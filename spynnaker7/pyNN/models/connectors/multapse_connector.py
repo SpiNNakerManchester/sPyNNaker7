@@ -19,3 +19,8 @@ class MultapseConnector(CommonMultapseConnector):
         CommonMultapseConnector.__init__(
             self, num_synapses=num_synapses, safe=safe, verbose=verbose)
         self.set_weights_and_delays(weights, delays)
+
+    def get_rng_next(self, num_synapses, prob_connect):
+        return self._rng.next(1, distribution="multinomial",
+                              parameters=[num_synapses, prob_connect])
+
