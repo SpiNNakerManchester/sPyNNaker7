@@ -23,4 +23,3 @@ class MultapseConnector(CommonMultapseConnector):
     def get_rng_next(self, num_synapses, prob_connect):
         return self._rng.next(1, distribution="multinomial",
                               parameters=[num_synapses, prob_connect])
-
