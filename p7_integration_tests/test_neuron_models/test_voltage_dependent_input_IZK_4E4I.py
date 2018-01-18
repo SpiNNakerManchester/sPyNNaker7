@@ -2,14 +2,18 @@ import spynnaker7.pyNN as p
 import plot_utils
 
 p.setup(0.1)
-runtime = 2000
+runtime = 1000
 populations = []
 
+num_pulses = 10
+wavelength = 500 #ms
+amplitude = 2
+
 pop_src1 = p.Population(1, p.SpikeSourceArray,
-                        {'spike_times': [105]#, 110, 115, 120, 125, 1450]#, 485]
+                        {'spike_times': [105, 106, 107 ,108, 109, 110, 111, 112]#, 110, 115, 120, 125, 1450]#, 485]
                                          }, label="src1")
 pop_src2 = p.Population(1, p.SpikeSourceArray,
-                        {'spike_times': [460]#, 465, 470, 475, 480]# 750,755,760,765, 766, 767, 768]
+                        {'spike_times': [105]#, 465, 470, 475, 480]# 750,755,760,765, 766, 767, 768]
                          }, label="src2")
 
 cell_params = { # L_V_Py
@@ -28,13 +32,13 @@ cell_params = { # L_V_Py
 }
 
 pop_ex = p.Population(1, p.extra_models.IZK_curr_comb_exp_4E4I, cell_params,  label="test")
-
+print pop_ex.get('i_offset')
 # define projections
-exc_proj0 = p.Projection(pop_src1, pop_ex,
-        p.OneToOneConnector(weights=0.1, delays=1), target="excitatory4")
+exc_proj0 = p.Projection(pop_src2, pop_ex,
+        p.OneToOneConnector(weights=1, delays=100), target="inhibitory3")
 
-exc_proj1 = p.Projection(pop_src1, pop_ex,
-        p.OneToOneConnector(weights=0.2, delays=100), target="inhibitory4")
+# exc_proj1 = p.Projection(pop_src1, pop_ex,
+#         p.OneToOneConnector(weights=200, delays=50), target="inhibitory4")
 
 # # NMDA synapse
 # exc_proj2 = p.Projection(pop_src2, pop_ex,
@@ -44,7 +48,13 @@ pop_ex.record()
 pop_ex.record_gsyn()
 pop_ex.record_v()
 
-p.run(runtime)
+for i in range(num_pulses):
+    p.run(wavelength/2)
+    pop_ex.set('i_offset', pop_ex.get('i_offset') + amplitude)
+    p.run(wavelength/2)
+    pop_ex.set('i_offset', pop_ex.get('i_offset') - amplitude)
+
+
 
 v = pop_ex.get_v()
 curr = pop_ex.get_gsyn()
