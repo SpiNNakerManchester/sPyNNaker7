@@ -5,9 +5,11 @@ p.setup(0.1)
 runtime = 1000
 populations = []
 
-num_pulses = 10
-wavelength = 500 #ms
+t_before_pulses = 750
+num_pulses = 6
+period = 500 #ms
 amplitude = 2
+t_after_pulses = 1500
 
 pop_src1 = p.Population(1, p.SpikeSourceArray,
                         {'spike_times': [105, 106, 107 ,108, 109, 110, 111, 112]#, 110, 115, 120, 125, 1450]#, 485]
@@ -32,7 +34,7 @@ cell_params = { # L_V_Py
 }
 
 pop_ex = p.Population(1, p.extra_models.IZK_curr_comb_exp_4E4I, cell_params,  label="test")
-print pop_ex.get('i_offset')
+
 # define projections
 exc_proj0 = p.Projection(pop_src2, pop_ex,
         p.OneToOneConnector(weights=1, delays=100), target="inhibitory3")
@@ -48,13 +50,21 @@ pop_ex.record()
 pop_ex.record_gsyn()
 pop_ex.record_v()
 
+t_total = 0
+# #######################
+p.run(t_before_pulses)
+t_total += t_before_pulses
+
 for i in range(num_pulses):
-    p.run(wavelength/2)
+    p.run(period/2)
     pop_ex.set('i_offset', pop_ex.get('i_offset') + amplitude)
-    p.run(wavelength/2)
+    p.run(period/2)
     pop_ex.set('i_offset', pop_ex.get('i_offset') - amplitude)
+    t_total += period
 
-
+p.run(t_after_pulses)
+t_total += t_after_pulses
+# #######################
 
 v = pop_ex.get_v()
 curr = pop_ex.get_gsyn()
@@ -63,4 +73,5 @@ spikes = pop_ex.getSpikes()
 plot_utils.plotAll(v, spikes)
 plot_utils.plot_gsyn(curr)
 
+print "total time: {}".format(t_total)
 p.end()
