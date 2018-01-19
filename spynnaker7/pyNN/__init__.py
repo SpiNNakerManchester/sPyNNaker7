@@ -8,11 +8,8 @@ import spynnaker7
 from pyNN.random import NumpyRNG, RandomDistribution
 from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
-from spinn_front_end_common.utilities import exceptions as \
-    front_end_common_exceptions
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol. \
-    socket_address import SocketAddress as __SockAddr
 
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
@@ -20,14 +17,8 @@ from spynnaker.pyNN.models.neural_projections.projection_application_edge \
     import ProjectionApplicationEdge
 from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
     import IFCondExpBase as IF_cond_exp
-from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base \
-    import IFCurrDualExpBase as IF_curr_dual_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
-from spynnaker.pyNN.models.neuron.builds.izk_cond_exp_base \
-    import IzkCondExpBase as IZK_cond_exp
-from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
-    import IzkCurrExpBase as IZK_curr_exp
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -68,12 +59,16 @@ from spynnaker7.pyNN.models.connectors.one_to_one_connector \
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
-from spynnaker7.pyNN.models.plasticity_components.weight_dependence. \
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
     weight_dependence_additive \
     import WeightDependenceAdditive as AdditiveWeightDependence
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
+
+from spynnaker7.pyNN import external_devices
+from spynnaker7.pyNN import extra_models
+
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
 from spynnaker7._version import __version__  # NOQA
 from spynnaker7._version import __version_name__  # NOQA
@@ -90,12 +85,11 @@ __all__ = [
     # Ugly, but tests expect it
     'utility_calls',
     # Implementations of the neuroscience models
-    'IF_cond_exp', 'IF_curr_dual_exp', 'IF_curr_exp', 'IZK_curr_exp',
-    'IZK_cond_exp', 'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
+    'IF_cond_exp', 'IF_curr_exp',
+    'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
     'ProjectionApplicationEdge', 'SpikeSourcePoisson',
-    'SpikeSourcePoissonVariable',
-    'SpikeSourceArray', 'SpikeSourceFromFile', 'AllToAllConnector',
-    'FixedNumberPreConnector',
+    'SpikeSourcePoissonVariable', 'SpikeSourceArray',
+    'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
@@ -106,10 +100,12 @@ __all__ = [
     # Stuff from pyNN.space
     'distance', 'Space', 'Line', 'Grid2D', 'Grid3D', 'Cuboid', 'Sphere',
     'RandomStructure',
+    # External devices and extra models
+    'external_devices', 'extra_models',
     # Stuff that we define
     'end', 'setup', 'run', 'get_spynnaker',
     'num_processes', 'rank', 'reset', 'set_number_of_neurons_per_core',
-    'register_database_notification_request', 'Population', 'Projection',
+    'Population', 'Projection',
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
@@ -152,7 +148,7 @@ def rank():
 def reset():
     """ Reset the time to zero, and start the clock.
     """
-    globals_variables.get_simulator().reset()
+    globals_variables.get_not_running_simulator().reset()
 
 
 def run(run_time=None):
@@ -224,20 +220,8 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
         else:
             raise Exception("Unknown Vertex Type {}".format(neuron_type))
 
-    simulator = globals_variables.get_simulator()
+    simulator = globals_variables.get_not_running_simulator()
     simulator.set_number_of_neurons_per_core(neuron_type, max_permitted)
-
-
-def register_database_notification_request(hostname, notify_port, ack_port):
-    """ Adds a socket system which is registered with the notification protocol
-
-    :param hostname: ip address of host
-    :param notify_port: port for listeing for when database is set up
-    :param ack_port: the port for sending back the ack
-    :rtype: None
-    """
-    globals_variables.get_simulator().add_socket_address(__SockAddr(
-        hostname, notify_port, ack_port))
 
 
 # noinspection PyPep8Naming
@@ -251,7 +235,9 @@ def Population(size, cellclass, cellparams, structure=None, label=None):
     :param label: the human readable label
     :return: a new population object
     """
-    return globals_variables.get_simulator().create_population(
+
+    globals_variables.get_simulator().verify_not_running()
+    return globals_variables.get_not_running_simulator().create_population(
         size, cellclass, cellparams, structure, label)
 
 
@@ -271,8 +257,8 @@ def Projection(presynaptic_population, postsynaptic_population,
     :param rng: random number generator if needed
     :return: a new Projection object
     """
-
-    return globals_variables.get_simulator().create_projection(
+    globals_variables.get_simulator().verify_not_running()
+    return globals_variables.get_not_running_simulator().create_projection(
         presynaptic_population, postsynaptic_population, connector, source,
         target, synapse_dynamics, label, rng)
 
@@ -379,7 +365,7 @@ def get_machine():
     """ Get the spinnaker machine in use
     """
     if not globals_variables.has_simulator():
-        raise front_end_common_exceptions.ConfigurationException(
+        raise ConfigurationException(
             "You currently have not ran setup, please do so before calling "
             "get_machine")
     return globals_variables.get_simulator().machine

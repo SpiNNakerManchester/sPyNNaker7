@@ -6,7 +6,6 @@ import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 import spynnaker.plot_utils as plot_utils
 from spinnman.exceptions import SpinnmanTimeoutException
-import unittest
 from unittest import SkipTest
 # from pprint import pprint as pp
 
@@ -81,8 +80,7 @@ def do_run(nNeurons, neurons_per_core):
 
 
 class MwhPopulationSynfire(BaseTestCase):
-    @unittest.skip("Broken p7_integration_tests/test_various/"
-                   "test_mwh_population_synfire.py")
+
     def test_run_heavy(self):
         try:
             nNeurons = 200  # number of neurons in each population

@@ -49,8 +49,8 @@ def do_run(nNeurons):
 
 class BigMultiProcessorSpikeSourcePrint(BaseTestCase):
 
-    @unittest.skip("Broken p7_integration_tests/test_various/"
-                   "test_bigMultiProcessorSpikeSourcePrint.py")
+    @unittest.skip("https://github.com/SpiNNakerManchester/sPyNNaker/issues/"
+                   "335")
     def test_run_(self):
         nNeurons = 600  # number of neurons in each population
         spikes = do_run(nNeurons)

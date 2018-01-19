@@ -1,5 +1,5 @@
-from spynnaker.pyNN.utilities.random_stats.abstract_random_stats\
-    import AbstractRandomStats
+from spynnaker.pyNN.utilities.random_stats import AbstractRandomStats
+
 import scipy.stats
 
 
@@ -24,3 +24,19 @@ class RandomStatsScipyImpl(AbstractRandomStats):
 
     def var(self, dist):
         return self._scipy_stats.var(*dist.parameters)
+
+    def high(self, dist):
+        """ Return the variance of the distribution
+        """
+        if dist.boundaries is None:
+            return None
+        else:
+            return max(dist.boundaries)
+
+    def low(self, dist):
+        """ Return the variance of the distribution
+        """
+        if dist.boundaries is None:
+            return None
+        else:
+            return min(dist.boundaries)

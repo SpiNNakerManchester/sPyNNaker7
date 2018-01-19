@@ -40,9 +40,6 @@ class TestCFGs(unittest.TestCase):
         # File reports should be in the new location
         self.assertIn('reports', os.listdir(current_path))
 
-    def test_set_up_main_objects(self):
-        Spinnaker(timestep=1, min_delay=1, max_delay=10)
-
 
 if __name__ == '__main__':
     unittest.main()

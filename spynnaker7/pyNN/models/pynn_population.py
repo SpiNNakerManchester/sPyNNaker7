@@ -2,7 +2,7 @@ from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
 from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities import exceptions
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 from pyNN import descriptions
 
@@ -401,7 +401,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
                 number of elements.
         """
         if len(value_array) != self._vertex.n_atoms:
-            raise exceptions.ConfigurationException(
+            raise ConfigurationException(
                 "To use tset, you must have a array of values which matches "
                 "the size of the population. Please change this and try "
                 "again, or alternatively, use set()")

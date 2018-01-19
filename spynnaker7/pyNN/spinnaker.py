@@ -3,18 +3,19 @@ import logging
 
 from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
+from pyNN import __version__ as pynn_version
+
 from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models.pynn_population import Population
 from spynnaker7.pyNN.models.pynn_projection import Projection
 from spynnaker7.pyNN.spynnaker7_simulator_interface import \
     Spynnaker7SimulatorInterface
-from spynnaker7.pyNN.utilities.random_stats.random_stats_scipy_impl import \
-    RandomStatsScipyImpl
-from spynnaker7.pyNN.utilities.random_stats.random_stats_uniform_impl import \
-    RandomStatsUniformImpl
+from spynnaker7.pyNN.utilities.random_stats import \
+    RandomStatsScipyImpl, RandomStatsUniformImpl
 from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
     import Spynnaker7FailedState
+from _version import __version__ as version
 
 # global objects
 logger = logging.getLogger(__name__)
@@ -32,15 +33,16 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
             self, host_name=None, timestep=None, min_delay=None,
             max_delay=None, graph_label=None, database_socket_addresses=None,
             n_chips_required=None):
-        # Determine default executable folder location
-        # and add this default to end of list of search paths
+        front_end_versions = [("sPyNNaker7_version", version)]
+        front_end_versions.append(("pyNN_version", pynn_version))
 
         # population holders
         AbstractSpiNNakerCommon.__init__(
             self, database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
-            hostname=host_name, max_delay=max_delay, min_delay=min_delay)
+            hostname=host_name, max_delay=max_delay, min_delay=min_delay,
+            front_end_versions=front_end_versions)
 
     def create_population(self, size, cellclass, cellparams, structure, label):
         """ creates a pynn 0.75 population
