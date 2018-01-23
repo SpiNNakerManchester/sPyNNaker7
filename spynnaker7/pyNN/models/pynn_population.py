@@ -18,15 +18,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         vertex used with Spiking Neural Networks, comprising n cells (atoms)\
         of the same model type.
 
-    :param int size:
+    :param int size: \
         size (number of cells) of the Population.
-    :param cellclass:
+    :param cellclass: \
         specifies the neural model to use for the Population
-    :param dict cellparams:
+    :param dict cellparams: \
         a dictionary containing model specific parameters and values
-    :param structure:
+    :param structure: \
         a spatial structure
-    :param string label:
+    :param string label: \
         a label identifying the Population
     """
 
@@ -47,8 +47,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # create population vertex.
         vertex = cellclass(**internal_cellparams)
 
-        PyNNPopulationCommon.__init__(
-            self, spinnaker_control=spinnaker, size=size, vertex=vertex,
+        super(Population, self).__init__(
+            spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
         RecordingCommon.__init__(self, self)
 
@@ -61,10 +61,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def describe(self, template='population_default.txt', engine='default'):
         """ Returns a human-readable description of the population.
 
-        The output may be customised by specifying a different template
+        The output may be customised by specifying a different template\
         together with an associated template engine (see ``pyNN.descriptions``)
 
-        If template is None, then a dictionary containing the template context
+        If template is None, then a dictionary containing the template context\
         will be returned.
         """
 
@@ -289,7 +289,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Write spike time information from the population to a given file.
 
         :param filename: the absolute file path for where the spikes are to\
-                    be printed in
+            be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         if not gather:
@@ -308,7 +308,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Write conductance information from the population to a given file.
 
         :param filename: the absolute file path for where the gsyn are to be\
-                    printed in
+            printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
@@ -328,7 +328,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             given file.
 
         :param filename: the absolute file path for where the voltage are to\
-                     be printed in
+            be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
@@ -344,8 +344,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
              from rand_distr, which should be a RandomDistribution object.
 
         :param parametername: the parameter to set
-        :param rand_distr: the random distribution object to set the parameter\
-                     to
+        :param rand_distr: \
+            the random distribution object to set the parameter to
         """
         self.set(parametername, rand_distr)
 
@@ -381,7 +381,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         :param parametername: the name of the parameter
         :param value_array: the array of values which must have the correct\
-                number of elements.
+            number of elements.
         """
         if len(value_array) != self._vertex.n_atoms:
             raise ConfigurationException(

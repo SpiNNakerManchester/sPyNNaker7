@@ -1,7 +1,7 @@
 from pyNN.space import Space
 
-from spynnaker.pyNN.models.neural_projections.connectors. \
-    all_to_all_connector import AllToAllConnector as CommonAllToAllConnector
+from spynnaker.pyNN.models.neural_projections.connectors \
+    import AllToAllConnector as CommonAllToAllConnector
 
 import logging
 
@@ -18,20 +18,20 @@ class AllToAllConnector(CommonAllToAllConnector):
             space=Space(), safe=True, verbose=None):
         """
 
-        :param allow_self_connections:
-            if the connector is used to connect a
-            Population to itself, this flag determines whether a neuron is
-            allowed to connect to itself, or only to other neurons in the
+        :param allow_self_connections: \
+            if the connector is used to connect a\
+            Population to itself, this flag determines whether a neuron is\
+            allowed to connect to itself, or only to other neurons in the\
             Population.
         :type allow_self_connections: bool
-        :param space: a Space object, needed if you wish to specify distance-
+        :param space: a Space object, needed if you wish to specify distance-\
             dependent weights or delays
-        :param safe: if True, check that weights and delays have valid values.
-         If False, this check is skipped.
+        :param safe: if True, check that weights and delays have valid values.\
+            If False, this check is skipped.
         :param verbose:
-    """
-        CommonAllToAllConnector.__init__(
-            self, allow_self_connections=allow_self_connections, safe=safe,
+        """
+        super(AllToAllConnector, self).__init__(
+            allow_self_connections=allow_self_connections, safe=safe,
             verbose=verbose)
         self.set_space(space)
         self.set_weights_and_delays(weights, delays)

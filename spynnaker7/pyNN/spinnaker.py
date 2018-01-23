@@ -7,14 +7,12 @@ from pyNN import __version__ as pynn_version
 
 from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
-from spynnaker7.pyNN.models.pynn_population import Population
-from spynnaker7.pyNN.models.pynn_projection import Projection
+from spynnaker7.pyNN.models import Population, Projection
 from spynnaker7.pyNN.spynnaker7_simulator_interface import \
     Spynnaker7SimulatorInterface
 from spynnaker7.pyNN.utilities.random_stats import \
     RandomStatsScipyImpl, RandomStatsUniformImpl
-from spynnaker7.pyNN.utilities.spynnaker7_failed_state \
-    import Spynnaker7FailedState
+from spynnaker7.pyNN.utilities import Spynnaker7FailedState
 from _version import __version__ as version
 
 # global objects
@@ -37,8 +35,8 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
         front_end_versions.append(("pyNN_version", pynn_version))
 
         # population holders
-        AbstractSpiNNakerCommon.__init__(
-            self, database_socket_addresses=database_socket_addresses,
+        super(Spinnaker, self).__init__(
+            database_socket_addresses=database_socket_addresses,
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
             hostname=host_name, max_delay=max_delay, min_delay=min_delay,
@@ -99,27 +97,24 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
 
     @staticmethod
     def get_random_distribution():
-        """
-        Depricated use  is_a_pynn_random instead
-        """
+        """ Deprecated. Use is_a_pynn_random instead """
         return RandomDistribution
 
     def is_a_pynn_random(self, thing):
-        """
-        Checks if the thing is a pynn random
+        """ Checks if the thing is a pynn random
 
-        The exact definition of a pynn random can or could change between
+        The exact definition of a pynn random can or could change between\
         pynn versions so can only be checked against a specific pynn version
 
         :param thing: any object
         :return: True if this object is a pynn random
-        :trype: bol
+        :trype: bool
         """
         return isinstance(thing, RandomDistribution)
 
     def get_pynn_NumpyRNG(self):
-        """
-        get specfic PyNN version of NumpyRNG
+        """ Get specific PyNN version of NumpyRNG
+
         :return: NumpyRNG
         :rtype: NumpyRNG
         """

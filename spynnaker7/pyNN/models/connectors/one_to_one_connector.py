@@ -1,8 +1,8 @@
 from pyNN.space import Space
 from pyNN.random import RandomDistribution
 
-from spynnaker.pyNN.models.neural_projections.connectors\
-    .one_to_one_connector import OneToOneConnector as CommonOneToOneConnector
+from spynnaker.pyNN.models.neural_projections.connectors \
+    import OneToOneConnector as CommonOneToOneConnector
 
 
 class OneToOneConnector(CommonOneToOneConnector):
@@ -17,8 +17,7 @@ class OneToOneConnector(CommonOneToOneConnector):
             verbose=False):
         """
         """
-        CommonOneToOneConnector.__init__(
-            self, safe=safe, verbose=verbose,
-            random_number_class=RandomDistribution)
+        super(OneToOneConnector, self).__init__(
+            safe=safe, verbose=verbose, random_number_class=RandomDistribution)
         self.set_weights_and_delays(weights, delays)
         self.set_space(space)

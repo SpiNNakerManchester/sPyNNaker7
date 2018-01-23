@@ -32,8 +32,8 @@ class Projection(PyNNProjectionCommon):
         else:
             synapse_dynamics_stdp = synapse_dynamics.slow
 
-        PyNNProjectionCommon.__init__(
-            self, spinnaker_control=spinnaker_control, connector=connector,
+        super(Projection, self).__init__(
+            spinnaker_control=spinnaker_control, connector=connector,
             synapse_dynamics_stdp=synapse_dynamics_stdp,
             target=target, pre_synaptic_population=presynaptic_population,
             post_synaptic_population=postsynaptic_population,
@@ -50,10 +50,10 @@ class Projection(PyNNProjectionCommon):
     def describe(self, template='projection_default.txt', engine='default'):
         """ Return a human-readable description of the projection.
 
-        The output may be customised by specifying a different template
+        The output may be customised by specifying a different template\
         together with an associated template engine (see ``pyNN.descriptions``)
 
-        If template is None, then a dictionary containing the template context
+        If template is None, then a dictionary containing the template context\
         will be returned.
         """
         # TODO
@@ -70,6 +70,7 @@ class Projection(PyNNProjectionCommon):
             gather=True):  # @UnusedVariable
         """ Get parameters of the dynamic synapses for all connections in this\
             Projection.
+
         :param parameter_name:
         :param format:
         :param gather:
@@ -90,14 +91,15 @@ class Projection(PyNNProjectionCommon):
         """
         Get synaptic weights for all connections in this Projection.
 
-        Possible formats are: a list of length equal to the number of
-        connections in the projection, a 2D weight array (with NaN for
-        non-existent connections). Note that for the array format, if there is
-        more than connection between two cells, the summed weight will be
+        Possible formats are: a list of length equal to the number of\
+        connections in the projection, a 2D weight array (with NaN for\
+        non-existent connections). Note that for the array format, if there is\
+        more than connection between two cells, the summed weight will be\
         given.
+
         :param format: the type of format to be returned (only support "list")
         :param gather: gather the weights from stuff. currently has no meaning\
-                in spinnaker when set to false. Therefore is always true
+            in spinnaker when set to false. Therefore is always true
         """
         logger.info("Getting weights from Projection {}".format(self._label))
         return self._get_synaptic_data(format == "list", ["weight"])
@@ -107,8 +109,8 @@ class Projection(PyNNProjectionCommon):
         """
         Get synaptic delays for all connections in this Projection.
 
-        Possible formats are: a list of length equal to the number of
-        connections in the projection, a 2D delay array (with NaN for
+        Possible formats are: a list of length equal to the number of\
+        connections in the projection, a 2D delay array (with NaN for\
         non-existent connections).
         """
         return self._get_synaptic_data(format == "list", ["weight"])

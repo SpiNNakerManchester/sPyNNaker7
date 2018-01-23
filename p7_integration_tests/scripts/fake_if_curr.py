@@ -44,9 +44,8 @@ class FakeIFCurrExp(AbstractPopulationVertex):
         input_type = InputTypeCurrent()
         threshold_type = ThresholdTypeStatic(n_neurons, v_thresh)
 
-        AbstractPopulationVertex.__init__(
-            self, n_neurons=n_neurons, binary="Fake_IF_curr_exp.aplx",
-            label=label,
+        super(FakeIFCurrExp, self).__init__(
+            n_neurons=n_neurons, binary="Fake_IF_curr_exp.aplx", label=label,
             max_atoms_per_core=FakeIFCurrExp._model_based_max_atoms_per_core,
             spikes_per_second=spikes_per_second,
             ring_buffer_sigma=ring_buffer_sigma,

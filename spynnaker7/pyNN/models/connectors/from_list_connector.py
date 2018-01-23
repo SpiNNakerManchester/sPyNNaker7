@@ -1,4 +1,4 @@
-from spynnaker.pyNN.models.neural_projections.connectors.from_list_connector\
+from spynnaker.pyNN.models.neural_projections.connectors \
     import FromListConnector as CommonFromListConnector
 from spynnaker.pyNN import exceptions
 import logging
@@ -9,14 +9,14 @@ logger = logging.getLogger(__name__)
 class FromListConnector(CommonFromListConnector):
     """ Make connections according to a list.
 
-    :param: conn_list:
-        a list of tuples, one tuple for each connection. Each
+    :param: conn_list:\
+        a list of tuples, one tuple for each connection. Each\
         tuple should contain::
 
          (pre_idx, post_idx, weight, delay)
 
-        where pre_idx is the index (i.e. order in the Population,
-        not the ID) of the presynaptic neuron, and post_idx is
+        where pre_idx is the index (i.e. order in the Population,\
+        not the ID) of the presynaptic neuron, and post_idx is\
         the index of the postsynaptic neuron.
     """
 
@@ -35,5 +35,5 @@ class FromListConnector(CommonFromListConnector):
             self._split_conn_list(
                 conn_list, ['pre', 'post', 'weight', 'delay'])
 
-        CommonFromListConnector.__init__(self, conn_list, safe, verbose)
+        super(FromListConnector, self).__init__(conn_list, safe, verbose)
         self.set_weights_and_delays(weights, delays)
