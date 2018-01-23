@@ -4,6 +4,7 @@ from spynnaker.pyNN.models.neural_projections.connectors \
 
 
 class FromFileConnector(CommonFromFileConnector):
+    # pylint: disable=redefined-builtin
     def __init__(
             self, file, distributed=False, safe=True, verbose=False):
         super(FromFileConnector, self).__init__(

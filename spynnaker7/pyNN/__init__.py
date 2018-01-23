@@ -117,7 +117,7 @@ def end():
     """
     Do any necessary cleaning up before exiting.
 
-    Unregisters the controller,
+    Unregisters the controller,\
     prints any data recorded using the low-level API
     """
     globals_variables.get_simulator().stop()
@@ -133,8 +133,8 @@ def get_spynnaker():
 
 
 def num_processes():
-    """ Return the number of MPI processes
-       (not used for SpiNNaker, always returns 1)
+    """ Return the number of MPI processes\
+        (not used for SpiNNaker, always returns 1)
     """
     return 1
 
@@ -165,7 +165,7 @@ def run(run_time=None):
 def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
           database_socket_addresses=None, n_chips_required=None,
           **extra_params):
-    """ Should be called at the very beginning of a script.
+    """ Should be called at the very beginning of a script.\
         extra_params contains any keyword arguments that are required by a\
         given simulator but not by others.
 
@@ -176,8 +176,8 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     :param min_delay: the minumum number of time steps supported for delays
     :param max_delay: the maximum number of time steps supported for delays
     :param machine: The machine ip address
-    :param database_socket_addresses: the set of sockets needed to be listened
-    to for database notification protocol
+    :param database_socket_addresses: the set of sockets needed to be listened\
+        to for database notification protocol
     :param n_chips_required: The number of chips required for the simulation
     :param extra_params: random other crap
     :rtype: float or None
@@ -193,7 +193,7 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
             __version__, __version_name__, __version_month__, __version_year__,
             parent_dir))
 
-    if len(extra_params) > 0:
+    if extra_params:
         logger.warn("Extra params {} have been applied to the setup "
                     "command which we do not consider".format(extra_params))
     __Spinnaker(
@@ -217,10 +217,9 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
     :rtype: None
     """
     if not __inspect.isclass(neuron_type):
-        if neuron_type in globals():
-            neuron_type = globals()[neuron_type]
-        else:
+        if neuron_type not in globals():
             raise Exception("Unknown Vertex Type {}".format(neuron_type))
+        neuron_type = globals()[neuron_type]
 
     simulator = globals_variables.get_not_running_simulator()
     simulator.set_number_of_neurons_per_core(neuron_type, max_permitted)
@@ -300,9 +299,9 @@ def connect(source, target, weight=0.0, delay=None, synapse_type="excitatory",
             p=1, rng=None):
     """ Connect a source of spikes to a synaptic target.
 
-    source and target can both be individual cells or lists of cells, in
-    which case all possible connections are made with probability p, using
-    either the random number generator supplied, or the default rng
+    source and target can both be individual cells or lists of cells, in\
+    which case all possible connections are made with probability p, using\
+    either the random number generator supplied, or the default rng\
     otherwise. Weights should be in nA or uS.
     """
     connector = FixedProbabilityConnector(
@@ -312,6 +311,7 @@ def connect(source, target, weight=0.0, delay=None, synapse_type="excitatory",
 
 def get_time_step():
     """ The timestep requested
+
     :return:
     """
     return globals_variables.get_simulator().machine_time_step
@@ -319,6 +319,7 @@ def get_time_step():
 
 def get_min_delay():
     """ The minimum allowed synaptic delay.
+
     :return:
     """
     return globals_variables.get_simulator().min_delay
@@ -326,6 +327,7 @@ def get_min_delay():
 
 def get_max_delay():
     """ The maximum allowed synaptic delay.
+
     :return:
     """
     return globals_variables.get_simulator().max_delay
@@ -334,9 +336,10 @@ def get_max_delay():
 def set(cells, param, val=None):  # @ReservedAssignment
     """ Set one or more parameters of an individual cell or list of cells.
 
-    param can be a dict, in which case val should not be supplied, or a string
+    param can be a dict, in which case val should not be supplied, or a string\
     giving the parameter name, in which case val is the parameter value.
     """
+    # pylint: disable=redefined-builtin
     assert isinstance(cells, Population)
     cells.set(param, val)
 

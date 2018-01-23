@@ -363,8 +363,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def save_positions(self, file):  # @ReservedAssignment
         """ Save positions to file.
 
-            :param file: the file to write the positions to.
+        :param file: the file to write the positions to.
         """
+        # pylint: disable=redefined-builtin
         file_handle = open(file, "w")
         file_handle.write(self.positions)
         file_handle.close()

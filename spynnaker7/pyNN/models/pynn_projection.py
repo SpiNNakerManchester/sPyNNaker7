@@ -25,7 +25,7 @@ class Projection(PyNNProjectionCommon):
             connector, spinnaker_control, machine_time_step, user_max_delay,
             timescale_factor, source=None, target='excitatory',
             synapse_dynamics=None, rng=None):
-
+        # pylint: disable=too-many-arguments, protected-access
         synapse_dynamics_stdp = None
         if synapse_dynamics is None:
             synapse_dynamics_stdp = SynapseDynamicsStatic()
@@ -75,7 +75,7 @@ class Projection(PyNNProjectionCommon):
         :param format:
         :param gather:
         """
-
+        # pylint: disable=redefined-builtin
         if not gather:
             logger.warn("Spynnaker always gathers from every core.")
 
@@ -101,6 +101,7 @@ class Projection(PyNNProjectionCommon):
         :param gather: gather the weights from stuff. currently has no meaning\
             in spinnaker when set to false. Therefore is always true
         """
+        # pylint: disable=redefined-builtin
         logger.info("Getting weights from Projection {}".format(self._label))
         return self._get_synaptic_data(format == "list", ["weight"])
 
@@ -113,6 +114,7 @@ class Projection(PyNNProjectionCommon):
         connections in the projection, a 2D delay array (with NaN for\
         non-existent connections).
         """
+        # pylint: disable=redefined-builtin
         return self._get_synaptic_data(format == "list", ["weight"])
 
     def __len__(self):
