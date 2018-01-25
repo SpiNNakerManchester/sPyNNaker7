@@ -216,7 +216,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         :param to_file: file to write the spike data to
         """
-        self._record(variable=SPIKES, new_ids=self._all_ids, to_file=to_file)
+
+        self._record(SPIKES, sampling_interval=1, to_file=to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
@@ -229,11 +230,9 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record(
-            variable=GSYN_EXCIT, new_ids=self._all_ids, to_file=to_file)
+        self._record(GSYN_EXCIT, sampling_interval=1, to_file=to_file)
         self.file = to_file
-        self._record(
-            variable=GSYN_INHIB, new_ids=self._all_ids, to_file=to_file)
+        self._record(GSYN_INHIB, sampling_interval=1, to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -244,7 +243,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         :param to_file: the file to write the recorded v to.
         """
-        self._record(variable='v', new_ids=self._all_ids, to_file=to_file)
+
+        self._record('v', sampling_interval=1, to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
