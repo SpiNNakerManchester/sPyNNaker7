@@ -96,6 +96,7 @@ class MwhPopulationSynfire(BaseTestCase):
             raise SkipTest(ex)
 
     def test_run_light(self):
+        self.assert_not_spin_three()
         nNeurons = 200  # number of neurons in each population
         neurons_per_core = 50
         (v, gsyn, spikes) = do_run(nNeurons, neurons_per_core)
