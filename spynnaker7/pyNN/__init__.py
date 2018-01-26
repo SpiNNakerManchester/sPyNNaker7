@@ -28,7 +28,7 @@ from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_supervision \
      import IFCurrExpSupervision as IF_curr_exp_supervision
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_supervision_adaptive \
-     import IFCurrExpSupervision as IF_curr_exp_supervision_adaptive
+     import IFCurrExpSupervisionAdaptive as IF_curr_exp_supervision_adaptive
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
