@@ -50,7 +50,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         super(Population, self).__init__(
             spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(self, self)
+        RecordingCommon.__init__(self, population=self)
 
     @property
     def default_parameters(self):
