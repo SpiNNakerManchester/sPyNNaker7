@@ -88,8 +88,7 @@ class Projection(PyNNProjectionCommon):
     def getWeights(
             self, format='list',  # @ReservedAssignment
             gather=True):  # @UnusedVariable
-        """
-        Get synaptic weights for all connections in this Projection.
+        """ Get synaptic weights for all connections in this Projection.
 
         Possible formats are: a list of length equal to the number of\
         connections in the projection, a 2D weight array (with NaN for\
@@ -107,8 +106,7 @@ class Projection(PyNNProjectionCommon):
 
     # noinspection PyPep8Naming
     def getDelays(self, format='list', gather=True):  # @ReservedAssignment
-        """
-        Get synaptic delays for all connections in this Projection.
+        """ Get synaptic delays for all connections in this Projection.
 
         Possible formats are: a list of length equal to the number of\
         connections in the projection, a 2D delay array (with NaN for\

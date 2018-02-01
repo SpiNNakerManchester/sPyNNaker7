@@ -251,10 +251,10 @@ def _process_database_socket(
         database_notify_port_num, database_notify_host, database_ack_port_num):
     """ code to handle building a database socket address as needed
 
-    :param database_notify_port_num:  the port num where to send the db is \
-        written packet.
-    :param database_notify_host: the ipaddress of where to send the db is \
-        written packet.
+    :param database_notify_port_num: \
+        the port num where to send the db is written packet.
+    :param database_notify_host: \
+        the ipaddress of where to send the db is written packet.
     :param database_ack_port_num: the port number to listen on for ack of \
         having read and set them selves up on.
     :rtype: None

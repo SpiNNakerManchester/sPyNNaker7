@@ -91,9 +91,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyPep8Naming
     def getSpikes(self, compatible_output=True, gather=True):
-        """
-        Return a 2-column numpy array containing cell ids and spike times for\
-        recorded cells.
+        """ Return a 2-column numpy array containing cell ids and spike times\
+            for recorded cells.
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
         return self._get_recorded_variable("spikes")
@@ -106,9 +105,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=True):
-        """
-        Return a 3-column numpy array containing cell ids, time and synaptic\
-        conductances for recorded cells.
+        """ Return a 3-column numpy array containing cell ids, time and\
+            synaptic conductances for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
         :type gather: bool
@@ -127,9 +125,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=True):
-        """
-        Return a 3-column numpy array containing cell ids, time, and V_m for\
-        recorded cells.
+        """ Return a 3-column numpy array containing cell ids, time, and V_m\
+            for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
         :type gather: bool
@@ -205,9 +202,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Set initial membrane potentials for all the cells in the\
             population to random values.
 
-        :param `pyNN.random.RandomDistribution` distribution:\
-            the distribution used to draw random values.
-
+        :param distribution: the distribution used to draw random values.
+        :type distribution: pyNN.random.RandomDistribution
         """
         self.initialize('v', distribution)
         self._change_requires_mapping = True
@@ -288,8 +284,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def printSpikes(self, filename, gather=True):
         """ Write spike time information from the population to a given file.
 
-        :param filename: the absolute file path for where the spikes are to\
-            be printed in
+        :param filename: \
+            the absolute file path for where the spikes are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         if not gather:
@@ -307,8 +303,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def print_gsyn(self, filename, gather=True):
         """ Write conductance information from the population to a given file.
 
-        :param filename: the absolute file path for where the gsyn are to be\
-            printed in
+        :param filename: \
+            the absolute file path for where the gsyn are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
@@ -327,8 +323,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Write membrane potential information from the population to a\
             given file.
 
-        :param filename: the absolute file path for where the voltage are to\
-            be printed in
+        :param filename: \
+            the absolute file path for where the voltage are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
@@ -356,7 +352,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param n: the number of neurons to sample
         :param rng: the random number generator to use.
         """
-
         # TODO: Need PopulationView support
         raise NotImplementedError
 
@@ -381,8 +376,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             value_array, which must have the same dimensions as the Population.
 
         :param parametername: the name of the parameter
-        :param value_array: the array of values which must have the correct\
-            number of elements.
+        :param value_array: \
+            the array of values which must have the correct number of elements.
         """
         if len(value_array) != self._vertex.n_atoms:
             raise ConfigurationException(

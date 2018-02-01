@@ -23,8 +23,7 @@ globals_variables.set_failed_state(Spynnaker7FailedState())
 
 
 class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
-    """
-    Spinnaker: the main entrance for the spynnaker front end
+    """ Spinnaker: the main entrance for the spynnaker front end
     """
 
     def __init__(
@@ -59,7 +58,7 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
     def create_projection(
             self, presynaptic_population, postsynaptic_population, connector,
             source, target, synapse_dynamics, label, rng):
-        """
+        """ creates a pynn 0.75 projection
 
         :param presynaptic_population: source pop this projection goes from
         :param postsynaptic_population: dest pop this projection goes to
@@ -69,7 +68,7 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
         :param synapse_dynamics: plasticity object
         :param label: human readable version of the projection
         :param rng: the random number generator to use on this projection
-        :return:
+        :return: a projection instance
         """
         if label is None:
             label = "Projection {}".format(self._edge_count)
