@@ -148,12 +148,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :return: None
         """
         if not gather:
-            logger.warn(
+            logger.warning(
                 "Spynnaker 0.7 only supports gather = True, will  execute "
                 "as if gather was true anyhow")
 
         if not compatible_output:
-            logger.warn(
+            logger.warning(
                 "Spynnaker 0.7 only supports compatible_output = True, will"
                 " execute as if compatible_output was false anyhow")
 
@@ -293,8 +293,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param gather: Supported from the PyNN language, but ignored here
         """
         if not gather:
-            logger.warn("Spynnaker only supports gather = true, will execute"
-                        " as if gather was true anyhow")
+            logger.warning("Spynnaker only supports gather = true, will "
+                           "execute as if gather was true anyhow")
         spikes = self._get_recorded_variable('spikes')
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
