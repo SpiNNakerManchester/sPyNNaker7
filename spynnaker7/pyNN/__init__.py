@@ -10,6 +10,7 @@ from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
+from spinn_utilities.log import FormatAdapter
 
 from spynnaker.pyNN.models.neural_projections \
     .delay_afferent_application_edge import DelayAfferentApplicationEdge
@@ -74,7 +75,7 @@ from spynnaker7._version import __version_month__  # NOQA
 from spynnaker7._version import __version_year__  # NOQA
 
 # traditional logger
-logger = __logging.getLogger(__name__)
+logger = FormatAdapter(__logging.getLogger(__name__))
 
 # List of binary search paths
 _binary_search_paths = []
@@ -185,17 +186,17 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     global _binary_search_paths
 
     logger.info(
-        "sPyNNaker (c) {} APT Group, University of Manchester".format(
-            __version_year__))
+        "sPyNNaker (c) {} APT Group, University of Manchester",
+        __version_year__)
     parent_dir = __os.path.split(__os.path.split(spynnaker7.__file__)[0])[0]
     logger.info(
-        "Release version {}({}) - {} {}. Installed in folder {}".format(
-            __version__, __version_name__, __version_month__, __version_year__,
-            parent_dir))
+        "Release version {}({}) - {} {}. Installed in folder {}",
+        __version__, __version_name__, __version_month__, __version_year__,
+        parent_dir)
 
     if extra_params:
-        logger.warn("Extra params {} have been applied to the setup "
-                    "command which we do not consider".format(extra_params))
+        logger.warning("Extra params {} have been applied to the setup "
+                       "command which we do not consider", extra_params)
     __Spinnaker(
         host_name=machine, timestep=timestep, min_delay=min_delay,
         max_delay=max_delay,

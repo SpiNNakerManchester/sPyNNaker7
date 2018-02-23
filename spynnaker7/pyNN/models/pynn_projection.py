@@ -77,7 +77,7 @@ class Projection(PyNNProjectionCommon):
         """
         # pylint: disable=redefined-builtin
         if not gather:
-            logger.warn("Spynnaker always gathers from every core.")
+            logger.warning("Spynnaker always gathers from every core.")
 
         fixed_value = self._synapse_information.synapse_dynamics.get_value(
             parameter_name)

@@ -90,7 +90,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyPep8Naming
     def getSpikes(self, compatible_output=True, gather=True):
-        """ Return a 2-column numpy array containing cell ids and spike times\
+        """ Return a 2-column numpy array containing cell IDs and spike times\
             for recorded cells.
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
@@ -104,7 +104,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=True):
-        """ Return a 3-column numpy array containing cell ids, time and\
+        """ Return a 3-column numpy array containing cell IDs, time and\
             synaptic conductances for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
@@ -124,7 +124,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=True):
-        """ Return a 3-column numpy array containing cell ids, time, and V_m\
+        """ Return a 3-column numpy array containing cell IDs, time, and V_m\
             for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
@@ -144,13 +144,13 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :return: None
         """
         if not gather:
-            logger.warn(
-                "Spynnaker 0.7 only supports gather = True, will execute "
-                "as if gather was true anyhow")
+            logger.warning(
+                "sPyNNaker 0.7 only supports gather = True, will execute as "
+                "if gather was true anyhow")
 
         if not compatible_output:
-            logger.warn(
-                "Spynnaker 0.7 only supports compatible_output = True, will"
+            logger.warning(
+                "sPyNNaker 0.7 only supports compatible_output = True, will"
                 " execute as if compatible_output was false anyhow")
 
     @staticmethod
@@ -287,8 +287,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param gather: Supported from the PyNN language, but ignored here
         """
         if not gather:
-            logger.warn("Spynnaker only supports gather = true, will execute"
-                        " as if gather was true anyhow")
+            logger.warning("sPyNNaker 0.7 only supports gather = true, will "
+                           "execute as if gather was true anyhow")
         spikes = self._get_recorded_variable('spikes')
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
