@@ -211,18 +211,20 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         self.initialize('v', distribution)
         self._change_requires_mapping = True
 
-    def record(self, to_file=None):
+    def record(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record spikes from all cells in the Population.
 
         :param to_file: file to write the spike data to
         """
 
-        self._record(SPIKES, sampling_interval=1, to_file=to_file)
+        self._record(
+            SPIKES, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_gsyn(self, to_file=None):
+    def record_gsyn(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record the synaptic conductance for all cells in the Population.
 
         :param to_file: the file to write the recorded gsyn to.
@@ -230,21 +232,27 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record(GSYN_EXCIT, sampling_interval=1, to_file=to_file)
+        self._record(
+            GSYN_EXCIT, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
-        self._record(GSYN_INHIB, sampling_interval=1, to_file=to_file)
+        self._record(
+            GSYN_INHIB, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_v(self, to_file=None):
+    def record_v(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record the membrane potential for all cells in the Population.
 
         :param to_file: the file to write the recorded v to.
         """
 
-        self._record('v', sampling_interval=1, to_file=to_file)
+        self._record(
+            'v', sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
