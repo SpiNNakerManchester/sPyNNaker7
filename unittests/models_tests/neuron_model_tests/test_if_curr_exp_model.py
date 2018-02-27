@@ -7,6 +7,7 @@ class TestIFCurrExpModel(unittest.TestCase):
                    "test_izk_curr_exp_model.py "
                    "test_new_izk_curr_exp_mode")
     def test_new_if_curr_exp_model(self):
+        #pylint: disable=protected-access
         cell_params_lif = {'cm': 0.25,
                            'i_offset': 0.0,
                            'tau_m': 20.0,
@@ -19,7 +20,7 @@ class TestIFCurrExpModel(unittest.TestCase):
         n_neurons = 10
         if_curr_exp = IFCurrExpBase(
             n_neurons, 1000, 1.0, **cell_params_lif)
-        self.assertEqual(if_curr_exp.model_name, "IF_curr_exp")
+        self.assertEqual(if_curr_exp._model_name, "IF_curr_exp")
         self.assertEqual(len(if_curr_exp.get_parameters()), 10)
         self.assertEqual(if_curr_exp._v_thresh, cell_params_lif['v_thresh'])
         self.assertEqual(if_curr_exp._v_reset, cell_params_lif['v_reset'])
@@ -33,9 +34,11 @@ class TestIFCurrExpModel(unittest.TestCase):
         self.assertEqual(if_curr_exp._i_offset, cell_params_lif['i_offset'])
         self.assertEqual(if_curr_exp._cm, cell_params_lif['cm'])
 
+    @unittest.skip("empty test")
     def test_delay_vertex(self):
         pass
 
+    @unittest.skip("empty test")
     def test_get_spikes(self):
         pass
 

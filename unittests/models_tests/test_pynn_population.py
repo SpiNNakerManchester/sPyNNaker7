@@ -130,7 +130,7 @@ class TestPyNNPopulation(unittest.TestCase):
         with self.assertRaises(ConfigurationException):
             pop.tset("cm", data)
 
-    @unittest.skip("unittests\models_tests\test_pynn_population "
+    @unittest.skip("unittests/models_tests/test_pynn_population "
                    "test_get_default_parameters_of_if_curr_exp")
     def test_get_default_parameters_of_if_curr_exp(self):
         pop = pyNN.Population(10, pyNN.IF_curr_exp, cell_params_lif,
@@ -143,7 +143,7 @@ class TestPyNNPopulation(unittest.TestCase):
         for param in default_params.keys():
             self.assertEqual(default_params[param], boxed_defaults[param])
 
-    @unittest.skip("unittests\models_tests\test_pynn_population "
+    @unittest.skip("unittests/models_tests/test_pynn_population "
                    "test_get_default_parameters_of_if_"
                    "curr_exp_no_instaniation")
     def test_get_default_parameters_of_if_curr_exp_no_instaniation(self):
