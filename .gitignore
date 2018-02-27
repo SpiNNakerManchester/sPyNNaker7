@@ -11,3 +11,5 @@
 *egg-info/
 pyNN-spiNNaker-src/
 MANIFEST
+/.cache
+.coverage
