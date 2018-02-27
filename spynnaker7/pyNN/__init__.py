@@ -2,16 +2,16 @@ import inspect as __inspect
 import logging as __logging
 import numpy as __numpy
 import os as __os
+from spinn_utilities.log import FormatAdapter
+from spinn_utilities.overrides import overrides
 
 import spynnaker7
-from pyNN.random import NumpyRNG, RandomDistribution as __RandomDistribution
+from pyNN.random import NumpyRNG, RandomDistribution as _PynnRandomDistribution
 from pyNN.space import \
-    distance as __distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
+    distance as _pynn_distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
     RandomStructure
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
-from spinn_utilities.log import FormatAdapter
-from spinn_utilities.overrides import overrides
 
 from spynnaker.pyNN.models.neural_projections.delay_afferent_application_edge \
     import DelayAfferentApplicationEdge
@@ -111,12 +111,12 @@ __all__ = [
 
 
 # Patch the bugs in the PyNN documentation... Ugh!
-class RandomDistribution(__RandomDistribution):
+class RandomDistribution(_PynnRandomDistribution):
     """ Class which defines a ``next(n)`` method which returns an array of\
         :emphasis:`n` random numbers from a given distribution.
     """
 
-    @overrides(__RandomDistribution.__init__)
+    @overrides(_PynnRandomDistribution.__init__)
     def __init__(self, distribution='uniform', parameters=None, rng=None,
                  boundaries=None, constrain="clip"):
         """
@@ -144,7 +144,7 @@ class RandomDistribution(__RandomDistribution):
         super(RandomDistribution, self).__init__(
             distribution, parameters, rng, boundaries, constrain)
 
-    @overrides(__RandomDistribution.next)
+    @overrides(_PynnRandomDistribution.next)
     def next(self, n=1, mask_local=None):
         """ Return :emphasis:`n` random numbers from the distribution.
 
@@ -167,7 +167,7 @@ def distance(src, tgt, mask=None, scale_factor=1.0, offset=0.0,
     :param scale_factor: allows for different units in the pre- and post-\
         position (the post-synaptic position is multiplied by this quantity).
     """
-    return __distance(
+    return _pynn_distance(
         src, tgt, mask, scale_factor, offset, periodic_boundaries)
 
 
