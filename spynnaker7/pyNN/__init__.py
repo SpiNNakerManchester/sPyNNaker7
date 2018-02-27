@@ -4,9 +4,9 @@ import numpy as __numpy
 import os as __os
 
 import spynnaker7
-from pyNN.random import NumpyRNG, RandomDistribution as _RandomDistribution
+from pyNN.random import NumpyRNG, RandomDistribution as __RandomDistribution
 from pyNN.space import \
-    distance as _distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
+    distance as __distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
     RandomStructure
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
@@ -111,12 +111,12 @@ __all__ = [
 
 
 # Patch the bugs in the PyNN documentation... Ugh!
-class RandomDistribution(_RandomDistribution):
+class RandomDistribution(__RandomDistribution):
     """ Class which defines a ``next(n)`` method which returns an array of\
-        *n* random numbers from a given distribution.
+        :emphasis:`n` random numbers from a given distribution.
     """
 
-    @overrides(_RandomDistribution.__init__)
+    @overrides(__RandomDistribution.__init__)
     def __init__(self, distribution='uniform', parameters=None, rng=None,
                  boundaries=None, constrain="clip"):
         """
@@ -144,9 +144,9 @@ class RandomDistribution(_RandomDistribution):
         super(RandomDistribution, self).__init__(
             distribution, parameters, rng, boundaries, constrain)
 
-    @overrides(_RandomDistribution.next)
+    @overrides(__RandomDistribution.next)
     def next(self, n=1, mask_local=None):
-        """ Return *n* random numbers from the distribution.
+        """ Return :emphasis:`n` random numbers from the distribution.
 
         :param n: The number of random numbers to return.
         :param mask_local: Leave set to ``None`` (the default).
@@ -167,7 +167,8 @@ def distance(src, tgt, mask=None, scale_factor=1.0, offset=0.0,
     :param scale_factor: allows for different units in the pre- and post-\
         position (the post-synaptic position is multiplied by this quantity).
     """
-    return _distance(src, tgt, mask, scale_factor, offset, periodic_boundaries)
+    return __distance(
+        src, tgt, mask, scale_factor, offset, periodic_boundaries)
 
 
 def get_projections_data(projection_data):
@@ -233,7 +234,7 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     :param machine: A SpiNNaker machine used to run the simulation.
     :param timestep: The timestep in milliseconds.\
        Value will be rounded up to whole microseconds.\
-       Set to None to use the value from the config file
+       Set to None to use the value from the configuration file
     :param min_delay: the minimum number of time steps supported for delays
     :param max_delay: the maximum number of time steps supported for delays
     :param machine: The machine ip address
