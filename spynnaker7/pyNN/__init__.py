@@ -4,53 +4,14 @@ import numpy as __numpy
 import os as __os
 
 import spynnaker7
-from pyNN.random import NumpyRNG, RandomDistribution
+from pyNN.random import NumpyRNG, RandomDistribution as _RandomDistribution
 from pyNN.space import \
-    distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
-# Patch the bugs in the PyNN documentation... Ugh!
-RandomDistribution.__doc__ = """Class which defines a ``next(n)`` method which\
-returns an array of *n* random numbers from a given distribution.
-"""
-RandomDistribution.__init__.__doc__ = """
-:param rng: If present, should be a NumpyRNG or GSLRNG object.
-:param distribution: should be the name of a method supported by the\
-    underlying random number generator object.
-:param parameters: should be a list or tuple containing the arguments\
-    expected by the underlying method in the correct order. named arguments\
-    are not yet supported.
-:param boundaries: a tuple (min, max) used to specify explicitly, for\
-    distributions like Gaussian, Gamma or others, hard boundaries for the
-    parameters. If parameters are drawn outside those boundaries, the policy\
-    applied will depend on the constrain parameter.
-:param constrain: controls the policy for weights out of the specified\
-    boundaries. If "``clip``", random numbers are clipped to the boundaries.\
-    If "``redraw``", random numbers are drawn till they fall within the\
-    boundaries.
-
-.. note::
-    Note that NumpyRNG and GSLRNG distributions may not have the same names,\
-    e.g., "``normal``" for NumpyRNG and "``gaussian``" for GSLRNG, and the\
-    arguments may also differ.
-"""
-RandomDistribution.next.__doc__ = """
-Return *n* random numbers from the distribution.
-
-:param n: The number of random numbers to return.
-:param mask_local: Leave set to ``None`` (the default).
-:return: sequence of random numbers
-"""
-distance.__doc__ = """ Return the Euclidian distance between two cells.
-
-:param mask: allows only certain dimensions to be considered, e.g.:
-    * to ignore the z-dimension, use ``mask=array([0,1])``
-    * to ignore y, ``mask=array([0,2])``
-    * to just consider z-distance, ``mask=array([2])``
-:param scale_factor: allows for different units in the pre- and post-\
-    position (the post-synaptic position is multipied by this quantity).
-"""
+    distance as _distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
+    RandomStructure
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
 from spinn_utilities.log import FormatAdapter
+from spinn_utilities.overrides import overrides
 
 from spynnaker.pyNN.models.neural_projections.delay_afferent_application_edge \
     import DelayAfferentApplicationEdge
@@ -147,6 +108,66 @@ __all__ = [
     'NativeRNG', 'get_current_time', 'create', 'connect', 'get_time_step',
     'get_min_delay', 'get_max_delay', 'set', 'initialize', 'record',
     'record_v', 'record_gsyn', 'get_machine']
+
+
+# Patch the bugs in the PyNN documentation... Ugh!
+class RandomDistribution(_RandomDistribution):
+    """ Class which defines a ``next(n)`` method which returns an array of\
+        *n* random numbers from a given distribution.
+    """
+
+    @overrides(_RandomDistribution.__init__)
+    def __init__(self, distribution='uniform', parameters=None, rng=None,
+                 boundaries=None, constrain="clip"):
+        """
+        :param rng: If present, should be a NumpyRNG or GSLRNG object.
+        :param distribution: should be the name of a method supported by the\
+            underlying random number generator object.
+        :param parameters: should be a list or tuple containing the arguments\
+            expected by the underlying method in the correct order. Named\
+            arguments are not yet supported.
+        :param boundaries: a tuple (min, max) used to specify explicitly, for\
+            distributions like Gaussian, Gamma or others, hard boundaries for\
+            the parameters. If parameters are drawn outside those boundaries,\
+            the policy applied will depend on the constrain parameter.
+        :param constrain: controls the policy for weights out of the specified\
+            boundaries. If "``clip``", random numbers are clipped to the\
+            boundaries. If "``redraw``", random numbers are drawn till they\
+            fall within the boundaries.
+        
+        .. note::
+            Note that NumpyRNG and GSLRNG distributions may not have the same\
+            names, e.g., "``normal``" for NumpyRNG and "``gaussian``" for\
+            GSLRNG, and the arguments may also differ.
+        """
+        parameters = [] if parameters is None else parameters
+        super(RandomDistribution, self).__init__(
+            distribution, parameters, rng, boundaries, constrain)
+
+    @overrides(_RandomDistribution.next)
+    def next(self, n=1, mask_local=None):
+        """ Return *n* random numbers from the distribution.
+
+        :param n: The number of random numbers to return.
+        :param mask_local: Leave set to ``None`` (the default).
+        :return: sequence of random numbers
+        """
+        return super(RandomDistribution, self).next(n, mask_local)
+
+
+# Patch the bugs in the PyNN documentation... Ugh!
+def distance(src, tgt, mask=None, scale_factor=1.0, offset=0.0,
+             periodic_boundaries=None):
+    """ Return the Euclidian distance between two cells.
+
+    :param mask: allows only certain dimensions to be considered, e.g.:
+        * to ignore the z-dimension, use ``mask=array([0,1])``
+        * to ignore y, ``mask=array([0,2])``
+        * to just consider z-distance, ``mask=array([2])``
+    :param scale_factor: allows for different units in the pre- and post-\
+        position (the post-synaptic position is multiplied by this quantity).
+    """
+    return _distance(src, tgt, mask, scale_factor, offset, periodic_boundaries)
 
 
 def get_projections_data(projection_data):
