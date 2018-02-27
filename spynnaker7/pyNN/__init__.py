@@ -134,7 +134,7 @@ class RandomDistribution(_RandomDistribution):
             boundaries. If "``clip``", random numbers are clipped to the\
             boundaries. If "``redraw``", random numbers are drawn till they\
             fall within the boundaries.
-        
+
         .. note::
             Note that NumpyRNG and GSLRNG distributions may not have the same\
             names, e.g., "``normal``" for NumpyRNG and "``gaussian``" for\

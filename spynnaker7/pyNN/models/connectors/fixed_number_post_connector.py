@@ -31,7 +31,7 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
             dependent weights or delays
         :param safe: if True, check that weights and delays have valid values.\
             If False, this check is skipped.
-        :param verbose: whether to do verbose logging 
+        :param verbose: whether to do verbose logging
         :param weights: \
             may either be a float, a !RandomDistribution object, a list/\
             1D array with at least as many items as connections to be\
