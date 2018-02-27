@@ -7,7 +7,7 @@ class TestIFCurrExpModel(unittest.TestCase):
                    "test_izk_curr_exp_model.py "
                    "test_new_izk_curr_exp_mode")
     def test_new_if_curr_exp_model(self):
-        #pylint: disable=protected-access
+        # pylint: disable=protected-access
         cell_params_lif = {'cm': 0.25,
                            'i_offset': 0.0,
                            'tau_m': 20.0,
