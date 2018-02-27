@@ -116,7 +116,7 @@ class RandomDistribution(_PynnRandomDistribution):
         :emphasis:`n` random numbers from a given distribution.
     """
 
-    @overrides(_PynnRandomDistribution.__init__)
+    @overrides(_PynnRandomDistribution.__init__, extend_doc=False)
     def __init__(self, distribution='uniform', parameters=None, rng=None,
                  boundaries=None, constrain="clip"):
         """
@@ -144,13 +144,13 @@ class RandomDistribution(_PynnRandomDistribution):
         super(RandomDistribution, self).__init__(
             distribution, parameters, rng, boundaries, constrain)
 
-    @overrides(_PynnRandomDistribution.next)
+    @overrides(_PynnRandomDistribution.next, extend_doc=False)
     def next(self, n=1, mask_local=None):
-        """ Return :emphasis:`n` random numbers from the distribution.
+        """ Return *n* random numbers from the distribution.
 
         :param n: The number of random numbers to return.
         :param mask_local: Leave set to ``None`` (the default).
-        :return: sequence of random numbers
+        :return: sequence of random numbers, or a random number if *n* is 1.
         """
         return super(RandomDistribution, self).next(n, mask_local)
 
