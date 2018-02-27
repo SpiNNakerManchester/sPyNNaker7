@@ -31,13 +31,15 @@ class FixedNumberPostConnector(CommonFixedNumberPostConnector):
             dependent weights or delays
         :param safe: if True, check that weights and delays have valid values.\
             If False, this check is skipped.
-        :param verbose: ??????????
-        :param `float` weights: \
+        :param verbose: whether to do verbose logging 
+        :param weights: \
             may either be a float, a !RandomDistribution object, a list/\
             1D array with at least as many items as connections to be\
             created, or a distance dependence as per a d_expression. Units nA.
-        :param `float` delays:  -- as `weights`. If `None`, all synaptic\
+        :type weights: float, RandomDistribution, list, str
+        :param delays: as `weights`; units ms. If `None`, all synaptic\
             delays will be set to the global minimum delay.
+        :type delays: float, RandomDistribution, list, str
         """
         if isinstance(n, RandomDistribution):
             raise NotImplementedError(

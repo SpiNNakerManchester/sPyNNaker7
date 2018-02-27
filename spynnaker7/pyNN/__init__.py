@@ -1,19 +1,59 @@
 import inspect as __inspect
 import logging as __logging
-import os as __os
-
 import numpy as __numpy
+import os as __os
 
 import spynnaker7
 from pyNN.random import NumpyRNG, RandomDistribution
 from pyNN.space import \
     distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, RandomStructure
+# Patch the bugs in the PyNN documentation... Ugh!
+RandomDistribution.__doc__ = """Class which defines a ``next(n)`` method which\
+returns an array of *n* random numbers from a given distribution.
+"""
+RandomDistribution.__init__.__doc__ = """
+:param rng: If present, should be a NumpyRNG or GSLRNG object.
+:param distribution: should be the name of a method supported by the\
+    underlying random number generator object.
+:param parameters: should be a list or tuple containing the arguments\
+    expected by the underlying method in the correct order. named arguments\
+    are not yet supported.
+:param boundaries: a tuple (min, max) used to specify explicitly, for\
+    distributions like Gaussian, Gamma or others, hard boundaries for the
+    parameters. If parameters are drawn outside those boundaries, the policy\
+    applied will depend on the constrain parameter.
+:param constrain: controls the policy for weights out of the specified\
+    boundaries. If "``clip``", random numbers are clipped to the boundaries.\
+    If "``redraw``", random numbers are drawn till they fall within the\
+    boundaries.
+
+.. note::
+    Note that NumpyRNG and GSLRNG distributions may not have the same names,\
+    e.g., "``normal``" for NumpyRNG and "``gaussian``" for GSLRNG, and the\
+    arguments may also differ.
+"""
+RandomDistribution.next.__doc__ = """
+Return *n* random numbers from the distribution.
+
+:param n: The number of random numbers to return.
+:param mask_local: Leave set to ``None`` (the default).
+:return: sequence of random numbers
+"""
+distance.__doc__ = """ Return the Euclidian distance between two cells.
+
+:param mask: allows only certain dimensions to be considered, e.g.:
+    * to ignore the z-dimension, use ``mask=array([0,1])``
+    * to ignore y, ``mask=array([0,2])``
+    * to just consider z-distance, ``mask=array([2])``
+:param scale_factor: allows for different units in the pre- and post-\
+    position (the post-synaptic position is multipied by this quantity).
+"""
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
 from spinn_utilities.log import FormatAdapter
 
-from spynnaker.pyNN.models.neural_projections \
-    .delay_afferent_application_edge import DelayAfferentApplicationEdge
+from spynnaker.pyNN.models.neural_projections.delay_afferent_application_edge \
+    import DelayAfferentApplicationEdge
 from spynnaker.pyNN.models.neural_projections.projection_application_edge \
     import ProjectionApplicationEdge
 from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
@@ -41,12 +81,12 @@ from spynnaker7.pyNN.models.connectors.all_to_all_connector \
 from spynnaker7.pyNN.models.connectors. \
     distance_dependent_probability_connector import \
     DistanceDependentProbabilityConnector
-from spynnaker7.pyNN.models.connectors. \
-    fixed_number_post_connector import FixedNumberPostConnector
-from spynnaker7.pyNN.models.connectors. \
-    fixed_number_pre_connector import FixedNumberPreConnector
-from spynnaker7.pyNN.models.connectors. \
-    fixed_probability_connector import FixedProbabilityConnector
+from spynnaker7.pyNN.models.connectors.fixed_number_post_connector \
+    import FixedNumberPostConnector
+from spynnaker7.pyNN.models.connectors.fixed_number_pre_connector \
+    import FixedNumberPreConnector
+from spynnaker7.pyNN.models.connectors.fixed_probability_connector \
+    import FixedProbabilityConnector
 from spynnaker7.pyNN.models.connectors.from_file_connector \
     import FromFileConnector
 from spynnaker7.pyNN.models.connectors.from_list_connector import \
@@ -115,8 +155,7 @@ def get_projections_data(projection_data):
 
 
 def end():
-    """
-    Do any necessary cleaning up before exiting.
+    """ Do any necessary cleaning up before exiting.
 
     Unregisters the controller,\
     prints any data recorded using the low-level API
@@ -126,7 +165,7 @@ def end():
 
 
 def get_spynnaker():
-    """helper method for other plugins to add stuff to the graph
+    """ Helper method for other plugins to add stuff to the graph
 
     :return: The current spinnaker API, or None if before setup or after end.
     """
@@ -171,10 +210,10 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
         given simulator but not by others.
 
     :param machine: A SpiNNaker machine used to run the simulation.
-    :param timestep: The timestep in milleseconds.\
+    :param timestep: The timestep in milliseconds.\
        Value will be rounded up to whole microseconds.\
        Set to None to use the value from the config file
-    :param min_delay: the minumum number of time steps supported for delays
+    :param min_delay: the minimum number of time steps supported for delays
     :param max_delay: the maximum number of time steps supported for delays
     :param machine: The machine ip address
     :param database_socket_addresses: the set of sockets needed to be listened\
@@ -183,8 +222,6 @@ def setup(timestep=0.1, min_delay=None, max_delay=None, machine=None,
     :param extra_params: random other crap
     :rtype: float or None
     """
-    global _binary_search_paths
-
     logger.info(
         "sPyNNaker (c) {} APT Group, University of Manchester",
         __version_year__)
@@ -213,7 +250,7 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
 
     :param neuron_type: the neuron type that will have its max atoms set
     :param max_permitted: The max amount of atoms to be set
-    :type neuron_type: The string reprensetation of the neuron type
+    :type neuron_type: The string representation of the neuron type
     :type max_permitted: int
     :rtype: None
     """
@@ -228,12 +265,13 @@ def set_number_of_neurons_per_core(neuron_type, max_permitted):
 
 # noinspection PyPep8Naming
 def Population(size, cellclass, cellparams, structure=None, label=None):
-    """ building a new pop
+    """ Builds a new population object.
 
     :param size: n neurons
     :param cellclass: the neuron class that needs to be created
-    :param cellparams: the params to put into the neuron model
-    :param structure: ??????
+    :param cellparams: the parameters to put into the neuron model
+    :param structure: a structure that describes the arrangement of the\
+        neurons of the population in space
     :param label: the human readable label
     :return: a new population object
     """
@@ -247,13 +285,14 @@ def Population(size, cellclass, cellparams, structure=None, label=None):
 def Projection(presynaptic_population, postsynaptic_population,
                connector, source=None, target='excitatory',
                synapse_dynamics=None, label=None, rng=None):
-    """ builds a new projection object
+    """ Builds a new projection object.
 
     :param presynaptic_population: the source pop
-    :param postsynaptic_population: the dest pop
-    :param connector: the connector describing connecitivty
-    :param source: ??????????
-    :param target: type of synapse, exicitiatory or inhibitoary for example.
+    :param postsynaptic_population: the destination pop
+    :param connector: the connector describing connectivity
+    :param source: string specifying which attribute of the presynaptic cell\
+        signals action potentials, or None for the default
+    :param target: type of synapse, excitatory or inhibitory for example.
     :param synapse_dynamics: plasticity
     :param label: human readable label
     :param rng: random number generator if needed
@@ -267,6 +306,7 @@ def Projection(presynaptic_population, postsynaptic_population,
 
 def NativeRNG(seed_value):
     """ Fixes the random number generator's seed
+
     :param seed_value:
     :return:
     """
@@ -274,8 +314,8 @@ def NativeRNG(seed_value):
 
 
 def get_current_time():
-    """
-    returns the machine time step defined in setup
+    """ Returns the machine time step defined in setup
+
     :return: the runtime currently
     """
     return globals_variables.get_simulator().get_current_time()
@@ -286,10 +326,10 @@ def get_current_time():
 # =============================================================================
 
 def create(cellclass, cellparams=None, n=1):
-    """ Create n cells all of the same type.
+    """ Create *n* cells all of the same type.
 
-    If n > 1, return a list of cell ids/references.
-    If n==1, return just the single id.
+    If *n* > 1, return a list of cell IDs/references.
+    If *n* == 1, return just the single ID.
     """
     if cellparams is None:
         cellparams = {}
@@ -300,9 +340,9 @@ def connect(source, target, weight=0.0, delay=None, synapse_type="excitatory",
             p=1, rng=None):
     """ Connect a source of spikes to a synaptic target.
 
-    source and target can both be individual cells or lists of cells, in\
-    which case all possible connections are made with probability p, using\
-    either the random number generator supplied, or the default rng\
+    ``source`` and ``target`` can both be individual cells or lists of cells,\
+    in which case all possible connections are made with probability ``p``,\
+    using either the random number generator supplied, or the default RNG\
     otherwise. Weights should be in nA or uS.
     """
     connector = FixedProbabilityConnector(
@@ -337,8 +377,9 @@ def get_max_delay():
 def set(cells, param, val=None):  # @ReservedAssignment
     """ Set one or more parameters of an individual cell or list of cells.
 
-    param can be a dict, in which case val should not be supplied, or a string\
-    giving the parameter name, in which case val is the parameter value.
+    ``param`` can be a dict, in which case ``val`` should not be supplied, or\
+    a string giving the parameter name, in which case ``val`` is the\
+    parameter value.
     """
     # pylint: disable=redefined-builtin
     assert isinstance(cells, Population)
