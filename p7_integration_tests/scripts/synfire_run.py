@@ -50,40 +50,40 @@ class TestRun(object):
         :param spike_times_list: list of times the SSA sends in spikes
             - must be the same length as  run times
             - If set the spike_time parameter is ignored
-        :type spike_times_list: list of matrix of
+        :type spike_times_list: list of matrix of\
             int times the SSA sends in spikes
-        :param placement_constraint: x, y and p values to add a
+        :param placement_constraint: x, y and p values to add a\
             placement_constraint to population[0]
         :type (int, int, int)
         :type weight_to_spike: float
         :param delay: time delay in the single connectors in the spike chain
         :type delay: float
-        :param neurons_per_core: Number of neurons per core.
-            If set to None no  set_number_of_neurons_per_core call will be made
+        :param neurons_per_core: Number of neurons per core.\
+            If set to None, no set_number_of_neurons_per_core call will be made
         :type neurons_per_core: int or None
         :param constraint: A Constraint to be place on populations[0]
         :type constraint: AbstractConstraint
-        :param cell_class: class to be used for the main population
+        :param cell_class: class to be used for the main population.\
             Not used by any test at the moment
         :type cell_class: AbstractPopulationVertex
-        :param cell_params: values for the main population
-            Not used by any test at the moment
+        :param cell_params: values for the main population.\
+            Not used by any test at the moment.\
             Note: the values must match what is expected by the cellclass
         :type cell_params: dict
-        :param run_times: times for each run.
+        :param run_times: times for each run.\
             A zero will skip run but trigger reset and get date ext as set
         :type run_times: list of int
         :param reset: if True will call reset after each run except the last
         :type reset: bool
-        :param extract_between_runs: If True reads V, gysn and spikes
-            between each run.
+        :param extract_between_runs: \
+            If True reads V, gysn and spikes between each run.
         :type extract_between_runs: bool
-        :param set_between_runs set instuctions to be carried out between runs.
-            Should be a list of tuples.
+        :param set_between_runs: set instructions to be carried out between\
+            runs. Should be a list of tuples.
             First element of each tuple is 0 or 1
                 0 for main population
-                1 for input polulation
-            Second element a String for name of peroperty to change
+                1 for input population
+            Second element a String for name of property to change
             Third element the new value
         :type set_between_runs: List[(int, String, any)]
         :param new_pop: If True will add a new population before the second run
@@ -92,24 +92,24 @@ class TestRun(object):
         :type record_input_spikes: bool
         :param record: If True will aks for spikes to be recorded
         :type record: bool
-        :param get_spikes: If set overrides the normal behaviour
-            of getting spikes if and only if record is True.
+        :param get_spikes: If set overrides the normal behaviour\
+            of getting spikes if and only if record is True.\
             If left None the value of record is used.
         :type get_spikes: bool
         :param spike_path: The path to print(write) the last spike data too
         :type spike_path: str or None
-        :param record_v: If True will aks for voltage to be recorded
+        :param record_v: If True will ask for voltage to be recorded
         :type record_v: bool
-        :param get_v: If set overrides the normal behaviour
-            of getting v if and only if record_v is True.
+        :param get_v: If set overrides the normal behaviour\
+            of getting v if and only if record_v is True.\
             If left None the value of record_v is used.
         :type get_v: bool
         :param v_path: The path to print(write) the last v data too
         :type v_path: str or None
-        :param record_gsyn: If True will aks for gsyn to be recorded
+        :param record_gsyn: If True will ask for gsyn to be recorded
         :type record_gsyn: bool
-        :param get_gsyn: If set overrides the normal behaviour
-            of getting gsyn if and only if record_gsyn is True.
+        :param get_gsyn: If set overrides the normal behaviour\
+            of getting gsyn if and only if record_gsyn is True.\
             If left None the value of record_gsyn is used.
         :type get_v: bool
         :param gsyn_path: The path to print(write) the last gsyn data too
@@ -119,9 +119,9 @@ class TestRun(object):
         :param get_delays: If True delays will be gotten
         :type get_delays: bool
         :param end_before_print: If True will call end() before running the \
-            optional print commands.
-            Note: end will always be called twice even if no print path
-            provided
+            optional print commands.\
+            Note: end will always be called twice even if no print path\
+            provided.
             WARNING: This is expected to cause an Exception \
                 if spike_path, v_path or gsyn_path provided
         :type end_before_print: bool
@@ -129,8 +129,8 @@ class TestRun(object):
         :type randomise_v_init: bool
         :param use_spike_connections: Will put the spike connections in
         :type use_spike_connections: bool
-        :param use_wrap_around_connections: Will also put in a connector from
-            the last spike neuron back to the first
+        :param use_wrap_around_connections: Will also put in a connector from\
+            the last spike neuron back to the first.\
             Note: Has no effect if use_spike_connections == False
         :type use_wrap_around_connections: bool
         """
@@ -304,7 +304,7 @@ class TestRun(object):
     def get_output_pop_gsyn(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray
@@ -318,7 +318,7 @@ class TestRun(object):
     def get_output_pop_voltage(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray
@@ -332,7 +332,7 @@ class TestRun(object):
     def get_output_pop_spikes(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray
@@ -346,7 +346,7 @@ class TestRun(object):
     def get_spike_source_spikes(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray
@@ -360,7 +360,7 @@ class TestRun(object):
     def get_weights(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray
@@ -374,7 +374,7 @@ class TestRun(object):
     def get_delay(self):
         """
 
-        ;return if not recorded returns None
+        :return: if not recorded returns None
             if recorded once returns a numpy array
             if recorded more than once returns a list of numpy arrays
         :rtype: None, nparray or list of nparray

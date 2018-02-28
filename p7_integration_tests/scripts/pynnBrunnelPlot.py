@@ -24,9 +24,8 @@ def _histogram(a, bins=10, plot_range=None, normed=False):
             mn -= 0.5
             mx += 0.5
         bins = linspace(mn, mx, bins, endpoint=False)
-    else:
-        if(bins[1:] - bins[:-1] < 0).any():
-            raise AttributeError("bins must increase monotonically.")
+    elif(bins[1:] - bins[:-1] < 0).any():
+        raise AttributeError("bins must increase monotonically.")
 
     # best block size probably depends on processor cache size
     block = 65536
@@ -36,11 +35,10 @@ def _histogram(a, bins=10, plot_range=None, normed=False):
     n = concatenate([n, [len(a)]])
     n = n[1:] - n[:-1]
 
-    if normed:
-        db = bins[1] - bins[0]
-        return 1.0 / (a.size * db) * n
-    else:
+    if not normed:
         return n
+    db = bins[1] - bins[0]
+    return 1.0 / (a.size * db) * n
 
 
 def _make_plot(ts, ts1, gids, neurons, hist, hist_binwidth, grayscale, title,

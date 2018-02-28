@@ -3,6 +3,7 @@ import random
 import spynnaker7.pyNN as Frontend
 import time
 from threading import Condition
+from spinn_front_end_common.utilities.constants import NOTIFY_PORT
 
 from p7_integration_tests.base_test_case import BaseTestCase
 
@@ -158,7 +159,7 @@ def do_run():
     # Set up the live connection for sending spikes
     live_spikes_connection_send = \
         Frontend.external_devices.SpynnakerLiveSpikesConnection(
-            receive_labels=None, local_port=19999,
+            receive_labels=None, local_port=NOTIFY_PORT,
             send_labels=["spike_injector_forward", "spike_injector_backward"])
 
     # Set up callbacks to occur at initialisation

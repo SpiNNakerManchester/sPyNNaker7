@@ -30,13 +30,11 @@ class RandomStatsScipyImpl(AbstractRandomStats):
         """
         if dist.boundaries is None:
             return None
-        else:
-            return max(dist.boundaries)
+        return max(dist.boundaries)
 
     def low(self, dist):
         """ Return the variance of the distribution
         """
         if dist.boundaries is None:
             return None
-        else:
-            return min(dist.boundaries)
+        return min(dist.boundaries)
