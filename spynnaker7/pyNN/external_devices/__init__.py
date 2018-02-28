@@ -8,80 +8,36 @@ from spinn_front_end_common.utilities import globals_variables
 from spinn_front_end_common.utilities.notification_protocol \
     import SocketAddress
 from spinn_front_end_common.utility_models import LivePacketGather
-from spinn_front_end_common.utilities.notification_protocol \
-    import SocketAddress as __SockAddr
 
 # spinnman imports
 from spinnman.messages.eieio.eieio_type import EIEIOType
 
 # main
 from spynnaker.pyNN.connections \
-    import EthernetCommandConnection
-from spynnaker.pyNN.connections \
-    import EthernetControlConnection
-from spynnaker.pyNN.connections \
-    import SpynnakerLiveSpikesConnection
-from spynnaker.pyNN.connections import SpynnakerPoissonControlConnection
+    import EthernetCommandConnection, EthernetControlConnection, \
+    SpynnakerLiveSpikesConnection, SpynnakerPoissonControlConnection
 
-# connections
 from spynnaker.pyNN.external_devices_models \
-    import AbstractEthernetController
+    import AbstractEthernetController, AbstractEthernetSensor
 from spynnaker.pyNN.external_devices_models \
-    import AbstractEthernetSensor
+    import ArbitraryFPGADevice, ExternalCochleaDevice, ExternalFPGARetinaDevice
 from spynnaker.pyNN.external_devices_models \
-    import ArbitraryFPGADevice
-from spynnaker.pyNN.external_devices_models \
-    import ExternalCochleaDevice
-from spynnaker.pyNN.external_devices_models \
-    import ExternalFPGARetinaDevice
-from spynnaker.pyNN.external_devices_models \
-    import MunichMotorDevice
-from spynnaker.pyNN.external_devices_models \
-    import MunichRetinaDevice
+    import MunichMotorDevice, MunichRetinaDevice
 
-# PushBot Ethernet control
-from spynnaker.pyNN.external_devices_models.push_bot.\
-    push_bot_control_modules import PushBotLifEthernet
-
-# PushBotSpiNNakerLink control
-from spynnaker.pyNN.external_devices_models.push_bot.\
-    push_bot_control_modules import PushBotLifSpinnakerLink
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_ethernet import PushBotEthernetLaserDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_ethernet import PushBotEthernetLEDDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_ethernet import PushBotEthernetMotorDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_ethernet import PushBotEthernetRetinaDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_ethernet import PushBotEthernetSpeakerDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_spinnaker_link import PushBotSpiNNakerLinkLaserDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_spinnaker_link import PushBotSpiNNakerLinkLEDDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_spinnaker_link import PushBotSpiNNakerLinkMotorDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_spinnaker_link import PushBotSpiNNakerLinkRetinaDevice
-from spynnaker.pyNN.external_devices_models.push_bot \
-    .push_bot_spinnaker_link import PushBotSpiNNakerLinkSpeakerDevice
-
-# PushBot Parameters
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotLED
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotMotor
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotRetinaResolution
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotLaser
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotSpeaker
-
-# push bot retina viewer
-from spynnaker.pyNN.external_devices_models.push_bot. \
-    push_bot_parameters import PushBotRetinaViewer
+# PushBot
+from spynnaker.pyNN.external_devices_models.push_bot.push_bot_control_modules\
+    import PushBotLifEthernet, PushBotLifSpinnakerLink
+from spynnaker.pyNN.external_devices_models.push_bot.push_bot_ethernet \
+    import PushBotEthernetLaserDevice, PushBotEthernetLEDDevice, \
+    PushBotEthernetMotorDevice, PushBotEthernetRetinaDevice, \
+    PushBotEthernetSpeakerDevice
+from spynnaker.pyNN.external_devices_models.push_bot.push_bot_spinnaker_link \
+    import PushBotSpiNNakerLinkLaserDevice, PushBotSpiNNakerLinkLEDDevice, \
+    PushBotSpiNNakerLinkMotorDevice, PushBotSpiNNakerLinkRetinaDevice, \
+    PushBotSpiNNakerLinkSpeakerDevice
+from spynnaker.pyNN.external_devices_models.push_bot.push_bot_parameters \
+    import PushBotLED, PushBotMotor, PushBotRetinaResolution, PushBotLaser, \
+    PushBotSpeaker, PushBotRetinaViewer
 
 # other plugins
 from spynnaker.pyNN.protocols \
@@ -104,11 +60,9 @@ activate_live_output_for = \
 add_poisson_live_rate_control = \
     SpynnakerExternalDevicePluginManager.add_poisson_live_rate_control
 
-
 logger = logging.getLogger(__name__)
 
 spynnaker_external_devices = SpynnakerExternalDevicePluginManager()
-
 
 __all__ = [
     "EIEIOType",
@@ -143,9 +97,7 @@ __all__ = [
     "activate_live_output_to",
     "SpikeInjector",
     "register_database_notification_request",
-    "add_poisson_live_rate_control"
-
-]
+    "add_poisson_live_rate_control"]
 
 
 def register_database_notification_request(hostname, notify_port, ack_port):
@@ -156,7 +108,7 @@ def register_database_notification_request(hostname, notify_port, ack_port):
     :param ack_port: the port for sending back the ack
     :rtype: None
     """
-    spynnaker_external_devices.add_socket_address(__SockAddr(
+    spynnaker_external_devices.add_socket_address(SocketAddress(
         hostname, notify_port, ack_port))
 
 
@@ -171,18 +123,18 @@ def EthernetControl(
     :param params: The parameters of the model
     :param label: An optional label for the population
     :param local_host:\
-            The optional local host IP address to listen on for commands
+        The optional local host IP address to listen on for commands
     :param lost_port: The optional local port to listen on for commands
     :param database_ack_port_num:\
-            The optional port to which responses to the database notification\
-            protocol are to be sent
+        The optional port to which responses to the database notification\
+        protocol are to be sent
     :param database_notify_port_num:\
-            The optional port to which notifications from the database\
-            notification protocol are to be sent
+        The optional port to which notifications from the database\
+        notification protocol are to be sent
     :return:\
-            A pyNN Population which can be used as the target of a Projection.\
-            Note that the Population can also be used as the source of a\
-            Projection, but it might not send spikes.
+        A pyNN Population which can be used as the target of a Projection.\
+        Note that the Population can also be used as the source of a\
+        Projection, but it might not send spikes.
     """
     if not issubclass(params['model'], AbstractEthernetController):
         raise Exception(
@@ -193,9 +145,8 @@ def EthernetControl(
         translator, local_host, local_port)
     devices_with_commands = [
         device for device in vertex.get_external_devices()
-        if isinstance(device, AbstractSendMeMulticastCommandsVertex)
-    ]
-    if len(devices_with_commands) > 0:
+        if isinstance(device, AbstractSendMeMulticastCommandsVertex)]
+    if devices_with_commands:
         ethernet_command_connection = EthernetCommandConnection(
             translator, devices_with_commands, local_host,
             database_notify_port_num)
@@ -223,18 +174,17 @@ def EthernetSensorPopulation(
     :param model: Class of a model that implements AbstractEthernetController
     :param params: The parameters of the model
     :param local_host:\
-            The optional local host IP address to listen on for database\
-            notification
+        The optional local host IP address to listen on for database\
+        notification
     :param database_ack_port_num:\
-            The optional port to which responses to the database notification\
-            protocol are to be sent
+        The optional port to which responses to the database notification\
+        protocol are to be sent
     :param database_notify_port_num:\
-            The optional port to which notifications from the database\
-            notification protocol are to be sent
+        The optional port to which notifications from the database\
+        notification protocol are to be sent
     :return:\
-            A pyNN Population which can be used as the source of a Projection.\
-            Note that the Population cannot be used as the target of a\
-            Projection.
+        A pyNN Population which can be used as the source of a Projection.\
+        Note that the Population cannot be used as the target of a Projection.
     """
     if not issubclass(model, AbstractEthernetSensor):
         raise Exception("Model must be a subclass of AbstractEthernetSensor")
@@ -279,14 +229,14 @@ def SpikeInjector(
     :param virtual_key: the virtual key used in the routing system
     :type virtual_key: int
     :param database_notify_host: the hostname for the device which is\
-            listening to the database notification.
+        listening to the database notification.
     :type database_notify_host: str
     :param database_ack_port_num: the port number to which a external device\
-            will acknowledge that they have finished reading the database and\
-            are ready for it to start execution
+        will acknowledge that they have finished reading the database and\
+        are ready for it to start execution
     :type database_ack_port_num: int
     :param database_notify_port_num: The port number to which a external\
-            device will receive the database is ready command
+        device will receive the database is ready command
     :type database_notify_port_num: int
     """
     if notify:
@@ -299,14 +249,14 @@ def SpikeInjector(
 
 def _process_database_socket(
         database_notify_port_num, database_notify_host, database_ack_port_num):
-    """ code to handle building a database socket address as needed
+    """ Build a database socket address as needed
 
-    :param database_notify_port_num:  the port num where to send the db is \
-    written packet.
-    :param database_notify_host: the ipaddress of where to send the db is \
-    written packet.
+    :param database_notify_port_num: \
+        the port num where to send the DB-is-written packet.
+    :param database_notify_host: \
+        the hostname or IP address of where to send the DB-is-written packet.
     :param database_ack_port_num: the port number to listen on for ack of \
-     having read and set them selves up on.
+        having read and set them selves up on.
     :rtype: None
     """
     config = globals_variables.get_simulator().config

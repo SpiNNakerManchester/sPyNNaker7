@@ -18,16 +18,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         vertex used with Spiking Neural Networks, comprising n cells (atoms)\
         of the same model type.
 
-    :param int size:
-        size (number of cells) of the Population.
-    :param cellclass:
-        specifies the neural model to use for the Population
-    :param dict cellparams:
+    :param size: size (number of cells) of the Population.
+    :type size: int
+    :param cellclass: specifies the neural model to use for the Population
+    :param cellparams: \
         a dictionary containing model specific parameters and values
-    :param structure:
-        a spatial structure
-    :param string label:
-        a label identifying the Population
+    :type cellparams: dict
+    :param structure: a spatial structure
+    :param label: a label identifying the Population
+    :type label: str
     """
 
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
@@ -47,10 +46,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # create population vertex.
         vertex = cellclass(**internal_cellparams)
 
-        PyNNPopulationCommon.__init__(
-            self, spinnaker_control=spinnaker, size=size, vertex=vertex,
+        super(Population, self).__init__(
+            spinnaker_control=spinnaker, size=size, vertex=vertex,
             initial_values=None, structure=structure)
-        RecordingCommon.__init__(self, self)
+        RecordingCommon.__init__(self, population=self)
 
     @property
     def default_parameters(self):
@@ -61,10 +60,10 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def describe(self, template='population_default.txt', engine='default'):
         """ Returns a human-readable description of the population.
 
-        The output may be customised by specifying a different template
+        The output may be customised by specifying a different template\
         together with an associated template engine (see ``pyNN.descriptions``)
 
-        If template is None, then a dictionary containing the template context
+        If template is None, then a dictionary containing the template context\
         will be returned.
         """
 
@@ -91,9 +90,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyPep8Naming
     def getSpikes(self, compatible_output=True, gather=True):
-        """
-        Return a 2-column numpy array containing cell ids and spike times for\
-        recorded cells.
+        """ Return a 2-column numpy array containing cell IDs and spike times\
+            for recorded cells.
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
         return self._get_recorded_variable("spikes")
@@ -106,9 +104,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_gsyn(self, gather=True, compatible_output=True):
-        """
-        Return a 3-column numpy array containing cell ids, time and synaptic\
-        conductances for recorded cells.
+        """ Return a 3-column numpy array containing cell IDs, time and\
+            synaptic conductances for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
         :type gather: bool
@@ -127,9 +124,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=True):
-        """
-        Return a 3-column numpy array containing cell ids, time, and V_m for\
-        recorded cells.
+        """ Return a 3-column numpy array containing cell IDs, time, and V_m\
+            for recorded cells.
 
         :param gather: not used - inserted to match PyNN specs
         :type gather: bool
@@ -149,12 +145,12 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
         if not gather:
             logger.warning(
-                "Spynnaker 0.7 only supports gather = True, will  execute "
-                "as if gather was true anyhow")
+                "sPyNNaker 0.7 only supports gather = True, will execute as "
+                "if gather was true anyhow")
 
         if not compatible_output:
             logger.warning(
-                "Spynnaker 0.7 only supports compatible_output = True, will"
+                "sPyNNaker 0.7 only supports compatible_output = True, will"
                 " execute as if compatible_output was false anyhow")
 
     @staticmethod
@@ -205,9 +201,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """ Set initial membrane potentials for all the cells in the\
             population to random values.
 
-        :param `pyNN.random.RandomDistribution` distribution:\
-            the distribution used to draw random values.
-
+        :param distribution: the distribution used to draw random values.
+        :type distribution: pyNN.random.RandomDistribution
         """
         self.initialize('v', distribution)
         self._change_requires_mapping = True
@@ -272,80 +267,75 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def _print_headers(self, file_to_write, variable, n_data_points):
-        time_step = (
-                self._spinnaker_control.machine_time_step * 1.0) / 1000.0
-        file_to_write.write("# variable = {}\n".format(variable))
-        file_to_write.write("# first_index = 0\n")
-        file_to_write.write("# last_index = {}\n".format(self._vertex.n_atoms))
-        file_to_write.write("# first_id = {}\n".format(self._first_id))
-        file_to_write.write("# last_id = {}\n".format(self._last_id))
-        file_to_write.write("# n = {}\n".format(n_data_points))
-        file_to_write.write("# size = {}\n".format(self._vertex.n_atoms))
-        file_to_write.write("# dt = {}\n".format(time_step))
+    def _print_headers(self, f, variable, n_data_points):
+        time_step = (self._spinnaker_control.machine_time_step * 1.0) / 1000.0
+        f.write("# variable = {}\n".format(variable))
+        f.write("# first_index = 0\n")
+        f.write("# last_index = {}\n".format(self._vertex.n_atoms))
+        f.write("# first_id = {}\n".format(self._first_id))
+        f.write("# last_id = {}\n".format(self._last_id))
+        f.write("# n = {}\n".format(n_data_points))
+        f.write("# size = {}\n".format(self._vertex.n_atoms))
+        f.write("# dt = {}\n".format(time_step))
 
     # noinspection PyPep8Naming
     def printSpikes(self, filename, gather=True):
         """ Write spike time information from the population to a given file.
 
-        :param filename: the absolute file path for where the spikes are to\
-                    be printed in
+        :param filename: \
+            the absolute file path for where the spikes are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         if not gather:
-            logger.warning("Spynnaker only supports gather = true, will "
+            logger.warning("sPyNNaker 0.7 only supports gather = true, will "
                            "execute as if gather was true anyhow")
         spikes = self._get_recorded_variable('spikes')
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
-            spike_file = open(filename, "w")
-            self._print_headers(spike_file, SPIKES, spikes.shape[0])
-            for (neuronId, time) in spikes:
-                spike_file.write("{}\t{}\n".format(time, neuronId))
-            spike_file.close()
+            with open(filename, "w") as f:
+                self._print_headers(f, SPIKES, spikes.shape[0])
+                for (neuronId, time) in spikes:
+                    f.write("{}\t{}\n".format(time, neuronId))
 
     def print_gsyn(self, filename, gather=True):
         """ Write conductance information from the population to a given file.
 
-        :param filename: the absolute file path for where the gsyn are to be\
-                    printed in
+        :param filename: \
+            the absolute file path for where the gsyn are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
         gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
 
         utility_calls.check_directory_exists_and_create_if_not(filename)
-        file_handle = open(filename, "w")
-        self._print_headers(file_handle, "gsyn", gsyn_exc.shape[0])
-        for ((neuronId, _, value_e), (_, _, value_i)) in zip(
-                gsyn_exc, gsyn_inh):
-            file_handle.write("{}\t{}\t{}\n".format(
-                value_e, value_i, neuronId))
-        file_handle.close()
+        with open(filename, "w") as f:
+            self._print_headers(f, "gsyn", gsyn_exc.shape[0])
+            for ((neuronId, _, value_e), (_, _, value_i)) in zip(
+                    gsyn_exc, gsyn_inh):
+                f.write("{}\t{}\t{}\n".format(value_e, value_i, neuronId))
 
     def print_v(self, filename, gather=True):
         """ Write membrane potential information from the population to a\
             given file.
 
-        :param filename: the absolute file path for where the voltage are to\
-                     be printed in
+        :param filename: \
+            the absolute file path for where the voltage are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
         v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
         utility_calls.check_directory_exists_and_create_if_not(filename)
-        file_handle = open(filename, "w")
-        self._print_headers(file_handle, MEMBRANE_POTENTIAL, v.shape[0])
-        for (neuronId, _, value) in v:
-            file_handle.write("{}\t{}\n".format(value, neuronId))
-        file_handle.close()
+        with open(filename, "w") as f:
+            self._print_headers(f, MEMBRANE_POTENTIAL, v.shape[0])
+            for (neuronId, _, value) in v:
+                f.write("{}\t{}\n".format(value, neuronId))
 
     def rset(self, parametername, rand_distr):
         """ 'Random' set. Set the value of parametername to a value taken\
              from rand_distr, which should be a RandomDistribution object.
 
         :param parametername: the parameter to set
-        :param rand_distr: the random distribution object to set the parameter\
-                     to
+        :param rand_distr: \
+            the random distribution object to set the parameter to
         """
         self.set(parametername, rand_distr)
 
@@ -356,18 +346,17 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :param n: the number of neurons to sample
         :param rng: the random number generator to use.
         """
-
         # TODO: Need PopulationView support
         raise NotImplementedError
 
     def save_positions(self, file):  # @ReservedAssignment
         """ Save positions to file.
 
-            :param file: the file to write the positions to.
+        :param file: the file to write the positions to.
         """
-        file_handle = open(file, "w")
-        file_handle.write(self.positions)
-        file_handle.close()
+        # pylint: disable=redefined-builtin
+        with open(file, "w") as f:
+            f.write(self.positions)
 
     @property
     def structure(self):
@@ -380,8 +369,8 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             value_array, which must have the same dimensions as the Population.
 
         :param parametername: the name of the parameter
-        :param value_array: the array of values which must have the correct\
-                number of elements.
+        :param value_array: \
+            the array of values which must have the correct number of elements.
         """
         if len(value_array) != self._vertex.n_atoms:
             raise ConfigurationException(
