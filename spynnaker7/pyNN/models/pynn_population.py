@@ -306,22 +306,17 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def print_gsyn(self, filename, gather=True):
         """ Write conductance information from the population to a given file.
-
-        :param filename: \
-            the absolute file path for where the gsyn are to be printed in
+        :param filename: the absolute file path for where the gsyn are to be\
+                    printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
-        gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
+        gsyn = self.get_gsyn()
 
         utility_calls.check_directory_exists_and_create_if_not(filename)
-        file_handle = open(filename, "w")
-        self._print_headers(file_handle, "gsyn", gsyn_exc.shape[0])
-        for ((neuronId, _, value_e), (_, _, value_i)) in zip(
-                gsyn_exc, gsyn_inh):
-            file_handle.write("{}\t{}\t{}\n".format(
-                value_e, value_i, neuronId))
-        file_handle.close()
+        with open(filename, "w") as f:
+            self._print_headers(f, "gsyn", gsyn.shape[0])
+            for (neuronId, _, value_e, value_i) in gsyn:
+                f.write("{}\t{}\t{}\n".format(value_e, value_i, neuronId))
 
     def print_v(self, filename, gather=True):
         """ Write membrane potential information from the population to a\
