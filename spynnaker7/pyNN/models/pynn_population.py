@@ -7,7 +7,6 @@ from spinn_front_end_common.utilities.exceptions import ConfigurationException
 
 from pyNN import descriptions
 
-import numpy
 import logging
 
 logger = logging.getLogger(__name__)
@@ -94,7 +93,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             for recorded cells.
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable("spikes")
+        return self._get_spikes()
 
     def get_spike_counts(self, gather=True):
         """ Return the number of spikes for each neuron.
@@ -114,13 +113,13 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         """
 
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        excit = self._get_recorded_variable("gsyn_exc")
-        inhib = self._get_recorded_variable("gsyn_inh")
-        # TODO this needs fixing for seperate recordings of cells on views
-        # and assembliers
-        # merge two arrays into one
-        merged = numpy.hstack((excit, inhib))
-        return numpy.delete(merged, [3, 4], 1)
+        (exc_data, exc_ids, exc_sampling_interval) = \
+            self._get_recorded_matrix("gsyn_exc")
+        (inh_data, inh_ids, inh_sampling_interval) = \
+            self._get_recorded_matrix("gsyn_inh")
+        # TODO this needs fixing for to check ids and interval are the same
+        return self.pynn7_format(
+            exc_data, exc_ids, exc_sampling_interval, inh_data)
 
     # noinspection PyUnusedLocal
     def get_v(self, gather=True, compatible_output=True):
@@ -133,7 +132,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         :type compatible_output: bool
         """
         self._compatible_output_and_gather_warnings(compatible_output, gather)
-        return self._get_recorded_variable(MEMBRANE_POTENTIAL)
+        return self._get_recorded_pynn7(MEMBRANE_POTENTIAL)
 
     @staticmethod
     def _compatible_output_and_gather_warnings(compatible_output, gather):
@@ -207,18 +206,20 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         self.initialize('v', distribution)
         self._change_requires_mapping = True
 
-    def record(self, to_file=None):
+    def record(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record spikes from all cells in the Population.
 
         :param to_file: file to write the spike data to
         """
 
-        self._record(SPIKES, self._all_ids, 1, to_file)
+        self._record(
+            SPIKES, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_gsyn(self, to_file=None):
+    def record_gsyn(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record the synaptic conductance for all cells in the Population.
 
         :param to_file: the file to write the recorded gsyn to.
@@ -226,21 +227,27 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         # have to set each to record and set the file at that point, otherwise
         # itll not work due to pynn bug
-        self._record(GSYN_EXCIT, self._all_ids, 1, to_file)
+        self._record(
+            GSYN_EXCIT, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
-        self._record(GSYN_INHIB, self._all_ids, 1, to_file)
+        self._record(
+            GSYN_INHIB, sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_v(self, to_file=None):
+    def record_v(self, sampling_interval=1, indexes=None, to_file=None):
         """ Record the membrane potential for all cells in the Population.
 
         :param to_file: the file to write the recorded v to.
         """
 
-        self._record('v', self._all_ids, 1, to_file)
+        self._record(
+            'v', sampling_interval=sampling_interval, indexes=indexes,
+            to_file=to_file)
         self.file = to_file
 
         # state that something has changed in the population,
@@ -289,7 +296,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         if not gather:
             logger.warning("sPyNNaker 0.7 only supports gather = true, will "
                            "execute as if gather was true anyhow")
-        spikes = self._get_recorded_variable('spikes')
+        spikes = self._get_spikes()
         if spikes is not None:
             utility_calls.check_directory_exists_and_create_if_not(filename)
             with open(filename, "w") as f:
@@ -299,19 +306,16 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
     def print_gsyn(self, filename, gather=True):
         """ Write conductance information from the population to a given file.
-
-        :param filename: \
-            the absolute file path for where the gsyn are to be printed in
+        :param filename: the absolute file path for where the gsyn are to be\
+                    printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        gsyn_exc = self._get_recorded_variable(GSYN_EXCIT)
-        gsyn_inh = self._get_recorded_variable(GSYN_INHIB)
+        gsyn = self.get_gsyn()
 
         utility_calls.check_directory_exists_and_create_if_not(filename)
         with open(filename, "w") as f:
-            self._print_headers(f, "gsyn", gsyn_exc.shape[0])
-            for ((neuronId, _, value_e), (_, _, value_i)) in zip(
-                    gsyn_exc, gsyn_inh):
+            self._print_headers(f, "gsyn", gsyn.shape[0])
+            for (neuronId, _, value_e, value_i) in gsyn:
                 f.write("{}\t{}\t{}\n".format(value_e, value_i, neuronId))
 
     def print_v(self, filename, gather=True):
@@ -322,7 +326,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             the absolute file path for where the voltage are to be printed in
         :param gather: Supported from the PyNN language, but ignored here
         """
-        v = self._get_recorded_variable(MEMBRANE_POTENTIAL)
+        v = self._get_recorded_pynn7(MEMBRANE_POTENTIAL)
         utility_calls.check_directory_exists_and_create_if_not(filename)
         with open(filename, "w") as f:
             self._print_headers(f, MEMBRANE_POTENTIAL, v.shape[0])

@@ -232,7 +232,7 @@ class TestPyNNPopulation(unittest.TestCase):
         sim._buffer_manager = MockBufferManager(recorded_data)
         sim._graph_mapper = graph_mapper
         sim._placements = placements
-
+        sim._no_machine_time_steps = 3
         temp_spikes_file_name = tempfile.mktemp(".dat")
         temp_v_file_name = tempfile.mktemp(".dat")
         temp_gsyn_file_name = tempfile.mktemp(".dat")
