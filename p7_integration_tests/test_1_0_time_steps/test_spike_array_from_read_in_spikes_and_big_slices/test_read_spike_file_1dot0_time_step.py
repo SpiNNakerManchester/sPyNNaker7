@@ -105,6 +105,7 @@ class TestReadingSpikeArrayDataAndBigSlices(BaseTestCase):
         test that tests the printing of v from a pre determined recording
         :return:
         """
+        self.assert_not_spin_three()
         try:
             spikes = do_run()
         except SpinnmanTimeoutException as ex:

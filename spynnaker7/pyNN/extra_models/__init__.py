@@ -19,8 +19,7 @@ from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
 
 # plastic weight spynnaker 7
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
-    .weight_dependence_additive_triplet \
-    import WeightDependenceAdditiveTriplet as WeightDependenceAdditiveTriplet
+    .weight_dependence_additive_triplet import WeightDependenceAdditiveTriplet
 
 __all__ = [
     # spynnaker 7 models

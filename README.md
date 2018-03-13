@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/SpiNNakerManchester/sPyNNaker7.svg?branch=master)](https://travis-ci.org/SpiNNakerManchester/sPyNNaker7)
+[![Coverage Status](https://coveralls.io/repos/github/SpiNNakerManchester/sPyNNaker7/badge.svg?branch=master)](https://coveralls.io/github/SpiNNakerManchester/sPyNNaker7?branch=master)
 
 This package provides a PyNN 7 implementation for SpiNNaker.
 
