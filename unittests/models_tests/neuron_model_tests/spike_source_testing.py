@@ -1,5 +1,4 @@
 import spynnaker7.pyNN as p
-import random
 import numpy as np
 
 
@@ -12,6 +11,7 @@ def distance(x0, x1, grid=np.asarray([16, 16]), type='euclidian'):
     if type == 'manhattan':
         return np.abs(delta).sum(axis=-1)
     return np.sqrt((delta ** 2).sum(axis=-1))
+
 
 def generate_rates(s, grid, f_base=5, f_peak=152.8, sigma_stim=2):
     '''
@@ -32,46 +32,47 @@ def generate_rates(s, grid, f_base=5, f_peak=152.8, sigma_stim=2):
 timestep = 1
 interval = 20
 total_runtime = 15000 * interval
-number_of_rates = total_runtime/interval
+number_of_rates = total_runtime // interval
 num_sources = 256
 p.setup(timestep)
 
 
-
-grid = np.asarray((1,256))
+grid = np.asarray((1, 256))
 rates = []
 max_locs = []
 for i in range(number_of_rates):
-    x = np.random.randint(0,256)
+    x = np.random.randint(0, 256)
     max_locs.append(x)
-    rate = generate_rates([1,x], grid)
+    rate = generate_rates([1, x], grid)
     rates.append(list(rate[0]))
 
 # for i in max_locs:
-#     print i
+#     print(i)
 
 # rates = []
 # for i in range(number_of_rates):
 #     c =  num_sources * [1]
-#     c[random.randint(0,255)] = 200
+#     c[random.randint(0, 255)] = 200
 #     rates.append(c)
 
 
 # rate = [100, 200, 300] # (Hz) frequency of the random stimulation
-# rates = [[10, 10, 500], [500, 10, 10], [10, 500, 10]]#, [10, 20, 500],  [10, 500, 10]]  # (Hz) frequency of the random stimulation
+# rates = [[10, 10, 500], [500, 10, 10], [10, 500, 10]]#, [10, 20, 500],
+#          [10, 500, 10]]  # (Hz) frequency of the random stimulation
 # total_runtime: make sure this is set to the end time of the simulation
 # (or further, otherwise sources will stop making spikes)
 
 # stim_dur = total_runtime/len(rate)   # (ms) duration of random stimulation
 
 ext_stim = p.Population(
-            num_sources, p.SpikeSourcePoissonVariable,
-            {'rate_interval_duration': interval, 'rate': rates},
-            label="expoisson")
+    num_sources, p.SpikeSourcePoissonVariable,
+    {'rate_interval_duration': interval, 'rate': rates},
+    label="expoisson")
 
 exc_pop = p.Population(num_sources, p.IF_curr_exp, {})
 
-p.Projection(ext_stim, exc_pop, p.OneToOneConnector(weights=2, delays=timestep))
+p.Projection(ext_stim, exc_pop,
+             p.OneToOneConnector(weights=2, delays=timestep))
 
 recording = True
 if recording:
@@ -95,12 +96,14 @@ p.run(total_runtime)
 
 # spikes = exc_pop.getSpikes()
 # v = exc_pop.get_v()
+
 if recording:
     source_spikes = ext_stim.getSpikes()
 
-    import pylab as plt
     def plot_spikes(spikes, title):
         if spikes is not None and len(spikes) > 0:
+            import pylab as plt
+
             f, ax1 = plt.subplots(1, 1, figsize=(16, 8))
             ax1.set_xlim((0, total_runtime))
             ax1.scatter([i[1] for i in spikes], [i[0] for i in spikes], s=.2)
@@ -110,8 +113,7 @@ if recording:
             plt.show()
 
         else:
-            print "No spikes received"
-
+            print("No spikes received")
 
     plot_spikes(source_spikes, "SPIIIIKES!")
 # plot_utils.plotAll(v, spikes)
