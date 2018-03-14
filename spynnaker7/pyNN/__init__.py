@@ -27,7 +27,8 @@ from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
     import SynapseDynamicsSTDP as STDPMechanism
-from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_structural \
+from spynnaker.pyNN.models.neuron.synapse_dynamics\
+    .synapse_dynamics_structural \
     import SynapseDynamicsStructural as StructuralMechanism
 from spynnaker.pyNN.models.spike_source.spike_source_array \
     import SpikeSourceArray
@@ -97,8 +98,8 @@ __all__ = [
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
-    'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
-    'MultiplicativeWeightDependence',
+    'STDPMechanism', 'StructuralMechanism', 'AdditiveWeightDependence',
+    'SpikePairRule', 'MultiplicativeWeightDependence',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
     # Stuff from pyNN.space
