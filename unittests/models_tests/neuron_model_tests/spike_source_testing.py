@@ -1,3 +1,5 @@
+import unittest
+
 import spynnaker7.pyNN as p
 import numpy as np
 
@@ -28,93 +30,45 @@ def generate_rates(s, grid, f_base=5, f_peak=152.8, sigma_stim=2):
                 -_d / (2 * (sigma_stim ** 2)))
     return _rates
 
-
-timestep = 1
-interval = 20
-total_runtime = 15000 * interval
-number_of_rates = total_runtime // interval
-num_sources = 256
-p.setup(timestep)
-
-
-grid = np.asarray((1, 256))
-rates = []
-max_locs = []
-for i in range(number_of_rates):
-    x = np.random.randint(0, 256)
-    max_locs.append(x)
-    rate = generate_rates([1, x], grid)
-    rates.append(list(rate[0]))
-
-# for i in max_locs:
-#     print(i)
-
-# rates = []
-# for i in range(number_of_rates):
-#     c =  num_sources * [1]
-#     c[random.randint(0, 255)] = 200
-#     rates.append(c)
+class TestVRPSS(unittest.TestCase):
+    def test_variable_rate_poisson_spike_source_generation(self):
+        timestep = 1
+        interval = 20
+        total_runtime = 15000 * interval
+        number_of_rates = total_runtime // interval
+        num_sources = 256
+        p.setup(timestep)
 
 
-# rate = [100, 200, 300] # (Hz) frequency of the random stimulation
-# rates = [[10, 10, 500], [500, 10, 10], [10, 500, 10]]#, [10, 20, 500],
-#          [10, 500, 10]]  # (Hz) frequency of the random stimulation
-# total_runtime: make sure this is set to the end time of the simulation
-# (or further, otherwise sources will stop making spikes)
+        grid = np.asarray((1, 256))
+        rates = []
+        max_locs = []
+        for i in range(number_of_rates):
+            x = np.random.randint(0, 256)
+            max_locs.append(x)
+            rate = generate_rates([1, x], grid)
+            rates.append(list(rate[0]))
 
-# stim_dur = total_runtime/len(rate)   # (ms) duration of random stimulation
 
-ext_stim = p.Population(
-    num_sources, p.SpikeSourcePoissonVariable,
-    {'rate_interval_duration': interval, 'rate': rates},
-    label="expoisson")
+        ext_stim = p.Population(
+            num_sources, p.SpikeSourcePoissonVariable,
+            {'rate_interval_duration': interval, 'rate': rates},
+            label="expoisson")
 
-exc_pop = p.Population(num_sources, p.IF_curr_exp, {})
+        exc_pop = p.Population(num_sources, p.IF_curr_exp, {})
 
-p.Projection(ext_stim, exc_pop,
-             p.OneToOneConnector(weights=2, delays=timestep))
+        p.Projection(ext_stim, exc_pop,
+                     p.OneToOneConnector(weights=2, delays=timestep))
 
-recording = True
-if recording:
-    ext_stim.record()
+        recording = True
+        if recording:
+            ext_stim.record()
 
-# exc_pop.record()
-# exc_pop.record_v()
-# exc_pop.record_gsyn()
+        p.run(total_runtime)
 
-p.run(total_runtime)
+        if recording:
+            source_spikes = ext_stim.getSpikes()
+            self.assertTrue(source_spikes is not None
+                            and len(source_spikes) > 0)
+        p.end()
 
-# new_rate =  []
-# for i in range(number_of_rates):
-#     c =  num_sources * [1]
-#     c[random.randint(0,255)] = 400
-#     new_rate.append(c)
-#
-#
-# ext_stim.set('rate', new_rate)
-# p.run(total_runtime)
-
-# spikes = exc_pop.getSpikes()
-# v = exc_pop.get_v()
-
-if recording:
-    source_spikes = ext_stim.getSpikes()
-
-    def plot_spikes(spikes, title):
-        if spikes is not None and len(spikes) > 0:
-            import pylab as plt
-
-            f, ax1 = plt.subplots(1, 1, figsize=(16, 8))
-            ax1.set_xlim((0, total_runtime))
-            ax1.scatter([i[1] for i in spikes], [i[0] for i in spikes], s=.2)
-            ax1.set_xlabel('Time/ms')
-            ax1.set_ylabel('spikes')
-            ax1.set_title(title)
-            plt.show()
-
-        else:
-            print("No spikes received")
-
-    plot_spikes(source_spikes, "SPIIIIKES!")
-# plot_utils.plotAll(v, spikes)
-p.end()
