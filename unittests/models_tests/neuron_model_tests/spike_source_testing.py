@@ -30,6 +30,7 @@ def generate_rates(s, grid, f_base=5, f_peak=152.8, sigma_stim=2):
                 -_d / (2 * (sigma_stim ** 2)))
     return _rates
 
+
 class TestVRPSS(unittest.TestCase):
     def test_variable_rate_poisson_spike_source_generation(self):
         timestep = 1
@@ -39,7 +40,6 @@ class TestVRPSS(unittest.TestCase):
         num_sources = 256
         p.setup(timestep)
 
-
         grid = np.asarray((1, 256))
         rates = []
         max_locs = []
@@ -48,7 +48,6 @@ class TestVRPSS(unittest.TestCase):
             max_locs.append(x)
             rate = generate_rates([1, x], grid)
             rates.append(list(rate[0]))
-
 
         ext_stim = p.Population(
             num_sources, p.SpikeSourcePoissonVariable,
@@ -71,4 +70,3 @@ class TestVRPSS(unittest.TestCase):
             self.assertTrue(source_spikes is not None
                             and len(source_spikes) > 0)
         p.end()
-
