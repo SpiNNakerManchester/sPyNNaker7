@@ -206,10 +206,16 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         self.initialize('v', distribution)
         self._change_requires_mapping = True
 
-    def record(self, sampling_interval=1, indexes=None, to_file=None):
+    def record(self, variables, to_file=None, sampling_interval=None,
+               indexes=None):
         """ Record spikes from all cells in the Population.
 
         :param to_file: file to write the spike data to
+        :param sampling_interval: value in milliseconds, and an integer
+        multiple of the simulation timestep. Default None is timestep
+        :type sampling_interval: int
+        :param indexes: indexes to record at. Default None is all
+        :type indexes: list(int)
         """
 
         self._record(
