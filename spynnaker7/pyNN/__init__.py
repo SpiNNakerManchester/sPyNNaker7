@@ -28,8 +28,11 @@ from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
     import SynapseDynamicsSTDP as STDPMechanism
 from spynnaker.pyNN.models.neuron.synapse_dynamics\
-    .synapse_dynamics_structural \
-    import SynapseDynamicsStructural as StructuralMechanism
+    .synapse_dynamics_structural_static \
+    import SynapseDynamicsStructuralStatic as StructuralMechanismStatic
+from spynnaker.pyNN.models.neuron.synapse_dynamics\
+    .synapse_dynamics_structural_stdp \
+    import SynapseDynamicsStructuralSTDP as StructuralMechanismSTDP
 from spynnaker.pyNN.models.spike_source.spike_source_array \
     import SpikeSourceArray
 from spynnaker.pyNN.models.spike_source.spike_source_from_file \
@@ -95,8 +98,10 @@ __all__ = [
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
-    'STDPMechanism', 'StructuralMechanism', 'AdditiveWeightDependence',
+    'STDPMechanism', 'AdditiveWeightDependence',
     'SpikePairRule', 'MultiplicativeWeightDependence',
+    # Structural plasticity by Petrut Bogdan
+    'StructuralMechanismStatic', 'StructuralMechanismSTDP',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
     # Stuff from pyNN.space
