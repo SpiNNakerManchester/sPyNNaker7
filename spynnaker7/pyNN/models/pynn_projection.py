@@ -32,11 +32,7 @@ class Projection(PyNNProjectionCommon):
             synapse_dynamics=None, rng=None):
         # pylint: disable=too-many-arguments, protected-access
         synapse_dynamics_stdp = None
-        if (synapse_dynamics is None or
-                (isinstance(synapse_dynamics,
-                 AbstractSynapseDynamicsStructural) and
-                 isinstance(synapse_dynamics.super,
-                 AbstractStaticSynapseDynamics))):
+        if synapse_dynamics is None:
             synapse_dynamics_stdp = SynapseDynamicsStatic()
         else:
             synapse_dynamics_stdp = synapse_dynamics.slow
