@@ -1,10 +1,5 @@
 from spynnaker.pyNN.models.abstract_models import \
     AbstractAcceptsIncomingSynapses
-from spynnaker.pyNN.models.neuron.synapse_dynamics import \
-    AbstractStaticSynapseDynamics
-from spynnaker.pyNN.models.neuron.synapse_dynamics\
-    .abstract_synapse_dynamics_structural import \
-    AbstractSynapseDynamicsStructural
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_static \
     import SynapseDynamicsStatic
 from spynnaker.pyNN.models.pynn_projection_common import PyNNProjectionCommon
