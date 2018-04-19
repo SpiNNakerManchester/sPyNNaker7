@@ -23,10 +23,16 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
     import IFCurrExpBase as IF_curr_exp
 from spynnaker.pyNN.models.neuron.builds.if_curr_alpha \
     import IFCurrAlpha as IF_curr_alpha
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv \
+    import IFCurrExpDvDt as IF_curr_exp_dv
+
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
     import SynapseDynamicsSTDP as STDPMechanism
+from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_dv \
+    import SynapseDynamicsDvDt as DvDtMechanism
+
 from spynnaker.pyNN.models.spike_source.spike_source_array \
     import SpikeSourceArray
 from spynnaker.pyNN.models.spike_source.spike_source_from_file \
@@ -56,15 +62,23 @@ from spynnaker7.pyNN.models.connectors.multapse_connector \
     import MultapseConnector
 from spynnaker7.pyNN.models.connectors.one_to_one_connector \
     import OneToOneConnector
+
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_spike_pair \
     import TimingDependenceSpikePair as SpikePairRule
+from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
+    .timing_dependence_dv \
+    import TimingDependenceDvDt as DvDtRule
+
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
     weight_dependence_additive \
     import WeightDependenceAdditive as AdditiveWeightDependence
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
     .weight_dependence_multiplicative \
     import WeightDependenceMultiplicative as MultiplicativeWeightDependence
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
+    weight_dependence_additive_dv \
+    import WeightDependenceAdditiveDvDt as AdditiveWeightDependenceDvDt
 
 from spynnaker7.pyNN import external_devices
 from spynnaker7.pyNN import extra_models
