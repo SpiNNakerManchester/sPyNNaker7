@@ -206,10 +206,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         self.initialize('v', distribution)
         self._change_requires_mapping = True
 
-    def record(self, sampling_interval=1, indexes=None, to_file=None):
+    def record(self, to_file=None, sampling_interval=None, indexes=None):
         """ Record spikes from all cells in the Population.
 
         :param to_file: file to write the spike data to
+        :param sampling_interval: value in milliseconds, and an integer
+        multiple of the simulation timestep. Default None is timestep
+        :type sampling_interval: int
+        :param indexes: indexes to record at. Default None is all
+        :type indexes: list(int)
         """
 
         self._record(
@@ -219,10 +224,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_gsyn(self, sampling_interval=1, indexes=None, to_file=None):
+    def record_gsyn(self, to_file=None, sampling_interval=None, indexes=None):
         """ Record the synaptic conductance for all cells in the Population.
 
-        :param to_file: the file to write the recorded gsyn to.
+        :param to_file: file to write the spike data to
+        :param sampling_interval: value in milliseconds, and an integer
+        multiple of the simulation timestep. Default None is timestep
+        :type sampling_interval: int
+        :param indexes: indexes to record at. Default None is all
+        :type indexes: list(int)
         """
 
         # have to set each to record and set the file at that point, otherwise
@@ -239,10 +249,15 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         # state that something has changed in the population,
         self._change_requires_mapping = True
 
-    def record_v(self, sampling_interval=1, indexes=None, to_file=None):
+    def record_v(self, to_file=None, sampling_interval=None, indexes=None):
         """ Record the membrane potential for all cells in the Population.
 
-        :param to_file: the file to write the recorded v to.
+        :param to_file: file to write the spike data to
+        :param sampling_interval: value in milliseconds, and an integer
+        multiple of the simulation timestep. Default None is timestep
+        :type sampling_interval: int
+        :param indexes: indexes to record at. Default None is all
+        :type indexes: list(int)
         """
 
         self._record(
