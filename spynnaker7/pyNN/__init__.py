@@ -25,7 +25,9 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_alpha \
     import IFCurrAlpha as IF_curr_alpha
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv \
     import IFCurrExpDvDt as IF_curr_exp_dv
-
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv_adaptive \
+    import IFCurrExpDvDtAdaptive as IF_curr_exp_dv_adaptive
+    
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
@@ -68,7 +70,7 @@ from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     import TimingDependenceSpikePair as SpikePairRule
 from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
     .timing_dependence_dv \
-    import TimingDependenceDvDt as DvDtRule
+    import TimingDependenceDvDt as TimingDvDtRule
 
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
     weight_dependence_additive \
