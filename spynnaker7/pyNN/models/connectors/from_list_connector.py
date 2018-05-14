@@ -1,7 +1,8 @@
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import FromListConnector as CommonFromListConnector
-from spynnaker.pyNN.exceptions import InvalidParameterType
 import logging
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    FromListConnector as
+    CommonFromListConnector)
+from spynnaker.pyNN.exceptions import InvalidParameterType
 
 logger = logging.getLogger(__name__)
 

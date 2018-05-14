@@ -4,71 +4,43 @@ import numpy as __numpy
 import os as __os
 from spinn_utilities.log import FormatAdapter
 from spinn_utilities.overrides import overrides
-
 import spynnaker7
 from pyNN.random import NumpyRNG, RandomDistribution as _PynnRandomDistribution
-from pyNN.space import \
-    distance as _pynn_distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere, \
-    RandomStructure
+from pyNN.space import (
+    distance as _pynn_distance, Space, Line, Grid2D, Grid3D, Cuboid, Sphere,
+    RandomStructure)
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities import globals_variables
-
-from spynnaker.pyNN.models.neural_projections.delay_afferent_application_edge \
-    import DelayAfferentApplicationEdge
-from spynnaker.pyNN.models.neural_projections.projection_application_edge \
-    import ProjectionApplicationEdge
-from spynnaker.pyNN.models.neuron.builds.if_cond_exp_base \
-    import IFCondExpBase as IF_cond_exp
-from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base \
-    import IFCurrExpBase as IF_curr_exp
-from spynnaker.pyNN.models.neuron.builds.if_curr_alpha \
-    import IFCurrAlpha as IF_curr_alpha
-from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
-    import PyNNSynapseDynamics as SynapseDynamics
-from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
-    import SynapseDynamicsSTDP as STDPMechanism
-from spynnaker.pyNN.models.spike_source.spike_source_array \
-    import SpikeSourceArray
-from spynnaker.pyNN.models.spike_source.spike_source_from_file \
-    import SpikeSourceFromFile
-from spynnaker.pyNN.models.spike_source.spike_source_poisson \
-    import SpikeSourcePoisson
-from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
-    import DelayExtensionVertex
+from spynnaker.pyNN.models.neural_projections import (
+    ProjectionApplicationEdge, DelayAfferentApplicationEdge)
+from spynnaker.pyNN.models.neuron.builds import (
+    IFCondExpBase as
+    IF_cond_exp, IFCurrExpBase as
+    IF_curr_exp,
+    IFCurrAlpha as
+    IF_curr_alpha)
+from spynnaker.pyNN.models.neuron.synapse_dynamics import (
+    PyNNSynapseDynamics as
+    SynapseDynamics,
+    SynapseDynamicsSTDP as
+    STDPMechanism)
+from spynnaker.pyNN.models.spike_source import (
+    SpikeSourceArray, SpikeSourceFromFile, SpikeSourcePoisson)
+from spynnaker.pyNN.models.utility_models import DelayExtensionVertex
 from spynnaker.pyNN.utilities import utility_calls
-
-from spynnaker7.pyNN.models.connectors.all_to_all_connector \
-    import AllToAllConnector
-from spynnaker7.pyNN.models.connectors. \
-    distance_dependent_probability_connector import \
-    DistanceDependentProbabilityConnector
-from spynnaker7.pyNN.models.connectors.fixed_number_post_connector \
-    import FixedNumberPostConnector
-from spynnaker7.pyNN.models.connectors.fixed_number_pre_connector \
-    import FixedNumberPreConnector
-from spynnaker7.pyNN.models.connectors.fixed_probability_connector \
-    import FixedProbabilityConnector
-from spynnaker7.pyNN.models.connectors.from_file_connector \
-    import FromFileConnector
-from spynnaker7.pyNN.models.connectors.from_list_connector import \
-    FromListConnector
-from spynnaker7.pyNN.models.connectors.multapse_connector \
-    import MultapseConnector
-from spynnaker7.pyNN.models.connectors.one_to_one_connector \
-    import OneToOneConnector
-from spynnaker7.pyNN.models.plasticity_components.timing_dependence \
-    .timing_dependence_spike_pair \
-    import TimingDependenceSpikePair as SpikePairRule
-from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
-    weight_dependence_additive \
-    import WeightDependenceAdditive as AdditiveWeightDependence
-from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
-    .weight_dependence_multiplicative \
-    import WeightDependenceMultiplicative as MultiplicativeWeightDependence
-
-from spynnaker7.pyNN import external_devices
-from spynnaker7.pyNN import extra_models
-
+from spynnaker7.pyNN.models.connectors import (
+    AllToAllConnector, DistanceDependentProbabilityConnector,
+    FixedNumberPostConnector, FixedNumberPreConnector,
+    FixedProbabilityConnector, FromFileConnector, FromListConnector,
+    MultapseConnector, OneToOneConnector)
+from spynnaker7.pyNN.models.plasticity_components.timing_dependence import (
+    TimingDependenceSpikePair as
+    SpikePairRule)
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence import (
+    WeightDependenceAdditive as
+    AdditiveWeightDependence, WeightDependenceMultiplicative as
+    MultiplicativeWeightDependence)
+from spynnaker7.pyNN import (external_devices, extra_models)
 from spynnaker7.pyNN.spinnaker import Spinnaker as __Spinnaker
 from spynnaker7._version import __version__  # NOQA
 from spynnaker7._version import __version_name__  # NOQA
@@ -77,7 +49,6 @@ from spynnaker7._version import __version_year__  # NOQA
 
 # traditional logger
 logger = FormatAdapter(__logging.getLogger(__name__))
-
 # List of binary search paths
 _binary_search_paths = []
 

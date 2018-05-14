@@ -1,5 +1,5 @@
-import pyNN
 import os
+import pyNN
 
 if not pyNN.__version__.startswith("0.7"):
     raise Exception(
@@ -12,7 +12,6 @@ spinnaker_init = os.path.join(spinnaker_dir, "__init__.py")
 
 if not os.path.exists(spinnaker_dir):
     os.mkdir(spinnaker_dir)
-spinn_file = open(spinnaker_init, "w")
-spinn_file.write("from spynnaker7.pyNN import *\n")
-spinn_file.close()
+with open(spinnaker_init, "w") as spinn_file:
+    spinn_file.write("from spynnaker7.pyNN import *\n")
 print "Created", spinnaker_init

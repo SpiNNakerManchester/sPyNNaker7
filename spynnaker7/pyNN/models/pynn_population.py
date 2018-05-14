@@ -1,13 +1,11 @@
+import logging
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
+from pyNN import descriptions
 from spynnaker.pyNN.models.pynn_population_common import PyNNPopulationCommon
 from spynnaker.pyNN.models.recording_common import RecordingCommon
 from spynnaker.pyNN.utilities import utility_calls
-from spynnaker.pyNN.utilities.constants import \
-    SPIKES, MEMBRANE_POTENTIAL, GSYN_INHIB, GSYN_EXCIT
-from spinn_front_end_common.utilities.exceptions import ConfigurationException
-
-from pyNN import descriptions
-
-import logging
+from spynnaker.pyNN.utilities.constants import (
+    SPIKES, MEMBRANE_POTENTIAL, GSYN_INHIB, GSYN_EXCIT)
 
 logger = logging.getLogger(__name__)
 

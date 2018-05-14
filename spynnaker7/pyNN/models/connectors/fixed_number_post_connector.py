@@ -1,11 +1,9 @@
 import logging
-
 from pyNN.space import Space
-
 from pyNN.random import RandomDistribution
-
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import FixedNumberPostConnector as CommonFixedNumberPostConnector
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    FixedNumberPostConnector as
+    CommonFixedNumberPostConnector)
 
 logger = logging.getLogger(__file__)
 

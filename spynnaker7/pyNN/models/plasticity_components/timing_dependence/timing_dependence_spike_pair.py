@@ -1,5 +1,6 @@
-from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence \
-    import TimingDependenceSpikePair as CommonTimingDependenaceSpikePair
+from spynnaker.pyNN.models.neuron.plasticity.stdp.timing_dependence import (
+    TimingDependenceSpikePair as
+    CommonTimingDependenaceSpikePair)
 
 
 class TimingDependenceSpikePair(CommonTimingDependenaceSpikePair):

@@ -1,9 +1,10 @@
 from pyNN.space import Space
-
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import FixedProbabilityConnector as CommonFixedProbabilityConnector
-from pyNN.connectors import FixedProbabilityConnector as \
-    PyNNFixedProbabilityConnector
+from pyNN.connectors import (
+    FixedProbabilityConnector as
+    PyNNFixedProbabilityConnector)
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    FixedProbabilityConnector as
+    CommonFixedProbabilityConnector)
 
 
 class FixedProbabilityConnector(

@@ -1,11 +1,9 @@
-from pyNN.space import Space
-
-from pyNN.random import RandomDistribution
-
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import FixedNumberPreConnector as CommonFixedNumberPreConnector
-
 import logging
+from pyNN.space import Space
+from pyNN.random import RandomDistribution
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    FixedNumberPreConnector as
+    CommonFixedNumberPreConnector)
 
 logger = logging.getLogger(__file__)
 

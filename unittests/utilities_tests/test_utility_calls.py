@@ -1,10 +1,10 @@
-import unittest
-import spynnaker.pyNN.utilities.utility_calls as utility_calls
 import os
 import shutil
-from spinn_front_end_common.utilities import globals_variables
-from spynnaker7.pyNN.spinnaker import Spinnaker
+import unittest
 from pyNN.random import RandomDistribution
+from spinn_front_end_common.utilities import globals_variables
+import spynnaker.pyNN.utilities.utility_calls as utility_calls
+from spynnaker7.pyNN.spinnaker import Spinnaker
 
 
 class TestUtilityCalls(unittest.TestCase):

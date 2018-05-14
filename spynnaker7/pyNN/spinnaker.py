@@ -1,26 +1,22 @@
-# common front end imports
 import logging
-
+from spinn_utilities.overrides import overrides
 from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
 from pyNN import __version__ as pynn_version
-
 from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
+from spynnaker.pyNN.spynnaker_simulator_interface import (
+    SpynnakerSimulatorInterface)
 from spynnaker7.pyNN.models import Population, Projection
-from spynnaker7.pyNN.spynnaker7_simulator_interface import \
-    Spynnaker7SimulatorInterface
-from spynnaker7.pyNN.utilities.random_stats import \
-    RandomStatsScipyImpl, RandomStatsUniformImpl
+from spynnaker7.pyNN.spynnaker7_simulator_interface import (
+    Spynnaker7SimulatorInterface)
+from spynnaker7.pyNN.utilities.random_stats import (
+    RandomStatsScipyImpl, RandomStatsUniformImpl)
 from spynnaker7.pyNN.utilities import Spynnaker7FailedState
 from ._version import __version__ as version
-from spinn_utilities.overrides import overrides
-from spynnaker.pyNN.spynnaker_simulator_interface \
-    import SpynnakerSimulatorInterface
 
 # global objects
 logger = logging.getLogger(__name__)
-
 # At import time change the default FailedState
 globals_variables.set_failed_state(Spynnaker7FailedState())
 

@@ -1,7 +1,6 @@
 import unittest
 import os
 import shutil
-
 import spinn_utilities.conf_loader as conf_loader
 import spynnaker.pyNN
 from spynnaker7.pyNN.spinnaker import Spinnaker

@@ -1,6 +1,5 @@
 import unittest
-from spynnaker.pyNN.models.neuron.builds.if_curr_dual_exp_base import \
-    IFCurrDualExpBase
+from spynnaker.pyNN.models.neuron.builds import IFCurrDualExpBase
 import spynnaker7.pyNN as pyNN
 
 if not pyNN:

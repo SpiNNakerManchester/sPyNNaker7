@@ -1,5 +1,6 @@
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import MultapseConnector as CommonMultapseConnector
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    MultapseConnector as
+    CommonMultapseConnector)
 
 
 class MultapseConnector(CommonMultapseConnector):

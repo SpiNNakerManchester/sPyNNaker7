@@ -1,7 +1,7 @@
-from spynnaker.pyNN.models.neural_projections.connectors \
-    import DistanceDependentProbabilityConnector as \
-    CommonDistanceDependentProbabilityConnector
 from pyNN.space import Space
+from spynnaker.pyNN.models.neural_projections.connectors import (
+    DistanceDependentProbabilityConnector as
+    CommonDistanceDependentProbabilityConnector)
 
 
 class DistanceDependentProbabilityConnector(

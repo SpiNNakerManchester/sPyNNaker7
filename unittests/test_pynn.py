@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import unittest
-
 import spynnaker7.pyNN as pynn
 from spinn_front_end_common.utilities import globals_variables
 

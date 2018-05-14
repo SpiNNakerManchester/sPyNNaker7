@@ -1,54 +1,41 @@
-# general imports
 import logging
-
-# fec imports
-from spinn_front_end_common.abstract_models \
-    import AbstractSendMeMulticastCommandsVertex
-from spinn_front_end_common.utilities import globals_variables
-from spinn_front_end_common.utilities.notification_protocol \
-    import SocketAddress
-from spinn_front_end_common.utility_models import LivePacketGather
-
-# spinnman imports
 from spinnman.messages.eieio.eieio_type import EIEIOType
-
-# main
-from spynnaker.pyNN.connections \
-    import EthernetCommandConnection, EthernetControlConnection, \
-    SpynnakerLiveSpikesConnection, SpynnakerPoissonControlConnection
-
-from spynnaker.pyNN.external_devices_models \
-    import AbstractEthernetController, AbstractEthernetSensor
-from spynnaker.pyNN.external_devices_models \
-    import ArbitraryFPGADevice, ExternalCochleaDevice, ExternalFPGARetinaDevice
-from spynnaker.pyNN.external_devices_models \
-    import MunichMotorDevice, MunichRetinaDevice
-
-# PushBot
+from spinn_front_end_common.abstract_models import (
+    AbstractSendMeMulticastCommandsVertex)
+from spinn_front_end_common.utilities import globals_variables
+from spinn_front_end_common.utilities.notification_protocol import (
+    SocketAddress)
+from spinn_front_end_common.utility_models import LivePacketGather
+from spynnaker.pyNN.connections import (
+    EthernetCommandConnection, EthernetControlConnection,
+    SpynnakerLiveSpikesConnection, SpynnakerPoissonControlConnection)
+from spynnaker.pyNN.external_devices_models import (
+    AbstractEthernetController, AbstractEthernetSensor,
+    ArbitraryFPGADevice, ExternalCochleaDevice, ExternalFPGARetinaDevice,
+    MunichMotorDevice, MunichRetinaDevice)
 from spynnaker.pyNN.external_devices_models.push_bot.push_bot_control_modules\
-    import PushBotLifEthernet, PushBotLifSpinnakerLink
-from spynnaker.pyNN.external_devices_models.push_bot.push_bot_ethernet \
-    import PushBotEthernetLaserDevice, PushBotEthernetLEDDevice, \
-    PushBotEthernetMotorDevice, PushBotEthernetRetinaDevice, \
-    PushBotEthernetSpeakerDevice
+    import (
+        PushBotLifEthernet, PushBotLifSpinnakerLink)
+from spynnaker.pyNN.external_devices_models.push_bot.push_bot_ethernet import (
+    PushBotEthernetLaserDevice, PushBotEthernetLEDDevice,
+    PushBotEthernetMotorDevice, PushBotEthernetRetinaDevice,
+    PushBotEthernetSpeakerDevice)
 from spynnaker.pyNN.external_devices_models.push_bot.push_bot_spinnaker_link \
-    import PushBotSpiNNakerLinkLaserDevice, PushBotSpiNNakerLinkLEDDevice, \
-    PushBotSpiNNakerLinkMotorDevice, PushBotSpiNNakerLinkRetinaDevice, \
-    PushBotSpiNNakerLinkSpeakerDevice
+    import (
+        PushBotSpiNNakerLinkLaserDevice, PushBotSpiNNakerLinkLEDDevice,
+        PushBotSpiNNakerLinkMotorDevice, PushBotSpiNNakerLinkRetinaDevice,
+        PushBotSpiNNakerLinkSpeakerDevice)
 from spynnaker.pyNN.external_devices_models.push_bot.push_bot_parameters \
-    import PushBotLED, PushBotMotor, PushBotRetinaResolution, PushBotLaser, \
-    PushBotSpeaker, PushBotRetinaViewer
-
-# other plugins
-from spynnaker.pyNN.protocols \
-    import MunichIoSpiNNakerLinkProtocol
-from spynnaker.pyNN.spynnaker_external_device_plugin_manager \
-    import SpynnakerExternalDevicePluginManager
+    import (
+        PushBotLED, PushBotMotor, PushBotRetinaResolution, PushBotLaser,
+        PushBotSpeaker, PushBotRetinaViewer)
+from spynnaker.pyNN.protocols import MunichIoSpiNNakerLinkProtocol
+from spynnaker.pyNN.spynnaker_external_device_plugin_manager import (
+    SpynnakerExternalDevicePluginManager)
 from spynnaker.pyNN.external_devices_models import ExternalDeviceLifControl
-
-# injector
-from spynnaker.pyNN.models.utility_models \
-    import SpikeInjector as ExternalDeviceSpikeInjector
+from spynnaker.pyNN.models.utility_models import (
+    SpikeInjector as
+    ExternalDeviceSpikeInjector)
 
 # useful functions
 add_database_socket_address = \

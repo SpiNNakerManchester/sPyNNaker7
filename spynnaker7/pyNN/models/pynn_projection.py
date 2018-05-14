@@ -1,12 +1,9 @@
-from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_static \
-    import SynapseDynamicsStatic
-from spynnaker.pyNN.models.neuron.abstract_population_vertex \
-    import AbstractPopulationVertex
-from spynnaker.pyNN.models.pynn_projection_common import PyNNProjectionCommon
-
-from spinn_front_end_common.utilities.exceptions import ConfigurationException
-
 import logging
+from spinn_front_end_common.utilities.exceptions import ConfigurationException
+from spynnaker.pyNN.models.neuron.synapse_dynamics import (
+    SynapseDynamicsStatic)
+from spynnaker.pyNN.models.neuron import AbstractPopulationVertex
+from spynnaker.pyNN.models.pynn_projection_common import PyNNProjectionCommon
 
 logger = logging.getLogger(__name__)
 

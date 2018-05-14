@@ -1,6 +1,5 @@
 import unittest
-from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base import \
-    IzkCurrExpBase
+from spynnaker.pyNN.models.neuron.builds import IzkCurrExpBase
 
 
 class TestIZKCurrExpModel(unittest.TestCase):

@@ -1,5 +1,5 @@
 import unittest
-from spynnaker.pyNN.models.neuron.builds.if_curr_exp_base import IFCurrExpBase
+from spynnaker.pyNN.models.neuron.builds import IFCurrExpBase
 
 
 class TestIFCurrExpModel(unittest.TestCase):

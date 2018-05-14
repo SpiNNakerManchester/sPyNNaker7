@@ -1,5 +1,4 @@
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
-
 import spynnaker7.pyNN as p
 from p7_integration_tests.base_test_case import BaseTestCase
 

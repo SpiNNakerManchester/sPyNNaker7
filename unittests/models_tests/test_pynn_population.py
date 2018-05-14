@@ -1,23 +1,18 @@
 #!/usr/bin/env python
+import os
+import re
+import struct
+import tempfile
 import unittest
-import spynnaker7.pyNN as pyNN
+import numpy
+from pacman.model.graphs.machine import SimpleMachineVertex
+from pacman.model.graphs.common import GraphMapper, Slice
+from pacman.model.placements import Placements, Placement
+from pacman.model.constraints.placer_constraints import ChipAndCoreConstraint
 from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from spinn_front_end_common.utilities.globals_variables import get_simulator
-import re
-import numpy
-from pacman.model.graphs.machine.simple_machine_vertex \
-    import SimpleMachineVertex
-from pacman.model.graphs.common.graph_mapper import GraphMapper
-from pacman.model.graphs.common.slice import Slice
-from pacman.model.placements.placements import Placements
-from pacman.model.placements.placement import Placement
-from pacman.model.constraints.placer_constraints \
-    import ChipAndCoreConstraint
-from spinn_storage_handlers.buffered_bytearray_data_storage \
-    import BufferedBytearrayDataStorage
-import tempfile
-import os
-import struct
+from spinn_storage_handlers import BufferedBytearrayDataStorage
+import spynnaker7.pyNN as pyNN
 
 populations = list()
 cell_params_lif = {'cm': 0.25,
