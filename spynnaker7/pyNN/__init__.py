@@ -27,6 +27,8 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv \
     import IFCurrExpDvDt as IF_curr_exp_dv
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv_adaptive \
     import IFCurrExpDvDtAdaptive as IF_curr_exp_dv_adaptive
+from spynnaker.pyNN.models.neuron.builds.if_curr_exp_nmda_dv_adaptive \
+    import IFCurrExpDvDtAdaptiveNMDA as IF_curr_exp_nmda_dv_adaptive
     
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
@@ -81,6 +83,9 @@ from spynnaker7.pyNN.models.plasticity_components.weight_dependence \
 from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
     weight_dependence_additive_dv \
     import WeightDependenceAdditiveDvDt as AdditiveWeightDependenceDvDt
+from spynnaker7.pyNN.models.plasticity_components.weight_dependence.\
+    weight_dependence_additive_dv_nmda \
+    import WeightDependenceAdditiveDvDtNMDA as AdditiveWeightDependenceDvDtNMDA
 
 from spynnaker7.pyNN import external_devices
 from spynnaker7.pyNN import extra_models
