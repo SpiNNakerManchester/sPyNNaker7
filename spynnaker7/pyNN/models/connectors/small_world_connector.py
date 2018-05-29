@@ -25,4 +25,4 @@ class SmallWorldConnector(CommonSmallWorldConnector):
         return self._weights
 
     def get_delay(self):
-        return self._delay
+        return self._delays
