@@ -35,3 +35,14 @@ class AllToAllConnector(CommonAllToAllConnector):
             verbose=verbose)
         self.set_space(space)
         self.set_weights_and_delays(weights, delays)
+
+    def set_weights_and_delays(self, weights, delays):
+        self._weights = weights
+        self._delays = delays
+
+    def get_weight(self):
+        return self._weights
+
+    def get_delay(self):
+        return self._delay
+

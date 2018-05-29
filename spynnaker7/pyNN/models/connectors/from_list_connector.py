@@ -37,3 +37,12 @@ class FromListConnector(CommonFromListConnector):
 
         super(FromListConnector, self).__init__(conns, safe, verbose)
         self.set_weights_and_delays(weights, delays)
+        self._weights = weights
+        self._delays = delays
+
+    def get_weight(self):
+        return self._weights
+
+    def get_delay(self):
+        return self._delays
+
