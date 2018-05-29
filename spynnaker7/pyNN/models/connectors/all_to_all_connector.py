@@ -45,4 +45,3 @@ class AllToAllConnector(CommonAllToAllConnector):
 
     def get_delay(self):
         return self._delays
-

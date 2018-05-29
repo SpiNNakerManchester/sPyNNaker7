@@ -32,4 +32,3 @@ class MultapseConnector(CommonMultapseConnector):
 
     def get_delay(self):
         return self._delays
-

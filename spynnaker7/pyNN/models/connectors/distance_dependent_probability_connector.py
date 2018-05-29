@@ -56,4 +56,3 @@ class DistanceDependentProbabilityConnector(
 
     def get_delay(self):
         return self._delays
-

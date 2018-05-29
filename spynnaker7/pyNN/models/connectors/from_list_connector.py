@@ -45,4 +45,3 @@ class FromListConnector(CommonFromListConnector):
 
     def get_delay(self):
         return self._delays
-
