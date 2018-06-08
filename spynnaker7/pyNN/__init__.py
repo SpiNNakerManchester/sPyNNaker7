@@ -29,6 +29,14 @@ from spynnaker.pyNN.models.neuron.builds.if_curr_exp_dv_adaptive \
     import IFCurrExpDvDtAdaptive as IF_curr_exp_dv_adaptive
 from spynnaker.pyNN.models.neuron.builds.if_curr_exp_nmda_dv_adaptive \
     import IFCurrExpDvDtAdaptiveNMDA as IF_curr_exp_nmda_dv_adaptive
+
+from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_base \
+    import IzkCurrExpBase as IZK_curr_exp
+    
+from spynnaker.pyNN.models.neuron.builds.izk_curr_exp_nmda_dv_adaptive \
+    import IzkCurrExpDvDtAdaptiveNMDA as IZK_curr_exp_nmda_dv_adaptive
+
+
     
 from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
