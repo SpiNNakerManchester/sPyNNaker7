@@ -27,12 +27,20 @@ from spynnaker.pyNN.models.neuron.synapse_dynamics.pynn_synapse_dynamics \
     import PyNNSynapseDynamics as SynapseDynamics
 from spynnaker.pyNN.models.neuron.synapse_dynamics.synapse_dynamics_stdp \
     import SynapseDynamicsSTDP as STDPMechanism
+from spynnaker.pyNN.models.neuron.synapse_dynamics\
+    .synapse_dynamics_structural_static \
+    import SynapseDynamicsStructuralStatic as StructuralMechanismStatic
+from spynnaker.pyNN.models.neuron.synapse_dynamics\
+    .synapse_dynamics_structural_stdp \
+    import SynapseDynamicsStructuralSTDP as StructuralMechanismSTDP
 from spynnaker.pyNN.models.spike_source.spike_source_array \
     import SpikeSourceArray
 from spynnaker.pyNN.models.spike_source.spike_source_from_file \
     import SpikeSourceFromFile
 from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
+from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
+    import SpikeSourcePoissonVariable
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex
 from spynnaker.pyNN.utilities import utility_calls
@@ -87,13 +95,16 @@ __all__ = [
     # Implementations of the neuroscience models
     'IF_cond_exp', 'IF_curr_exp', "IF_curr_alpha",
     'DelayAfferentApplicationEdge', 'DelayExtensionVertex',
-    'ProjectionApplicationEdge', 'SpikeSourcePoisson', 'SpikeSourceArray',
+    'ProjectionApplicationEdge', 'SpikeSourcePoisson',
+    'SpikeSourcePoissonVariable', 'SpikeSourceArray',
     'SpikeSourceFromFile', 'AllToAllConnector', 'FixedNumberPreConnector',
     'FixedProbabilityConnector', 'FromListConnector', 'FromFileConnector',
     'MultapseConnector', 'OneToOneConnector', 'FixedNumberPostConnector',
     'DistanceDependentProbabilityConnector', 'SynapseDynamics',
-    'STDPMechanism', 'AdditiveWeightDependence', 'SpikePairRule',
-    'MultiplicativeWeightDependence',
+    'STDPMechanism', 'AdditiveWeightDependence',
+    'SpikePairRule', 'MultiplicativeWeightDependence',
+    # Structural plasticity by Petrut Bogdan
+    'StructuralMechanismStatic', 'StructuralMechanismSTDP',
     # Stuff from pyNN.random
     'NumpyRNG', 'RandomDistribution',
     # Stuff from pyNN.space
