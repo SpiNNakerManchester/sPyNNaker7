@@ -6,7 +6,7 @@ cache: pip
 
 before_install:
   - pip install --upgrade pip setuptools wheel
-  - pip install --only-binary=numpy,scipy numpy scipy
+  - pip install --only-binary=numpy,scipy numpy scipy matplotlib
   - git clone https://github.com/SpiNNakerManchester/SupportScripts.git support
   # SpiNNakerManchester internal dependencies; development mode
   - support/pipinstall.sh git://github.com/SpiNNakerManchester/SpiNNUtils.git
@@ -21,7 +21,7 @@ before_install:
 
 install:
   - pip install -r requirements-test.txt
-  - pip install python-coveralls
+  - pip install python-coveralls 'coverage>=4.4'
   - python ./setup.py install
 
 before_script:
