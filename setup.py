@@ -43,5 +43,7 @@ setup(
         'spalloc >= 1.0.1, < 2.0.0',
         'SpiNNFrontEndCommon >= 1!4.0.1, < 1!5.0.0',
         'sPyNNaker >= 1!4.0.1, < 1!5.0.0',
-        'pyNN >= 0.7, < 0.8']
+        'pyNN >= 0.7, < 0.8'],
+    maintainer="SpiNNakerTeam",
+    maintainer_email="spinnakerusers@googlegroups.com"
 )
