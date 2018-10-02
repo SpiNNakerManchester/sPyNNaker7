@@ -5,6 +5,7 @@ from pyNN.random import NumpyRNG
 from pyNN.random import RandomDistribution
 from pyNN import __version__ as pynn_version
 
+import spynnaker7
 from spinn_front_end_common.utilities import globals_variables
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models import Population, Projection
@@ -43,7 +44,8 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
             graph_label=graph_label,
             n_chips_required=n_chips_required, timestep=timestep,
             hostname=host_name, max_delay=max_delay, min_delay=min_delay,
-            front_end_versions=front_end_versions)
+            front_end_versions=front_end_versions,
+            top_level_module=spynnaker7)
 
     @overrides(Spynnaker7SimulatorInterface.create_population)
     def create_population(self, size, cellclass, cellparams, structure, label):
