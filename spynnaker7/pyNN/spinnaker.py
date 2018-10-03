@@ -6,6 +6,8 @@ from pyNN.random import RandomDistribution
 from pyNN import __version__ as pynn_version
 
 from spinn_front_end_common.utilities import globals_variables
+from spinn_utilities.citation.tool_citation_generation import \
+    CitationAggregator
 from spynnaker.pyNN.abstract_spinnaker_common import AbstractSpiNNakerCommon
 from spynnaker7.pyNN.models import Population, Projection
 from spynnaker7.pyNN.spynnaker7_simulator_interface import \
@@ -106,3 +108,16 @@ class Spinnaker(AbstractSpiNNakerCommon, Spynnaker7SimulatorInterface):
         :rtype: NumpyRNG
         """
         return NumpyRNG()
+
+    def generate_bibtex(self, doi_title, zenodo_access_token):
+        """ helper method for building bibtex from citation.cff's
+
+        :param doi_title: the title of the doi
+        :param zenodo_access_token: the access token for zenodo
+        :rtype: None
+        """
+        import spynnaker7
+        AbstractSpiNNakerCommon.generate_bibtex(
+            self, top_module=spynnaker7, doi_title=doi_title,
+            zenodo_access_token=zenodo_access_token,
+            tools_doi=CitationAggregator.locate_citation_doi(spynnaker7))
