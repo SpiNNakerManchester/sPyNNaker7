@@ -34,8 +34,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
 
         size = self._roundsize(size)
 
-        internal_cellparams = dict(cellparams)
-
         # set spinnaker targeted parameters
         model = cellclass
         if inspect.isclass(cellclass):
