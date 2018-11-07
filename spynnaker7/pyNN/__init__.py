@@ -39,7 +39,7 @@ from spynnaker.pyNN.models.spike_source.spike_source_from_file \
     import SpikeSourceFromFile
 from spynnaker.pyNN.models.spike_source.spike_source_poisson \
     import SpikeSourcePoisson
-#from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
+# from spynnaker.pyNN.models.spike_source.spike_source_poisson_variable \
 #    import SpikeSourcePoissonVariable
 from spynnaker.pyNN.models.utility_models.delay_extension_vertex \
     import DelayExtensionVertex

@@ -30,22 +30,13 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     """
 
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
-                 structure=None):
+                 structure=None, additional_parameters=None):
 
         size = self._roundsize(size)
 
         internal_cellparams = dict(cellparams)
 
         # set spinnaker targeted parameters
-        model_label = None
-        if 'label' in internal_cellparams:
-            model_label = internal_cellparams['label']
-        # self.label(model_label)
-        internal_cellparams['label'] = label  # self.label  # create_label(model_label, label)
-        # internal_cellparams['n_neurons'] = size
-
-        # create population vertex.
-#        vertex = cellclass(**internal_cellparams)
         model = cellclass
         if inspect.isclass(cellclass):
             if cellparams is None:
@@ -58,7 +49,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             spinnaker_control=spinnaker, size=size, label=label,
             constraints=None, model=model,
             initial_values=None, structure=structure,
-            additional_parameters=None)
+            additional_parameters=additional_parameters)
         RecordingCommon.__init__(self, population=self)
 
     @property
