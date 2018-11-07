@@ -8,6 +8,7 @@ from spinn_front_end_common.utilities.exceptions import ConfigurationException
 from pyNN import descriptions
 
 import logging
+import inspect
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +32,7 @@ class Population(PyNNPopulationCommon, RecordingCommon):
     def __init__(self, size, cellclass, cellparams, spinnaker, label,
                  structure=None):
 
-        size = self._roundsize(size, label)
+        size = self._roundsize(size)
 
         internal_cellparams = dict(cellparams)
 
@@ -39,15 +40,25 @@ class Population(PyNNPopulationCommon, RecordingCommon):
         model_label = None
         if 'label' in internal_cellparams:
             model_label = internal_cellparams['label']
-        internal_cellparams['label'] = self.create_label(model_label, label)
-        internal_cellparams['n_neurons'] = size
+        # self.label(model_label)
+        internal_cellparams['label'] = label  # self.label  # create_label(model_label, label)
+        # internal_cellparams['n_neurons'] = size
 
         # create population vertex.
-        vertex = cellclass(**internal_cellparams)
+#        vertex = cellclass(**internal_cellparams)
+        model = cellclass
+        if inspect.isclass(cellclass):
+            if cellparams is None:
+                model = cellclass()
+            else:
+                model = cellclass(**cellparams)
+        self._celltype = model
 
         super(Population, self).__init__(
-            spinnaker_control=spinnaker, size=size, vertex=vertex,
-            initial_values=None, structure=structure)
+            spinnaker_control=spinnaker, size=size, label=label,
+            constraints=None, model=model,
+            initial_values=None, structure=structure,
+            additional_parameters=None)
         RecordingCommon.__init__(self, population=self)
 
     @property
@@ -407,3 +418,6 @@ class Population(PyNNPopulationCommon, RecordingCommon):
             self.print_v(self._record_v_file)
         if self._record_gsyn_file is not None:
             self.print_gsyn(self._record_gsyn_file)
+
+    def initialize(self, variable, value):
+        super(Population, self)._initialize(variable, value)
