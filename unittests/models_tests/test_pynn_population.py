@@ -35,8 +35,8 @@ cell_params_izk = {
     'b': 0.2,
     'd': 2.0,
     'i_offset': 0,
-    'u_init': -14.0,
-    'v_init': -70.0,
+    'u': -14.0,
+    'v': -70.0,
     'tau_syn_E': 5.0,
     'tau_syn_I': 5.0}
 
@@ -155,12 +155,13 @@ class TestPyNNPopulation(unittest.TestCase):
         for param in default_params.keys():
             self.assertEqual(default_params[param], boxed_defaults[param])
 
-    def test_spikes_per_second_setting_in_a_pop(self):
-        pop = pyNN.Population(
-            10, pyNN.IF_curr_exp, {'spikes_per_second': 3333},
-            label="Constrained population")
-        spikes_per_second = pop._get_vertex.spikes_per_second
-        self.assertEqual(spikes_per_second, 3333)
+#     def test_spikes_per_second_setting_in_a_pop(self):
+#         pop = pyNN.Population(
+#             10, pyNN.IF_curr_exp,
+#             label="Constrained population",
+#             additional_parameters={'spikes_per_second': 3333})
+#         spikes_per_second = pop._get_vertex.spikes_per_second
+#         self.assertEqual(spikes_per_second, 3333)
 
     def test_spikes_per_second_not_set_in_a_pop(self):
         pop = pyNN.Population(
@@ -169,12 +170,13 @@ class TestPyNNPopulation(unittest.TestCase):
         spikes_per_second = pop._get_vertex.spikes_per_second
         self.assertEqual(spikes_per_second, 30)
 
-    def test_ring_buffer_sigma_setting_in_a_pop(self):
-        pop = pyNN.Population(
-            10, pyNN.IF_curr_exp, {'ring_buffer_sigma': 3333},
-            label="Constrained population")
-        ring_buffer_sigma = pop._get_vertex.ring_buffer_sigma
-        self.assertEqual(ring_buffer_sigma, 3333)
+#     def test_ring_buffer_sigma_setting_in_a_pop(self):
+#         pop = pyNN.Population(
+#             10, pyNN.IF_curr_exp,
+#             label="Constrained population",
+#             additional_parameters={'ring_buffer_sigma': 3333})
+#         ring_buffer_sigma = pop._get_vertex.ring_buffer_sigma
+#         self.assertEqual(ring_buffer_sigma, 3333)
 
     def test_ring_buffer_sigma_not_set_in_a_pop(self):
         pop = pyNN.Population(

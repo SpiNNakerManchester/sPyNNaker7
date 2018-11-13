@@ -39,8 +39,8 @@ cell_params_izk = {
     'b': 0.2,
     'd': 2.0,
     'i_offset': 0,
-    'u_init': -14.0,
-    'v_init': -70.0,
+    'u': -14.0,
+    'v': -70.0,
     'tau_syn_E': 5.0,
     'tau_syn_I': 5.0
 
